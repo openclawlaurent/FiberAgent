@@ -271,6 +271,19 @@ If stuck on one track → immediately pivot to next. Log blocker in memory.
 
 ---
 
+## Progress Log
+
+**21:30 UTC - Track 1 Started**
+- Created onChainSignals.js (deterministic mock wallet data)
+- Created behavioralTags.js (18 tags with boost logic)
+- Created personalizationEngine.js (orchestrator)
+- Committed to git
+- Created endpoint skeleton (ready to integrate)
+
+**Next:** Add endpoint to API, test, then move to Track 2
+
+---
+
 ## Success Criteria (By End of Feb 9)
 
 - ✅ Behavioral personalization working (wallet signals → cashback boost)
