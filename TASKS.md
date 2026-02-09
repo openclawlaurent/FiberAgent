@@ -141,14 +141,33 @@
 - [x] Task 4.1: Frontend demo already built and working (`/demo` route)
 - [x] Task 4.2: `HACKATHON_DEMO_GUIDE.md` (11.1KB) - Complete demo script + talking points
 
+### Priority 5: Behavioral Personalization (Track 1 - Phase 2)
+- [x] Track 1.1: `onChainSignals.js` (8.2KB) - 9 signal types, deterministic mock detection
+- [x] Track 1.2: `behavioralTags.js` (10.7KB) - 18 behavioral tags with boosts (5-50%)
+- [x] Track 1.3: `personalizationEngine.js` (6.6KB) - Signal→tag→boost pipeline
+- [x] Track 1.4: API integration - `GET /api/agent/search/personalized` endpoint
+- [x] Track 1.5: Tested end-to-end - MON holder wallet detected, boost calculated ✅
+
 ---
 
-## READY TO START (NEXT) 🚀
+## IN PROGRESS / READY NEXT 🚀
 
-### Priority 5: Social Media Integration
+### Priority 6: Social Media Integration
 - Ready to implement social agent based on `SOCIAL_AGENT_IMPLEMENTATION_GUIDE.md`
 - Colleague has all documentation needed
-- API is stable and tested
+- API is stable and tested with personalization layer
+
+### Track 2: Frontend Analytics (Next Priority)
+- [ ] Responsive design testing
+- [ ] Analytics dashboard (`/stats` page)
+- [ ] Personalization insights UI
+- Estimated: 2-3 hours
+
+### Track 3: Phase 2 Economics (High Impact)
+- [ ] Query staking system (agents stake MON, get kickback)
+- [ ] Kickback calculation (5% base, 10% for Founding Agents)
+- [ ] ERC-8004 reputation submission
+- Estimated: 3-4 hours
 
 ---
 
@@ -156,9 +175,10 @@
 
 - Every 5 minutes: Cron job checks this file for next task
 - Identifies next unblocked item
-- Executes in parallel with other work streams
-- **Goal:** Never idle, always making progress
-- **Philosophy:** Ask Laurent only for: credentials, domain names, external approvals
+- **NEVER STOPS** - if blocked, pivot to next track
+- **Goal:** Continuous parallel progress
+- **Philosophy:** Self-sufficient; ask Laurent only for credentials/approvals
 
-Last update: 2026-02-09 21:02 GMT+1  
-Status: **MVP COMPLETE** → Ready for demo + social media integration
+Last update: 2026-02-09 21:06 GMT+1  
+Status: **PHASE 2 FEATURES IN PROGRESS** - Behavioral personalization complete ✅  
+Deployed to GitHub: db5644d (Track 1 merged)
