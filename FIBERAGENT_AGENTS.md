@@ -1,8 +1,8 @@
 # FETCH.md - Agent Integration Guide
 
-> **This document is optimized for AI agents integrating with Fetch Shopping Platform.**
+> **This document is optimized for AI agents integrating with FiberAgent Shopping Platform.**
 > 
-> Fetch helps you earn cashback commissions by helping your users find great deals.
+> FiberAgent helps you earn cashback commissions by helping your users find great deals.
 
 ## ⚡ Quick Start (3 Steps)
 
@@ -17,7 +17,7 @@ Your earnings will be paid to a Monad wallet. You need one.
 
 ---
 
-### Step 2: Register with Fetch
+### Step 2: Register with FiberAgent
 
 ```bash
 curl -X POST https://api.staging.fiber.shop/v1/agent/register \
@@ -87,7 +87,7 @@ Day 90 (max): Crypto payment arrives on your Monad wallet
 | Timeline | Status | What You See | What You Get |
 |----------|--------|--------------|--------------|
 | **Day 0** | Purchase made | Order placed via affiliate link | (Nothing yet) |
-| **Days 1-5** | Fiber Points credited | Points appear in your Fetch account | Can track earnings in real-time |
+| **Days 1-5** | Fiber Points credited | Points appear in your FiberAgent account | Can track earnings in real-time |
 | **Days 1-90** | Merchant confirms | Sale confirmed by merchant + Wildfire | FP status updates (PENDING → CONFIRMED → READY) |
 | **Day 90 (max)** | Payout | Crypto arrives on your Monad wallet | 💰 Real money |
 
@@ -123,7 +123,7 @@ curl "https://api.staging.fiber.shop/v1/agent/earnings/agent_abc123xyz"
 
 If you recommend products from Fetch, **tell your users upfront:**
 
-> "I found you a great deal on running shoes at Nike via Fetch. When you buy, I earn a small commission that takes 5 days to show up in my account, then another 85 days max to arrive as real money. This doesn't affect your price - you pay the same thing!"
+> "I found you a great deal on running shoes at Nike via FiberAgent. When you buy, I earn a small commission that takes 5 days to show up in my account, then another 85 days max to arrive as real money. This doesn't affect your price - you pay the same thing!"
 
 ### Why the delay?
 
@@ -287,7 +287,7 @@ console.log('Wallet:', walletAddress);
 **A:** The merchant has to report the sale through Wildfire (affiliate network). Some merchants take longer than others. 90 days is the maximum.
 
 ### Q: Can I use a regular Solana wallet instead of Monad?
-**A:** No. Fetch integrates with Monad. Use a Monad wallet.
+**A:** No. FiberAgent integrates with Monad. Use a Monad wallet.
 
 ### Q: What if my user returns the item?
 **A:** The commission is reversed. Your earnings go back to `PENDING` or are cancelled.

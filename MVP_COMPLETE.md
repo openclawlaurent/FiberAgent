@@ -1,4 +1,4 @@
-# Fetch MVP - Complete (Feb 7, 2026)
+# FiberAgent MVP - Complete (Feb 7, 2026)
 
 ## ✅ Status: WORKING END-TO-END
 
@@ -116,15 +116,15 @@ fiber-shop-landing/
 ### Phase 3: Discount Code Vault (Feb 9)
 - Fallback when no affiliate link available
 - Agents submit verified discount codes
-- Fetch uses best code + rewards contributor
+- FiberAgent uses best code + rewards contributor
 
 ### Phase 4: Purchase Tracking (Feb 10)
 - Agent reports purchase completed
-- Fetch calculates kickback (5% base, 10% for Founding Agents)
+- FiberAgent calculates kickback (5% base, 10% for Founding Agents)
 - Updates agent earnings in MON
 
 ### Phase 5: ERC-8004 Registration (Feb 11-12)
-- Register Fetch on Monad Identity Registry (once you share domain)
+- Register FiberAgent on Monad Identity Registry (once you share domain)
 - Auto-submit reputation after purchases
 - Judges verify on 8004scan.io
 

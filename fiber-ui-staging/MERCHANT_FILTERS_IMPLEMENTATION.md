@@ -65,8 +65,8 @@ This document describes the complete implementation of the database-driven merch
 
 **Functions:**
 
-- `getMerchantCategories()` - Fetch active categories with seasonal filtering
-- `getMerchantSortOptions()` - Fetch active sort options
+- `getMerchantCategories()` - FiberAgent active categories with seasonal filtering
+- `getMerchantSortOptions()` - FiberAgent active sort options
 - `getDefaultSortOption()` - Get the default sort option
 - Fallback data for resilience
 

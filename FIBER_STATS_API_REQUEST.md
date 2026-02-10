@@ -1,6 +1,6 @@
-# Fiber Stats API Request - Fetch Analytics Endpoints
+# Fiber Stats API Request - FiberAgent Analytics Endpoints
 
-> **Purpose:** Enable Fetch frontend to display platform-wide analytics without needing a separate backend.
+> **Purpose:** Enable FiberAgent frontend to display platform-wide analytics without needing a separate backend.
 > 
 > **Timeline:** Needed for hackathon demo (Feb 15, 2026)
 

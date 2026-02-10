@@ -7,7 +7,7 @@
 ## Next Steps
 1. Implement the actual Fiber.shop API integration
    - Review the Fiber.shop API documentation
-   - Fetch product data based on search queries
+   - FiberAgent product data based on search queries
    - Design a caching mechanism to optimize performance
    - Format the product details in a clean, structured way
 

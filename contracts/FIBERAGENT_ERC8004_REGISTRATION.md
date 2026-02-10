@@ -1,4 +1,4 @@
-# Fetch ERC-8004 Registration Plan
+# FiberAgent ERC-8004 Registration Plan
 
 **Status:** Ready to deploy on Monad mainnet  
 **Timeline:** Feb 6-7 (registration) + Feb 8-15 (reputation updates)
@@ -23,7 +23,7 @@ Save this as `fetch-agent-card.json`:
       "type": "HTTP",
       "url": "https://fetch-api.example.com/api/agent/search",
       "method": "GET",
-      "description": "Query Fetch for personalized product deals",
+      "description": "Query FiberAgent for personalized product deals",
       "parameters": {
         "wallet": "wallet address (string)",
         "keywords": "search query (string)",
@@ -147,7 +147,7 @@ async function registerFetch() {
   const cardURI = "ipfs://QmXxxx..." || "https://fetch.../card.json";
   const fetchWallet = process.env.FETCH_WALLET_ADDRESS;
   
-  console.log("📝 Registering Fetch on Identity Registry...");
+  console.log("📝 Registering FiberAgent on Identity Registry...");
   console.log("  Card URI:", cardURI);
   console.log("  Wallet:", fetchWallet);
   
@@ -160,7 +160,7 @@ async function registerFetch() {
   
   // Extract token ID from event
   const event = receipt.logs[0]; // Or parse properly
-  console.log("✅ Fetch registered! Agent token ID:", event);
+  console.log("✅ FiberAgent registered! Agent token ID:", event);
   
   return event; // token_id
 }
@@ -251,7 +251,7 @@ async function submitReputationFeedback(stats) {
     )
   );
   
-  console.log("📤 Submitting Fetch reputation to ERC-8004...");
+  console.log("📤 Submitting FiberAgent reputation to ERC-8004...");
   console.log("  Token ID:", process.env.FETCH_TOKEN_ID);
   console.log("  Conversion Rate:", stats.conversionRate);
   console.log("  Avg Response Time:", stats.avgResponseTime, "ms");
@@ -333,7 +333,7 @@ const registry = new ethers.Contract(
 const agentCard = await registry.tokenURI(FETCH_TOKEN_ID);
 console.log("Agent Card URI:", agentCard);
 
-// Fetch and parse the card JSON
+// FiberAgent and parse the card JSON
 const response = await fetch(agentCard.replace('ipfs://', 'https://ipfs.io/ipfs/'));
 const card = await response.json();
 console.log("Agent Name:", card.name);
@@ -348,7 +348,7 @@ console.log("Endpoints:", card.endpoints);
 |------|------|--------|
 | Feb 6 | Prepare agent card JSON | TODO |
 | Feb 6 | Upload to IPFS | TODO |
-| Feb 7 | Register Fetch on Identity Registry (mint ERC-721) | TODO |
+| Feb 7 | Register FiberAgent on Identity Registry (mint ERC-721) | TODO |
 | Feb 7 | Save token ID + update .env | TODO |
 | Feb 8+ | Start submitting reputation feedback after purchases | TODO |
 | Feb 15 | Judges can verify Fetch's on-chain reputation | TODO |
@@ -358,7 +358,7 @@ console.log("Endpoints:", card.endpoints);
 ## Key Points
 
 ✅ **ERC-8004 is already deployed** on Monad mainnet (no need to deploy contracts)  
-✅ **Fetch gets permanent, verifiable identity** (ERC-721 token)  
+✅ **FiberAgent gets permanent, verifiable identity** (ERC-721 token)  
 ✅ **Reputation builds live** during hackathon (immutable feedback)  
 ✅ **Other agents can discover Fetch** via registries (8004scan.io, agentscan.info)  
 ✅ **Judges can verify everything on-chain** before awarding prizes  
@@ -367,10 +367,10 @@ console.log("Endpoints:", card.endpoints);
 
 ## Questions for Laurent
 
-1. **Fetch Monad Mainnet Wallet:** What's the wallet address? (or should I create one?)
+1. **FiberAgent Monad Mainnet Wallet:** What's the wallet address? (or should I create one?)
 2. **Private Key:** Where do we store FETCH_PRIVATE_KEY safely?
 3. **Agent Card Hosting:** IPFS or web server?
-4. **Logo/Branding:** Any PNG for Fetch logo to include in card?
+4. **Logo/Branding:** Any PNG for FiberAgent logo to include in card?
 5. **API Endpoint URL:** What's the production endpoint? (or localhost:5000 for demo?)
 
-Once you answer these, I can **execute registration on Feb 7** and have Fetch live on Monad mainnet. 🚀
+Once you answer these, I can **execute registration on Feb 7** and have FiberAgent live on Monad mainnet. 🚀

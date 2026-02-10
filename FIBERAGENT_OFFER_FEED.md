@@ -1,4 +1,4 @@
-# Fetch Offer Feed System
+# FiberAgent Offer Feed System
 
 **Purpose:** Real-time offer catalog for social media agents to query and post deals  
 **Status:** Scaffolding complete | Ready for integration  
@@ -10,7 +10,7 @@
 
 ```json
 {
-  "offer_id": "fetch_123456",
+  "offer_id": "fiberagent_123456",
   "merchant": "Nike",
   "category": "fitness",
   "product": "Air Max Shoes",

@@ -1,7 +1,7 @@
-# Fetch Hackathon Deployment Plan
+# FiberAgent Hackathon Deployment Plan
 ## Feb 6–15, 2026 | Monad Blockchain
 
-**Project:** Fetch (Agent-Powered Behavioral Intelligence Shopping)  
+**Project:** FiberAgent (Agent-Powered Behavioral Intelligence Shopping)  
 **Location:** `/home/nuc/.openclaw/workspace-fiber/fiber-shop-landing`  
 **Track:** Agent Track (No Token)  
 **White Paper:** See `memory/fetch-whitepaper.md`
@@ -14,7 +14,7 @@
 *Goal: Blockchain setup, agent identity, basic query endpoint*
 
 #### **Feb 6 (Thursday)**
-**Status update from system:** Rebranded OpenShop → Fetch ✅  
+**Status update from system:** Rebranded OpenShop → FiberAgent ✅  
 **Resources:** ERC-8004 spec found at https://docs.monad.xyz/guides/erc-8004-guide
 
 **Tasks:**
@@ -24,7 +24,7 @@
   - Store in `.env`: `FETCH_WALLET=0x...`
 
 - [ ] **ERC-8004 Registration on Monad Mainnet**
-  - **Identity Registry** (0x8004A169FB4a3325136EB29fA0ceB6D2e539a432): Register Fetch as agent
+  - **Identity Registry** (0x8004A169FB4a3325136EB29fA0ceB6D2e539a432): Register FiberAgent as agent
     - Create agent card JSON (name, description, endpoints, categories)
     - Upload to IPFS (or web server)
     - Mint ERC-721 token via Identity Registry contract
@@ -69,7 +69,7 @@
   - Record Fetch's token ID from transaction receipt
   - Update `.env`: `FETCH_TOKEN_ID=...`
   - Verify registration on 8004scan.io or Monad Vision
-  - **Deliverable:** Fetch registered on Monad mainnet with verified token ID
+  - **Deliverable:** FiberAgent registered on Monad mainnet with verified token ID
 
 - [ ] **Basic Search Endpoint**
   - Create `GET /api/agent/search?wallet=0x...&keywords=...`
@@ -78,7 +78,7 @@
   - Response format:
     ```json
     {
-      "agent_id": "fetch-agent-001",
+      "agent_id": "fiberagent-agent-001",
       "wallet": "0x...",
       "query": "running shoes",
       "results": [
@@ -112,7 +112,7 @@
   - Test with sample wallet address
   - Update demo frontend to call real endpoints instead of hardcoded data
 
-**Deliverable:** Fetch registered on Monad mainnet (ERC-8004) + two functional API endpoints
+**Deliverable:** FiberAgent registered on Monad mainnet (ERC-8004) + two functional API endpoints
 
 ---
 
@@ -231,7 +231,7 @@
 
 - [ ] **MON Spot Price Integration**
   - Create `src/services/monPrice.js`
-  - Fetch current MON/USD spot price (from DEX or API)
+  - FiberAgent current MON/USD spot price (from DEX or API)
   - Convert kickback amount to MON: `amount_usd / spot_price`
   - Example: $0.72 → 0.72 / $0.12 = 6 MON (if MON = $0.12)
   - Store spot price at time of purchase for audit
@@ -274,7 +274,7 @@
   - Response:
     ```json
     {
-      "agent_id": "fetch-agent-001",
+      "agent_id": "fiberagent-agent-001",
       "conversion_rate": 0.87,
       "avg_response_time_ms": 45,
       "total_queries": 342,
@@ -350,7 +350,7 @@
 #### **Feb 13 (Thursday)**
 **Tasks:**
 
-- [ ] **Fetch Persona Tuning**
+- [ ] **FiberAgent Persona Tuning**
   - Review tone examples from white paper (Section 3)
   - Update all API response messages to reflect Fetch's "Ari Gold" personality
   - Examples:
@@ -362,8 +362,8 @@
 - [ ] **Demo Page Redesign**
   - Update React demo page to showcase end-to-end flow:
     1. Agent A registers as Founding Agent → 2x kickback visual
-    2. Agent A queries Fetch with wallet 0xABC for "running shoes"
-    3. Fetch returns personalized result (behavioral boost explanation)
+    2. Agent A queries FiberAgent with wallet 0xABC for "running shoes"
+    3. FiberAgent returns personalized result (behavioral boost explanation)
     4. User completes purchase → webhook fired
     5. Kickback calculated + sent to Agent A
     6. Reputation updated on-chain
@@ -383,7 +383,7 @@
       -H "Content-Type: application/json" \
       -d '{"agent_id": "judge-agent-1", "agent_name": "Judge Test", "wallet": "0xJudge...", "is_founding_agent": true}'
     
-    # Query Fetch
+    # Query FiberAgent
     curl -X GET "http://fetch-api.local/api/agent/search?wallet=0x123&keywords=running+shoes"
     
     # Check reputation
@@ -395,7 +395,7 @@
 
 - [ ] **Architecture Diagram**
   - Create visual in `docs/ARCHITECTURE.md`:
-    - Calling Agent → Fetch → FP Engine + On-Chain Signals + Product Search + Code Vault → Personalized Response
+    - Calling Agent → FiberAgent → FP Engine + On-Chain Signals + Product Search + Code Vault → Personalized Response
     - Include flow for: purchase → webhook → kickback → reputation → gossip
   - Use ASCII or external diagram tool
 
@@ -427,7 +427,7 @@
 
 - [ ] **Demo Script (For Video)**
   - Write 2-3 minute script walking judges through:
-    1. "This is Fetch. Here's the problem we solve..." (15 sec)
+    1. "This is FiberAgent. Here's the problem we solve..." (15 sec)
     2. "Agent A registers here, gets 2x earnings as Founding Agent..." (20 sec)
     3. "Agent A queries for 'running shoes' for wallet 0xABC..." (10 sec)
     4. "See the behavioral personalization? FP tags recognize this wallet as a runner, boosts to 12% cashback..." (20 sec)
@@ -516,7 +516,7 @@
     - Demo video URL: YouTube link
     - Written description (500–800 words):
       - Problem: AI agents are blind to behavioral data
-      - Solution: Fetch provides behavioral intelligence layer
+      - Solution: FiberAgent provides behavioral intelligence layer
       - FP personalization: on-chain + off-chain data fusion
       - ERC-8004 trust: on-chain reputation registry
       - Monad usage: sub-second finality, low gas, high throughput
@@ -574,7 +574,7 @@
 - ✅ ERC-8004 reputation feedback
 - ✅ Discount code vault
 - ✅ Gossip feed with 5+ trending insights
-- ✅ Fetch persona consistent across responses
+- ✅ FiberAgent persona consistent across responses
 
 ### Demo Excellence (Nice to Have)
 - ✅ Working Twitter bot posting insights
@@ -628,11 +628,11 @@
 ## Questions for Laurent / Team
 
 ### ERC-8004 / Monad Mainnet (CRITICAL)
-1. **Fetch Monad Mainnet Wallet:** What's the wallet address we should use for ERC-8004 registration?
+1. **FiberAgent Monad Mainnet Wallet:** What's the wallet address we should use for ERC-8004 registration?
    - Or should I create a new one?
 2. **Private Key Storage:** Where/how do we securely store FETCH_PRIVATE_KEY?
    - In `.env.example`? Vault? KMS?
-3. **Agent Card Hosting:** IPFS or web server for the Fetch agent card JSON?
+3. **Agent Card Hosting:** IPFS or web server for the FiberAgent agent card JSON?
    - Preferred: IPFS via pinata.cloud?
 4. **Production API Endpoint:** What URL do we register on ERC-8004 Identity Registry?
    - Example: `https://fetch-api.example.com/api/agent/search`?
@@ -640,10 +640,10 @@
 
 ### API & Infrastructure
 5. **Wildfire API:** Do we have real API keys, or mock entirely for hackathon?
-6. **Logo/Branding:** Any PNG for Fetch logo to include in agent card?
+6. **Logo/Branding:** Any PNG for FiberAgent logo to include in agent card?
 
 ### Project Management
-7. **Twitter account:** Should Fetch auto-post trending insights to X/Twitter?
+7. **Twitter account:** Should FiberAgent auto-post trending insights to X/Twitter?
 8. **Repository visibility:** Public from start, or private until Feb 15 submission?
 9. **Database:** Postgres (recommended) or SQLite (simpler)?
 10. **Video recording:** Who's doing the demo video, and what's the recording setup?
@@ -661,7 +661,7 @@
 - **Previous Codebase:** `fiber-shop-landing/` (baseline for UI/backend structure)
 
 ### Key Contract Addresses (Monad Mainnet)
-- **Identity Registry:** `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` (register Fetch as agent)
+- **Identity Registry:** `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432` (register FiberAgent as agent)
 - **Reputation Registry:** `0x8004BAa17C55a88189AE136b182e5fdA19dE9b63` (submit feedback after purchases)
 - **Validation Registry:** Coming soon
 

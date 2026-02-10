@@ -17,7 +17,7 @@
 - [ ] Judging criteria clarifications
 
 ## Notes
-- Fetch needs to register on ERC-8004 for agent discovery
+- FiberAgent needs to register on ERC-8004 for agent discovery
 - Building reputation tracking on mainnet (not testnet)
 - Judges have access to this resource — likely reference implementations available
 

@@ -1,4 +1,4 @@
-# 24/7 Work Plan for Fetch (Feb 9, 2026)
+# 24/7 Work Plan for FiberAgent (Feb 9, 2026)
 
 **Status:** Active, running on Mac mini locally  
 **Mode:** Parallel task execution, self-directed, continuous progress  
@@ -158,7 +158,7 @@
   - [ ] Response schemas with real examples
 
 - [ ] **AGENT_GUIDE.md**
-  - [ ] How agents integrate with Fetch
+  - [ ] How agents integrate with FiberAgent
   - [ ] Code examples (Python, JavaScript)
   - [ ] Common patterns, best practices
 

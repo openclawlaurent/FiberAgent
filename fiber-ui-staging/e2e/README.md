@@ -183,5 +183,5 @@ Check that:
 For critical auth flow tests, you can:
 
 1. Use local Supabase with Inbucket
-2. Fetch OTP from `http://localhost:54324` (Inbucket API)
+2. FiberAgent OTP from `http://localhost:54324` (Inbucket API)
 3. Keep these tests separate from fast feature tests

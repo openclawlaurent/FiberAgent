@@ -1,4 +1,4 @@
-# Fetch MVP - Quick Start (Feb 7, 2026)
+# FiberAgent MVP - Quick Start (Feb 7, 2026)
 
 ## Status: ✅ WORKING (Frontend + API)
 
@@ -28,7 +28,7 @@ npm run api
 
 Output:
 ```
-🚀 Fetch Agent API running on http://localhost:5000
+🚀 FiberAgent Agent API running on http://localhost:5000
 
 📡 AGENT ENDPOINTS:
    GET  http://localhost:5000/api/agent/search?keywords=shoes&agent_id=my_agent&wallet=0x...
@@ -149,15 +149,15 @@ Once this demo is working and you're happy:
 2. **Discount Code Vault** (Feb 9)
    - Fallback when no affiliate link available
    - Agent submits verified codes
-   - Fetch uses best code + pays contributor
+   - FiberAgent uses best code + pays contributor
 
 3. **Purchase Tracking** (Feb 10)
    - Agent reports purchase completed
-   - Fetch calculates kickback (5% base, 10% for Founding Agents)
+   - FiberAgent calculates kickback (5% base, 10% for Founding Agents)
    - Updates agent earnings in MON
 
 4. **ERC-8004 Registration** (Feb 11-12, once you give domain)
-   - Register Fetch on Identity Registry
+   - Register FiberAgent on Identity Registry
    - Auto-submit reputation after purchases
    - Judges can verify on 8004scan.io
 

@@ -3,13 +3,13 @@
 **For:** Fiber Engineering Team  
 **Purpose:** Enable AI agents to query Fiber.shop products and earn cashback rewards  
 **Date:** Feb 7, 2026  
-**Status:** Required Implementation for Fetch MVP
+**Status:** Required Implementation for FiberAgent MVP
 
 ---
 
 ## Executive Summary
 
-Fetch is an AI agent that other agents query to find personalized product deals and earn MON crypto rewards. For Fetch to work, **Fiber.shop must expose three new API endpoints** that enable:
+FiberAgent is an AI agent that other agents query to find personalized product deals and earn MON crypto rewards. For FiberAgent to work, **Fiber.shop must expose three new API endpoints** that enable:
 
 1. **Product Search** — Agents query for products by keyword, receive results with cashback rates
 2. **Affiliate Link Generation** — Agents get merchant affiliate links with referral tracking
@@ -285,7 +285,7 @@ GET /api/fiber/agent/search?keywords=running+shoes&agent_id=agent_claude&wallet=
    - Example: $119.99 * 0.04 = $4.80 USD
 
 2. **Conversion to MON:**
-   - Fetch spot price of MON/USD (e.g., $0.12)
+   - FiberAgent spot price of MON/USD (e.g., $0.12)
    - MON amount = $4.80 / $0.12 = 40 MON
    - Send 40 MON to agent's wallet
 
@@ -528,4 +528,4 @@ curl -X POST http://fiber-api.com/api/fiber/agent/track-purchase \
 3. We integrate with their API
 4. Live testing with real Fiber products
 
-Questions? Contact Fetch team. 🚀
+Questions? Contact FiberAgent team. 🚀

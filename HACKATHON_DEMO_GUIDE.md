@@ -1,7 +1,7 @@
 # Hackathon Demo Guide
 
 **For:** Moltiverse Hackathon Judges  
-**Project:** Fetch — AI Behavioral Intelligence for Agent-to-Agent Commerce  
+**Project:** FiberAgent — AI Behavioral Intelligence for Agent-to-Agent Commerce  
 **Demo Duration:** 5-10 minutes  
 **Last Updated:** 2026-02-09 21:02 GMT+1
 
@@ -11,9 +11,9 @@
 
 **Problem:** AI agents exist in silos. They can't help users buy things because they don't know about products, merchants, or cashback opportunities. Users get bad deals because there's no personalization.
 
-**Solution:** Fetch is a behavioral intelligence agent that:
-1. **Connects agents to products** - Any agent can query Fetch for products in any category
-2. **Provides personalized cashback** - Fetch analyzes on-chain behavior to boost cashback 40-50%
+**Solution:** FiberAgent is a behavioral intelligence agent that:
+1. **Connects agents to products** - Any agent can query FiberAgent for products in any category
+2. **Provides personalized cashback** - FiberAgent analyzes on-chain behavior to boost cashback 40-50%
 3. **Aligns economics** - Everyone gets paid: users earn cashback, agents get kickbacks, merchants get customers
 
 **Impact:** Agents can now say _"I found you the best deal on blue shoes at Adidas — 5% cashback + behavioral bonus"_
@@ -26,9 +26,9 @@
 
 Judges will see:
 1. **An agent asks Fetch:** "Find blue shoes for my user"
-2. **Fetch searches:** Returns products from real merchants (Adidas, Nike, Puma)
-3. **Fetch personalizes:** Detects user is a "fitness enthusiast" → boosts cashback
-4. **Fetch returns:** Product list with merchant, price, and 40-50% boosted cashback
+2. **FiberAgent searches:** Returns products from real merchants (Adidas, Nike, Puma)
+3. **FiberAgent personalizes:** Detects user is a "fitness enthusiast" → boosts cashback
+4. **FiberAgent returns:** Product list with merchant, price, and 40-50% boosted cashback
 5. **User earns rewards:** MON or SOL tokens, on-chain identity via ERC-8004
 
 ---
@@ -36,7 +36,7 @@ Judges will see:
 ## How to Run the Demo
 
 ### Prerequisites
-- Mac mini running Fetch (API on port 5000, frontend on 3000)
+- Mac mini running FiberAgent (API on port 5000, frontend on 3000)
 - Connected to same WiFi as judges' devices
 - `test-agent-flow.sh` script ready
 
@@ -55,7 +55,7 @@ cd /home/nuc/.openclaw/workspace-fiber
 - Agent appears on leaderboard
 
 **Timeline:**
-- 0:00 - Fetch health (running)
+- 0:00 - FiberAgent health (running)
 - 0:10 - New agent registers (shows wallet integration)
 - 0:20 - Search shoes (3 products returned)
 - 0:30 - Log purchases (earnings calculated)
@@ -160,7 +160,7 @@ POST /api/agent/track-purchase { agent_id, product_id, purchase_amount }
 > - They can't negotiate cashback
 > - They have no way to get rewarded
 >
-> Fetch solves all three. Now agents can say: _'I found your best deal and I'm getting paid for helping you find it.'_ That's aligned incentives."
+> FiberAgent solves all three. Now agents can say: _'I found your best deal and I'm getting paid for helping you find it.'_ That's aligned incentives."
 
 ### The Technical Beauty
 
@@ -246,7 +246,7 @@ Everything is transparent and blockchain-settled."
 ## What Judges Need to Know
 
 ### The Vision
-- Fetch is the shopping layer for AI agents
+- FiberAgent is the shopping layer for AI agents
 - Agents go from "I can't help you buy things" to "I found your best deal and I'm getting paid"
 - This works on any blockchain (we're showing Monad, but design is multi-chain)
 
@@ -277,7 +277,7 @@ Before judges arrive:
 - [ ] Frontend running on port 3000 (`npm start`)
 - [ ] Test script ready: `./test-agent-flow.sh`
 - [ ] Network connection stable (judges' WiFi access working)
-- [ ] Fetch database has sample data (verify: 7+ agents, 31+ purchases)
+- [ ] FiberAgent database has sample data (verify: 7+ agents, 31+ purchases)
 - [ ] Leaderboard page loads without error
 - [ ] Stats dashboard responsive
 
@@ -293,7 +293,7 @@ curl http://localhost:3000/demo
 ## The Narrative Arc
 
 **Setup (1 min):**
-> "AI agents are amazing, but they can't help users find good deals. Fetch bridges that gap."
+> "AI agents are amazing, but they can't help users find good deals. FiberAgent bridges that gap."
 
 **Demonstration (5 min):**
 > "Let me show you: A brand-new agent discovers Fetch, registers in seconds, searches for products, logs a purchase, and starts earning rewards."
@@ -319,7 +319,7 @@ Judges should leave thinking:
 
 | Time | What's Happening |
 |------|------------------|
-| 0:00 | Introduction to Fetch |
+| 0:00 | Introduction to FiberAgent |
 | 0:30 | Show automated test flow (`./test-agent-flow.sh`) |
 | 2:00 | Show interactive demo (web UI + agent registration) |
 | 4:00 | Show leaderboard, earnings, on-chain data |

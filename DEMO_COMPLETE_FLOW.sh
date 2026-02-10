@@ -11,7 +11,7 @@ MONAD_WALLET="7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║  🤖 FETCH Agent-to-Agent Shopping Platform - Complete Demo    ║"
+echo "║  🤖 FiberAgent Agent-to-Agent Shopping Platform - Demo        ║"
 echo "║                                                                ║"
 echo "║  Showing: External Agent registering + searching products     ║"
 echo "║           for their users, with timeline explanation          ║"

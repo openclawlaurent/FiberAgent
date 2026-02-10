@@ -1,7 +1,7 @@
-# Fetch API Documentation for Social Media Agent
+# FiberAgent API Documentation for Social Media Agent
 
 **For:** Social Media Colleague  
-**Purpose:** Integrate Fetch offer selection into @fiber_shop Twitter bot  
+**Purpose:** Integrate FiberAgent offer selection into @fiber_shop Twitter bot  
 **Last Updated:** 2026-02-09 21:58 GMT+1  
 **Status:** MVP Ready (Phase 1: Waitlist) | Phase 2 (Live App) ready for deployment
 
@@ -9,7 +9,7 @@
 
 ## Quick Start
 
-Fetch is the **offer intelligence layer** for Fiber. Your Twitter bot queries Fetch to:
+FiberAgent is the **offer intelligence layer** for Fiber. Your Twitter bot queries FiberAgent to:
 1. Search for merchant offers by context (category, token community, ecosystem)
 2. Get top cashback rates ranked by percentage
 3. Build contextual CTAs with @mentions
@@ -128,7 +128,7 @@ curl "http://192.168.1.39:5000/api/agent/search?keywords=gaming&ecosystem=monad&
 
 **Endpoint:** `POST /api/agent/register`
 
-**Purpose:** Register your Twitter bot as a Fetch agent, get analytics tracking, enable on-chain reputation.
+**Purpose:** Register your Twitter bot as a FiberAgent agent, get analytics tracking, enable on-chain reputation.
 
 **Request Body:**
 
@@ -283,7 +283,7 @@ curl -H "Authorization: Bearer fk_live_abcd1234efgh5678ijkl9012" \
 
 ## Token Rotation Integration
 
-Fetch maintains the canonical token list. When you query an offer, the response includes:
+FiberAgent maintains the canonical token list. When you query an offer, the response includes:
 
 ```json
 {
@@ -298,7 +298,7 @@ Fetch maintains the canonical token list. When you query an offer, the response 
 
 **How to use in your bot:**
 
-1. Query Fetch for category (e.g., `fitness`)
+1. Query FiberAgent for category (e.g., `fitness`)
 2. Receive top offer with `recommended_token`
 3. If conversation context matches a token, use that instead
 4. Otherwise, randomly select from `alternative_tokens`
@@ -335,7 +335,7 @@ Fetch maintains the canonical token list. When you query an offer, the response 
 **Deduplication Window:** 24 hours per offer  
 **Max Mentions Per Offer:** 1 per 24h window (tracked by `offer_id`)
 
-**Fetch automatically applies penalties:**
+**FiberAgent automatically applies penalties:**
 - Same offer within 24h → dedup_penalty applied to ranking
 - Same token within 1h → suggest alternative token
 - Max 5 same-merchant offers in rotation
@@ -344,7 +344,7 @@ Fetch maintains the canonical token list. When you query an offer, the response 
 
 ## Behavioral Boost Logic
 
-When you include a `wallet` parameter, Fetch analyzes on-chain signals:
+When you include a `wallet` parameter, FiberAgent analyzes on-chain signals:
 
 ```
 GET /api/agent/search?keywords=fitness&wallet=0x123...
@@ -398,7 +398,7 @@ This boost applies automatically to matching offers. Example:
 - [ ] Parse response, extract `top_offer` and `recommended_token`
 - [ ] Log promotion with `/api/agent/offer-promoted` (for dedup + earnings)
 - [ ] Build CTA: `Earn {%} at @{merchant} in ${token} → {url}`
-- [ ] Respect 24h dedup window (Fetch enforces, but good to track locally)
+- [ ] Respect 24h dedup window (FiberAgent enforces, but good to track locally)
 - [ ] Weekly: Check `/api/agent/earnings/{agent_id}` for analytics
 
 ---

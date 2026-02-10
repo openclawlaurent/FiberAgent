@@ -1,6 +1,6 @@
-# Fetch White Paper - Moltiverse Hackathon
+# FiberAgent White Paper - Moltiverse Hackathon
 
-**Document:** Fetch by Fiber Moltiverse Hackathon Scope Track  
+**Document:** FiberAgent by Fiber Moltiverse Hackathon Scope Track  
 **Version:** 3.3 | February 6, 2026  
 **Status:** Internal Team Review  
 **Timeline:** Feb 6–15, 2026  
@@ -9,7 +9,7 @@
 ---
 
 ## One-Liner
-Fetch is an AI shopping agent that other agents query for personalized deals and behavioral intelligence: powered by on-chain activity and real-world purchase data, with everyone in the chain getting paid.
+FiberAgent is an AI shopping agent that other agents query for personalized deals and behavioral intelligence: powered by on-chain activity and real-world purchase data, with everyone in the chain getting paid.
 
 **Tagline:** "Have your agent call my agent."
 
@@ -24,18 +24,18 @@ AI agents will handle shopping, but today's agents are blind:
 - Can't see who the user is on-chain
 - Zero visibility into real-world purchases
 
-### The Solution: Fetch
-Fetch is a **behavioral intelligence agent** built by Fiber that operates like a Hollywood agent:
+### The Solution: FiberAgent
+FiberAgent is a **behavioral intelligence agent** built by Fiber that operates like a Hollywood agent:
 - Negotiates the best deal
 - Works its network
 - Takes a cut
 
 **Flow:**
 1. Agent A queries Fetch: "Find running shoe deals for wallet 0xABC..."
-2. Fetch checks wallet's **behavioral history**:
+2. FiberAgent checks wallet's **behavioral history**:
    - On-chain signals: token holdings, community membership
    - Off-chain data: real ecommerce purchases via merchant network
-3. Fetch returns **personalized offer**: Best deal for that user + boosted MON cashback
+3. FiberAgent returns **personalized offer**: Best deal for that user + boosted MON cashback
 4. If no direct affiliate link, checks **discount code vault** (curated, verified promo codes)
 5. User buys through referral link
 6. Everyone gets paid:
@@ -63,14 +63,14 @@ Fetch is a **behavioral intelligence agent** built by Fiber that operates like a
 - For merchants NOT in Wildfire's affiliate network
 - Curated collection of verified promo codes from agents and users
 - Validated for accuracy, recently tested
-- Fetch takes facilitation fee + shares cut with code submitter
-- Ensures Fetch always has something valuable to offer
+- FiberAgent takes facilitation fee + shares cut with code submitter
+- Ensures FiberAgent always has something valuable to offer
 
 ### 4. Agent-to-Agent Economics
 - Not one agent working alone — it's a **protocol with financial skin in the game**
 - Calling agents earn kickbacks
 - Code contributors earn fees
-- Fetch earns commissions
+- FiberAgent earns commissions
 - Users get better deals + stacked discounts
 - **Everyone's incentives align**
 
@@ -80,9 +80,9 @@ Fetch is a **behavioral intelligence agent** built by Fiber that operates like a
 
 ### Agent Gossip Network → Public Intelligence Feed
 **What it is:**
-- After successful purchases, Fetch aggregates **anonymized behavioral insights**
+- After successful purchases, FiberAgent aggregates **anonymized behavioral insights**
 - Broadcasts to subscribed agents: "Fitness intent trending 3.2x in BONK community this week — high conversion on premium running gear"
-- Fetch tweets select insights publicly
+- FiberAgent tweets select insights publicly
 
 **Why it's powerful:**
 - This consumer intelligence competes with Nielsen/Circana (firms charge $$$)
@@ -95,7 +95,7 @@ Fetch is a **behavioral intelligence agent** built by Fiber that operates like a
 
 ### Query Staking
 **Mechanism:**
-- Calling agents stake nominal MON when querying Fetch
+- Calling agents stake nominal MON when querying FiberAgent
 - If recommendation leads to purchase → stake returned + kickback
 - If spam queries → stake lost
 
@@ -141,7 +141,7 @@ Gamified bootstrapping for code vault quality:
 Validation: Codes must pass before bounty payout (keeps vault clean)
 
 ### Seeded Context from Public On-Chain Data
-While FP data isn't available on Monad hackathon environment, Fetch can read:
+While FP data isn't available on Monad hackathon environment, FiberAgent can read:
 - Token holdings, NFT ownership, DeFi positions, transaction frequency
 - Enough to demonstrate personalization concept from first query
 
@@ -150,7 +150,7 @@ While FP data isn't available on Monad hackathon environment, Fetch can read:
 ## Core Features (MVP Scope)
 
 ### 5.1 Agent Registration
-- Fetch operates from dedicated Monad wallet
+- FiberAgent operates from dedicated Monad wallet
 - Registers on ERC-8004 Identity Registry (publishes API endpoint in on-chain metadata)
 - Founding Agent flag stored for permanent kickback multiplier
 
@@ -195,7 +195,7 @@ Scores halve roughly every 2 months
 - Payouts in MON (pegged to spot price at purchase completion)
 
 ### 5.6 On-Chain Reputation (ERC-8004)
-- After every successful purchase, Fetch posts feedback to Reputation Registry
+- After every successful purchase, FiberAgent posts feedback to Reputation Registry
 - Other agents can check Fetch's track record: conversion rate, accuracy, speed
 - Calling agents accumulate reputation for bringing quality traffic
 
@@ -222,7 +222,7 @@ Scores halve roughly every 2 months
 ```
 Calling Agent 
   → GET /api/agent/search 
-  → Fetch Agent
+  → FiberAgent Agent
     ↓
     FP Lookup (Postgres) 
     + On-chain Signal Read (Monad RPC)
@@ -270,7 +270,7 @@ Calling Agent
 | Feb 6–7 | **Foundation** | Monad wallet, ERC-8004 registration, basic search endpoint, Founding Agent registration |
 | Feb 8–10 | **Intelligence** | FP tags, on-chain signal reading, behavioral boost logic, Wildfire/ES product search, discount code vault |
 | Feb 11–12 | **Economics** | Kickback system (% of cashback at MON spot), code contributor fees, query staking, reputation feedback, gossip feed |
-| Feb 13–14 | **Polish** | Demo page, Fetch persona tuning, bounty quest examples, documentation, repo cleanup |
+| Feb 13–14 | **Polish** | Demo page, FiberAgent persona tuning, bounty quest examples, documentation, repo cleanup |
 | Feb 15 | **Submit** | Final submission before 23:59 ET |
 
 ---
@@ -298,7 +298,7 @@ Calling Agent
 4. **MON payout threshold:** Batch payouts or per-transaction? Tied to spot price
 5. **Query stake amount:** Nominal (~$0.01 equivalent) to deter spam without discouraging legit queries
 6. **Gossip data depth:** Community cohort trends, category velocity, conversion benchmarks — what metrics most compelling?
-7. **Fetch persona calibration:** Ari Gold meets "friend with hookup" — how much confidence/attitude?
+7. **FiberAgent persona calibration:** Ari Gold meets "friend with hookup" — how much confidence/attitude?
 8. **Twitter bot scope:** Automated posting or manual curation? (Automated more impressive for judges, adds dev scope)
 
 ---
@@ -308,7 +308,7 @@ Calling Agent
 ### Why This Hackathon Matters Beyond $10K
 - Judges: Haseeb Qureshi (Dragonfly GP), Frankie (Paradigm GP) — both Tier 1 VCs on Fiber's fundraising list
 - **Strong showing:**
-  - Gets Fiber/Fetch on their radar organically
+  - Gets Fiber/FiberAgent on their radar organically
   - Live Monad demo validates cross-chain expansion narrative
   - Strengthens conversation with Monad venture/ecosystem team
   - Produces working proof-of-concept for fundraising materials
@@ -320,8 +320,8 @@ Calling Agent
 - Hackathon gives optionality without commitment
 - Revisit post-hackathon with Greg
 
-### Fetch as Standalone Brand?
-- Worth discussing: "Fetch by Fiber" → eventually own product/brand?
+### FiberAgent as Standalone Brand?
+- Worth discussing: "FiberAgent by Fiber" → eventually own product/brand?
 - Agent-facing commerce intelligence layer (Fetch) vs. underlying behavioral intelligence protocol (Fiber) = distinct products/go-to-markets
 - Parking for now — focus on shipping hackathon
 

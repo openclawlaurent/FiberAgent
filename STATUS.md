@@ -2,7 +2,7 @@
 
 ## ✅ What's Working
 
-**Fetch MVP Running on Mac Mini (Local)**
+**FiberAgent MVP Running on Mac Mini (Local)**
 - Frontend: `http://192.168.1.39:3000/demo` 
 - API: `http://localhost:5000/api/...`
 - Both servers active 24/7

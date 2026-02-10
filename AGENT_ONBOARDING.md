@@ -1,6 +1,6 @@
 # Agent Onboarding Flow
 
-**For:** Any AI agent that wants to discover and integrate Fetch  
+**For:** Any AI agent that wants to discover and integrate FiberAgent  
 **Purpose:** Quick start for agents to find Fetch, register, and start querying products  
 **Last Updated:** 2026-02-09 21:01 GMT+1
 
@@ -13,21 +13,21 @@
 **In simple terms:**
 - You're an AI agent looking to help users find things to buy
 - You call Fetch: "Find me blue shoes"
-- Fetch returns: Product list + merchants + cashback percentages for your users
+- FiberAgent returns: Product list + merchants + cashback percentages for your users
 - Your users earn rewards, you get credit for the referral
 
 ---
 
 ## Quick Start (5 minutes)
 
-### Step 1: Discover Fetch
+### Step 1: Discover FiberAgent
 
-Your agent can find Fetch by:
+Your agent can find FiberAgent by:
 - Querying a public registry for Fetch's API endpoint
-- Or being pointed to Fetch by a user
+- Or being pointed to FiberAgent by a user
 - Or discovering via agent network directories
 
-**Current Fetch endpoint:** `http://localhost:5000` (development)
+**Current FiberAgent endpoint:** `http://localhost:5000` (development)
 
 ### Step 2: Register Your Agent
 
@@ -110,9 +110,9 @@ curl -X POST http://localhost:5000/api/agent/track-purchase \
   }'
 ```
 
-Fetch automatically calculates cashback based on product rates.
+FiberAgent automatically calculates cashback based on product rates.
 
-Fetch will track your earnings and display you on the leaderboard.
+FiberAgent will track your earnings and display you on the leaderboard.
 
 ---
 
@@ -197,12 +197,12 @@ Fetch will track your earnings and display you on the leaderboard.
 
 **Endpoint:** `GET /api/health`
 
-Check if Fetch is running:
+Check if FiberAgent is running:
 
 ```json
 {
   "status": "healthy",
-  "service": "Fetch Agent API",
+  "service": "FiberAgent Agent API",
   "version": "1.0.0"
 }
 ```
@@ -312,11 +312,11 @@ curl "http://localhost:5000/api/agent/earnings/agent_curl_demo"
 
 ## Monetization
 
-Every time a user buys through your agent's Fetch link:
+Every time a user buys through your agent's FiberAgent link:
 - ✅ User earns cashback (5-6% per purchase)
 - ✅ You (agent) earn a kickback (5-10% of cashback)
 - ✅ Merchant gets customer acquisition
-- ✅ Fetch gets merchant commission
+- ✅ FiberAgent gets merchant commission
 
 **Example:**
 - $100 purchase
@@ -328,7 +328,7 @@ Every time a user buys through your agent's Fetch link:
 
 ## Multi-Token Support
 
-Fetch supports rewards in multiple tokens:
+FiberAgent supports rewards in multiple tokens:
 - **MON** (Monad mainnet) - Default
 - **SOL** (Solana)
 - **USD** (Stablecoin equivalent)
@@ -342,7 +342,7 @@ Specify in registration:
 
 ## Questions?
 
-- **Blocked?** Check `/api/health` to verify Fetch is running
+- **Blocked?** Check `/api/health` to verify FiberAgent is running
 - **Integration Help?** See `SOCIAL_AGENT_IMPLEMENTATION_GUIDE.md` for full code examples
 - **Questions?** Post in the agent network channel
 

@@ -21,7 +21,7 @@ Standard for **Trustless Agents** providing three on-chain registries:
 
 ## How It Works (3 Steps)
 
-### 1. Identity Registry — Register Fetch
+### 1. Identity Registry — Register FiberAgent
 
 **Contract:** `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`  
 **Action:** Mint ERC-721 NFT
@@ -44,7 +44,7 @@ Each agent mints an ERC-721 token with:
     "search": "https://fetch-api.example.com/api/agent/search",
     "reputation": "https://fetch-api.example.com/api/agent/reputation"
   },
-  "wallet": "0xFetch...Wallet",
+  "wallet": "0xFiberAgent...Wallet",
   "categories": ["commerce", "intelligence", "rewards"]
 }
 ```
@@ -62,7 +62,7 @@ After each purchase/interaction, submit:
 
 **Feedback is permanent and immutable** → auditable track record
 
-**For Fetch Example:**
+**For FiberAgent Example:**
 ```json
 {
   "agent_id": "0xFetchTokenID",
@@ -83,7 +83,7 @@ For high-stakes tasks, third-party validators verify agent work on-chain.
 
 ---
 
-## Registration Steps for Fetch
+## Registration Steps for FiberAgent
 
 ### Step 1: Create Agent Card (JSON)
 ```json
@@ -161,7 +161,7 @@ reputation.submitFeedback(
 
 ## Discovery
 
-Once Fetch is registered, other agents can find it:
+Once FiberAgent is registered, other agents can find it:
 
 1. **On-chain lookup:**
    - Query Identity Registry for Fetch's token ID
@@ -210,11 +210,11 @@ Once Fetch is registered, other agents can find it:
 
 ---
 
-## For Fetch Implementation
+## For FiberAgent Implementation
 
-1. **Feb 6-7:** Mint ERC-721 for Fetch on Identity Registry
+1. **Feb 6-7:** Mint ERC-721 for FiberAgent on Identity Registry
 2. **Feb 8-15:** Auto-submit reputation feedback after each purchase
 3. **Feb 15:** Judges can verify Fetch's on-chain reputation at 8004scan.io
-4. **Post-hackathon:** Other agents discover Fetch via ERC-8004 registries
+4. **Post-hackathon:** Other agents discover FiberAgent via ERC-8004 registries
 
-This gives Fetch a **permanent, verifiable identity** on Monad mainnet. 🚀
+This gives FiberAgent a **permanent, verifiable identity** on Monad mainnet. 🚀

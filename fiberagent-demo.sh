@@ -7,7 +7,7 @@ FETCH_BASE="https://api.staging.fiber.shop/v1"
 DEMO_WALLET="7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU"
 
 echo "=========================================="
-echo "🤖 Fetch Agent Demo - Agent-to-Agent Shopping"
+echo "🤖 FiberAgent Demo - Agent-to-Agent Shopping"
 echo "=========================================="
 echo ""
 

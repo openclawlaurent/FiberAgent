@@ -1,4 +1,4 @@
-# Fetch Wallet Setup - Monad Mainnet
+# FiberAgent Wallet Setup - Monad Mainnet
 
 **Created:** Feb 6, 2026 21:35 GMT+1  
 **Status:** Awaiting Laurent to send MON for gas fees

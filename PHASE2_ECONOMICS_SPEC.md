@@ -2,7 +2,7 @@
 
 **Status:** 🚀 Ready to implement | Specification: v1.0  
 **Timeline:** Feb 9-10, 2026  
-**Owner:** Fetch Agent System  
+**Owner:** FiberAgent Agent System  
 
 ---
 
@@ -482,4 +482,4 @@ GET /api/leaderboard/stakes
 ---
 
 *Last Updated: 2026-02-09 22:15 GMT+1*  
-*Owner: Fetch Dev Team*
+*Owner: FiberAgent Dev Team*

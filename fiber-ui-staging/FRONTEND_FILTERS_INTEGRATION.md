@@ -55,7 +55,7 @@ This document describes the frontend integration of the database-driven merchant
 
 **Functions:**
 
-- `getDynamicMerchantSuggestions()` - Fetch categories from database
+- `getDynamicMerchantSuggestions()` - FiberAgent categories from database
 - `getCategoryIcons()` - Get category icons for display
 - `FALLBACK_MERCHANT_SUGGESTIONS` - Fallback data
 

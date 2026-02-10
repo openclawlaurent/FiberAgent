@@ -1,4 +1,4 @@
-# Task Management — Fetch + Fiber Social Agent
+# Task Management — FiberAgent + Fiber Social Agent
 
 **Status:** Active | Last Update: 2026-02-09 21:58 GMT+1  
 **Operating Mode:** 24/7 continuous work | 5-min cron checks | Never stop
@@ -7,8 +7,8 @@
 
 ## PRIORITY 1: Colleague Documentation (Social Media Agent)
 
-### Task 1.1: Create Fetch API Documentation for Social Media Colleague
-- [x] Document all Fetch endpoints (search, register, earnings, stats)
+### Task 1.1: Create FiberAgent API Documentation for Social Media Colleague
+- [x] Document all FiberAgent endpoints (search, register, earnings, stats)
 - [x] Explain offer selection engine integration points
 - [x] Provide auth/API key setup
 - [x] Show example requests/responses for offer queries
@@ -17,7 +17,7 @@
 - [ ] Location: `FETCH_API_FOR_SOCIAL_AGENT.md` (10.6KB)
 
 ### Task 1.2: Create Implementation Guide for Colleague
-- [x] How to query Fetch for contextual offers
+- [x] How to query FiberAgent for contextual offers
 - [x] Token rotation strategy pseudo-code
 - [x] @mention construction from offer data
 - [x] CTA template library
@@ -44,7 +44,7 @@
 
 ---
 
-## PRIORITY 3: Hackathon MVP (Agent → Fetch → Products)
+## PRIORITY 3: Hackathon MVP (Agent → FiberAgent → Products)
 
 ### Task 3.1: Verify Agent Search Endpoint Works
 - [x] Test: External agent calls `/api/agent/search?keywords=adidas`
@@ -53,7 +53,7 @@
 - [x] Test result: `curl http://localhost:5000/api/agent/search?keywords=adidas&agent_id=test_agent` → 3 products + 5%, 3%, 2% cashback
 
 ### Task 3.2: Create Agent Onboarding Flow
-- [x] Simple endpoint for external agents to discover Fetch
+- [x] Simple endpoint for external agents to discover FiberAgent
 - [x] Documentation on how agents register
 - [x] Return example search query
 - [x] Code examples (Python, Node.js, curl)
@@ -61,7 +61,7 @@
 - [ ] Location: `AGENT_ONBOARDING.md` (7.9KB)
 
 ### Task 3.3: Mock External Agent for Testing
-- [x] Create test agent script (bash/curl) that queries Fetch for products
+- [x] Create test agent script (bash/curl) that queries FiberAgent for products
 - [x] Simulate: Register → Search shoes → Log purchases → Check earnings
 - [x] Verify end-to-end ✅ (new agent earned $10.39 from 2 purchases)
 - [x] Fixed: `/api/agent/track-purchase` endpoint integration
@@ -94,8 +94,8 @@
 
 ## PRIORITY 5: Social Media Integration (Ready to Start)
 
-### Task 5.1: Integrate Fetch with Social Media Spec
-- [ ] Social bot queries Fetch for category-matched offers
+### Task 5.1: Integrate FiberAgent with Social Media Spec
+- [ ] Social bot queries FiberAgent for category-matched offers
 - [ ] Token rotation selects from offer data (Solana, Monad, etc.)
 - [ ] CTA generation with @mentions (merchant + token)
 - [ ] Status: **READY** (all prerequisites done)
@@ -126,7 +126,7 @@
 ## COMPLETED ✅
 
 ### Priority 1: Colleague Documentation
-- [x] Task 1.1: `FETCH_API_FOR_SOCIAL_AGENT.md` (10.6KB) - Complete Fetch API reference
+- [x] Task 1.1: `FETCH_API_FOR_SOCIAL_AGENT.md` (10.6KB) - Complete FiberAgent API reference
 - [x] Task 1.2: `SOCIAL_AGENT_IMPLEMENTATION_GUIDE.md` (14.9KB) - 9-step integration guide with code examples
 
 ### Priority 2: Task Management Infrastructure

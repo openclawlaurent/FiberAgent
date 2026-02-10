@@ -1,7 +1,7 @@
 # Social Media Agent Implementation Guide
 
 **For:** Social Media Colleague  
-**Purpose:** Step-by-step integration of Fetch offer engine into @fiber_shop Twitter bot  
+**Purpose:** Step-by-step integration of FiberAgent offer engine into @fiber_shop Twitter bot  
 **Prerequisites:** Read `FETCH_API_FOR_SOCIAL_AGENT.md` first  
 **Last Updated:** 2026-02-09 21:58 GMT+1
 
@@ -209,12 +209,12 @@ function detectContext(tweetText, replyToUserId = null) {
 
 ---
 
-### Step 3: Fetch Offer Query
+### Step 3: FiberAgent Offer Query
 
 ```javascript
 async function queryFetchForOffers(context, agentId) {
   /**
-   * Query Fetch API for offers matching context
+   * Query FiberAgent API for offers matching context
    * Returns ranked list by cashback %
    */
   
@@ -262,7 +262,7 @@ function selectToken(context, offers, tokenList) {
   }
   
   if (offers.top_offer && offers.top_offer.recommended_token) {
-    // Fetch recommends a token (based on context)
+    // FiberAgent recommends a token (based on context)
     return offers.top_offer.recommended_token;
   }
   
@@ -391,12 +391,12 @@ async function postQuoteTweet(tweetId, offer, cta = null) {
 
 ---
 
-### Step 8: Log Promotion to Fetch
+### Step 8: Log Promotion to FiberAgent
 
 ```javascript
 async function logOfferPromotion(offer, tweetId, context) {
   /**
-   * Tell Fetch about promotion:
+   * Tell FiberAgent about promotion:
    * - For dedup tracking
    * - For earnings calculation
    * - For analytics
@@ -445,7 +445,7 @@ async function engagementCycle() {
   /**
    * Runs every 45 minutes
    * 1. Scan recent tweets in Solana/Monad communities
-   * 2. Query Fetch for offers
+   * 2. Query FiberAgent for offers
    * 3. Post 3-5 replies + 1 QT
    */
   
@@ -467,7 +467,7 @@ async function engagementCycle() {
     // Detect context from tweet
     const context = detectContext(tweet.text);
     
-    // Query Fetch for offers
+    // Query FiberAgent for offers
     const offers = await queryFetchForOffers(context, process.env.FETCH_AGENT_ID);
     
     // Select token
@@ -482,7 +482,7 @@ async function engagementCycle() {
     // Post reply
     const replyTweetId = await postReply(tweet.id, tweet.text, offers.top_offer, cta);
     
-    // Log to Fetch
+    // Log to FiberAgent
     await logOfferPromotion(offers.top_offer, replyTweetId, context);
     
     repliesPosted++;
@@ -559,7 +559,7 @@ setInterval(getAnalytics, 24 * 60 * 60 * 1000);
 
 ## Deduplication Rules
 
-Fetch enforces 24-hour dedup per offer. Your bot should also track locally:
+FiberAgent enforces 24-hour dedup per offer. Your bot should also track locally:
 
 ```javascript
 const dedupWindow = {}; // { offer_id: timestamp }
