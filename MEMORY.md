@@ -38,26 +38,29 @@
 - `DEPLOYMENT_PLAN.md` — Day-by-day checklist for Feb 6-15 execution
 - `memory/wallet-setup.md` — Wallet address + security notes
 
-**Latest Progress (Feb 10 20:58 GMT+1):**
-- ✅ **AGENTS.md** - 9.1KB comprehensive agent onboarding guide
-  - Wallet setup (3 options)
-  - API reference (register, search, earnings, update)
-  - **Critical: 1-5 day Fiber Points timeline + 1-90 day crypto payout timeline**
-  - FAQ section addressing timeline concerns
-  - Earning strategies (volume, niche, reputation)
-- ✅ **DEMO_COMPLETE_FLOW.sh** - 9.1KB executable demo showing:
-  - External agent registration
-  - Product search (with real Fiber API responses)
-  - Timeline explanation (Days 0-90)
-  - Earnings check
-  - Earning strategies
-- ✅ **Fiber API Integration LIVE** - All 4 endpoints working:
-  - POST /v1/agent/register - Returns agent_id
-  - GET /v1/agent/search - Returns merchants + affiliate links + cashback rates
-  - GET /v1/agent/earnings/{agent_id} - Returns earnings + reputation
-  - PATCH /v1/agent/{agent_id} - Update wallet/name
-- ✅ Verified with real curl examples from Fiber
-- ✅ Committed to GitHub (fb176ac)
+**Latest Progress (Feb 10 22:30 GMT+1):**
+- ✅ **Complete FiberAgent Rebranding** - All "Fetch" → "FiberAgent" throughout codebase
+  - 27+ files updated
+  - All function names, variables, documentation changed
+  - Removed all `fetch.local` references
+- ✅ **Fiber API Integration VERIFIED** - All 8 endpoints confirmed working:
+  - POST /v1/agent/register
+  - GET /v1/agent/search
+  - GET /v1/agent/earnings/{agent_id}
+  - GET /v1/agent/stats/platform
+  - GET /v1/agent/stats/leaderboard
+  - GET /v1/agent/stats/trends
+  - GET /v1/agent/{agent_id}/stats
+  - GET /v1/agent/{agent_id}/merchants
+  - PATCH /v1/agent/{agent_id}
+- ✅ **Frontend Redesign** - Landing page now has interactive chat demo
+  - Users ask naturally: "I need rain shoes"
+  - FiberAgent converts to keywords and searches
+  - Shows real products + cashback + agent earnings
+- ✅ **All endpoints using real Fiber API** (https://api.staging.fiber.shop/v1)
+- ✅ **StatsDashboard component** ready for live Fiber stats
+- ✅ **Committed to GitHub** (fdc1412 + submodule update)
+- ✅ **Vercel auto-deploying now**
 
 **What's Ready:**
 - MVP is production-ready for demo
