@@ -3,9 +3,9 @@
 ## Active Projects
 
 ### Fetch (Moltiverse Hackathon) - Agent Track
-- **Goal:** AI shopping agent providing behavioral intelligence for other agents to query with personalized deals + crypto rewards
-- **Status:** 🚀 Phase 1 MVP COMPLETE | Phase 2 Ready | 5-minute task loop running | Documentation complete for judge demo (Feb 9 21:02)
-- **Location:** `/home/nuc/.openclaw/workspace-fiber/fiber-shop-landing` (monorepo: frontend + API)
+- **Goal:** Platform for external agents to help their users find products via Fiber. User's Agent → Fetch Agent → Fiber API. Agents earn cashback commissions. Built on ERC-8004 reputation.
+- **Status:** 🚀 Phase 1 MVP COMPLETE | Fiber API Integration LIVE | Agent-to-Agent Demo WORKING (Feb 10 20:35)
+- **Location:** `/Users/laurentsalou/.openclaw/workspace-fiber` (Mac mini deployment)
 - **Tech Stack:** Node.js/Express (API) + React (frontend) + SQLite (database), Monad blockchain, ERC-8004 contracts
 - **Timeline:** Feb 6-15, 2026 (9 days to submit)
 - **Key Constraints:** 

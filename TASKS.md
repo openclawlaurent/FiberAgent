@@ -157,17 +157,34 @@
 - Colleague has all documentation needed
 - API is stable and tested with personalization layer
 
-### Track 2: Frontend Analytics (Next Priority)
-- [ ] Responsive design testing
-- [ ] Analytics dashboard (`/stats` page)
-- [ ] Personalization insights UI
-- Estimated: 2-3 hours
+### Track 2: Frontend Analytics ✅ COMPLETE
+- [x] Analytics dashboard (`/stats` page) - Full StatisticsPage component live
+- [x] 6 KPI cards (agents, earnings, purchases, avg, searches, API calls)
+- [x] Top agents leaderboard with medals
+- [x] Full agents table with sorting
+- [x] Activity breakdown + health metrics
+- [x] Platform insights section
+- [x] Responsive design tested
+- Completed: 2026-02-09 22:12 GMT+1
 
-### Track 3: Phase 2 Economics (High Impact)
-- [ ] Query staking system (agents stake MON, get kickback)
-- [ ] Kickback calculation (5% base, 10% for Founding Agents)
-- [ ] ERC-8004 reputation submission
-- Estimated: 3-4 hours
+### Track 3: Phase 2 Economics (High Impact) - IN PROGRESS
+- [ ] Task 3.1: Query staking system design
+  - [ ] Endpoint: `POST /api/agent/create-stake` (agent_id, amount MON, query, product_intent)
+  - [ ] Stake validation (balance check, min/max bounds)
+  - [ ] SQLite schema: `agent_stakes` table
+  - [ ] Status: Ready to implement
+- [ ] Task 3.2: Kickback calculation engine
+  - [ ] Base kickback: 5% of product revenue
+  - [ ] Founding Agent bonus: +5% (10% total)
+  - [ ] Query staker bonus: +2% per MON staked (scales up to cap)
+  - [ ] Distribution logic: purchase → identify stakers → allocate funds
+  - [ ] Status: Design + implementation
+- [ ] Task 3.3: ERC-8004 reputation submission
+  - [ ] On-chain proof of stakes
+  - [ ] Monad contract interaction (0x790b405d466f7fddcee4be90d504eb56e3fedcae)
+  - [ ] Mint NFT badges for Founding Agents
+  - [ ] Status: Depends on Task 3.1 completion
+- Estimated: 3-4 hours | Estimated start: 2026-02-09 22:12 GMT+1
 
 ---
 
