@@ -38,7 +38,22 @@
 - `DEPLOYMENT_PLAN.md` — Day-by-day checklist for Feb 6-15 execution
 - `memory/wallet-setup.md` — Wallet address + security notes
 
-**Latest Progress (Feb 10 22:30 GMT+1):**
+**Latest Progress (Feb 11 12:43 GMT+1):**
+- ✅ **Fixed Affiliate Links** - Now properly redirect to merchants
+  - Fiber API returns incomplete wild.link URLs
+  - Created /api/redirect.js proxy (mimics Fiber's /r/w handler)
+  - Format: /api/redirect?agent_id=...&merchant_url=...
+  - Tracks referral click, then redirects to merchant
+  - DemoPage & AgentApiDemo updated to use new format
+- ✅ **Design Fixes**
+  - DemoPage CSS now uses Fiber's colors (#00d084 green)
+  - Light theme matching fiber.shop aesthetic
+  - High contrast, easy to read
+- ✅ **Removed Broken Backend Calls**
+  - StatisticsPage.js no longer calls localhost:5000
+  - Now uses Fiber API via proxy
+
+**Earlier Session (Feb 10 22:30 GMT+1):**
 - ✅ **Complete FiberAgent Rebranding** - All "Fetch" → "FiberAgent" throughout codebase
   - 27+ files updated
   - All function names, variables, documentation changed
