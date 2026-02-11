@@ -233,7 +233,24 @@ export default function AgentApiDemo() {
                   <p><strong>Cashback Rate:</strong> {selectedProduct.cashback.display}</p>
                   <div className="affiliate-link">
                     <p><strong>Affiliate Link:</strong></p>
-                    <code>{selectedProduct.affiliate_link}</code>
+                    <a 
+                      href={selectedProduct.affiliate_link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="affiliate-button"
+                      style={{
+                        display: 'inline-block',
+                        padding: '10px 16px',
+                        backgroundColor: '#00d084',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        borderRadius: '6px',
+                        fontWeight: 'bold',
+                        marginRight: '10px'
+                      }}
+                    >
+                      🛍️ Open Affiliate Link
+                    </a>
                     <button 
                       className="copy-btn"
                       onClick={() => {
@@ -243,6 +260,9 @@ export default function AgentApiDemo() {
                     >
                       📋 Copy Link
                     </button>
+                    <p style={{fontSize: '0.75rem', marginTop: '10px', color: '#999', wordBreak: 'break-all'}}>
+                      {selectedProduct.affiliate_link}
+                    </p>
                   </div>
                   <p className="highlight">⏰ Timeline: 1-5 days for Fiber Points → 90 days for crypto</p>
                 </div>
