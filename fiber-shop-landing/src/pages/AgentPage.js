@@ -5,30 +5,8 @@ import '../styles/AgentPage.css';
 export default function AgentPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
-  const [selectedBlockchain, setSelectedBlockchain] = useState('Monad');
   const [selectedToken, setSelectedToken] = useState('MON');
-
-  // Blockchain and token mapping
-  const blockchainTokens = {
-    'Solana': ['SOL', 'MF', 'AOL', 'USDC', 'BONK', 'USD1', 'VALOR', 'PENGU'],
-    'Monad': ['MON']
-  };
-
-  const chainOptions = ['Monad', 'Solana'];
-
-  // Get available tokens for selected blockchain
-  const getAvailableTokens = () => {
-    return blockchainTokens[selectedBlockchain] || [];
-  };
-
-  // Handle blockchain change
-  const handleBlockchainChange = (e) => {
-    const newBlockchain = e.target.value;
-    setSelectedBlockchain(newBlockchain);
-    // Set token to first available token for new blockchain
-    const availableTokens = blockchainTokens[newBlockchain];
-    setSelectedToken(availableTokens[0]);
-  };
+  const tokens = ['MON', 'BONK'];
 
   useEffect(() => {
     if (searchQuery) {
@@ -45,131 +23,140 @@ export default function AgentPage() {
 
   return (
     <div className="agent-page">
-      <header className="agent-header">
-        <div className="agent-header-top">
-          <Link to="/" className="back-btn">← Back</Link>
-          <h1>FiberAgent for Agents</h1>
-          <div className="settings-icon">⚙️</div>
+      {/* Header */}
+      <section className="page-hero">
+        <div className="hero-inner">
+          <p className="label">FOR AGENTS</p>
+          <h1>Build revenue, not features.</h1>
+          <p className="sub">Register once. Search forever. Earn automatically.</p>
         </div>
-        <p className="agent-tagline">Powered by OpenClaw</p>
-      </header>
+      </section>
 
-      <main className="agent-main">
-        <section className="agent-dashboard">
-          <div className="dashboard-card earnings">
-            <h3>💰 Your Earnings</h3>
-            <div className="earnings-display">
-              <div className="earning-stat">
-                <p className="label">This Month</p>
-                <p className="value">$0.00</p>
-              </div>
-              <div className="earning-stat">
-                <p className="label">Total Users</p>
-                <p className="value">0</p>
-              </div>
-              <div className="earning-stat">
-                <p className="label">Active Transactions</p>
-                <p className="value">0</p>
-              </div>
+      <div className="page-body">
+        {/* Dashboard Cards */}
+        <section className="dashboard-section">
+          <div className="dashboard-grid">
+            <div className="dash-card">
+              <p className="card-label">Your Earnings</p>
+              <p className="card-value">$0.00</p>
+              <p className="card-desc">This month</p>
             </div>
-          </div>
-
-          <div className="dashboard-card settings">
-            <h3>⚙️ Your Reward Settings</h3>
-            <div className="settings-grid">
-              <div className="setting-item">
-                <label>Preferred Blockchain</label>
-                <select value={selectedBlockchain} onChange={handleBlockchainChange}>
-                  {chainOptions.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="setting-item">
-                <label>Preferred Token</label>
-                <select value={selectedToken} onChange={(e) => setSelectedToken(e.target.value)}>
-                  {getAvailableTokens().map(token => (
-                    <option key={token} value={token}>{token}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="dash-card">
+              <p className="card-label">Active Users</p>
+              <p className="card-value">0</p>
+              <p className="card-desc">Shopping through you</p>
             </div>
-            <div className="setting-note">
-              ✓ You receive <strong>{selectedToken}</strong> on <strong>{selectedBlockchain}</strong>. Change anytime.
+            <div className="dash-card">
+              <p className="card-label">Payout Token</p>
+              <div className="token-selector">
+                {tokens.map(t => (
+                  <button
+                    key={t}
+                    className={`token-btn ${selectedToken === t ? 'active' : ''}`}
+                    onClick={() => setSelectedToken(t)}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <p className="card-desc">Receive {selectedToken} on conversion</p>
             </div>
           </div>
         </section>
 
-        <section className="agent-products">
-          <h2>Find Products to Share with Your Users</h2>
-          <div className="search-section">
+        {/* How It Works */}
+        <section className="how-section">
+          <p className="section-label">THE PROCESS</p>
+          <h2>Three steps to revenue.</h2>
+          <div className="steps-layout">
+            <div className="how-step">
+              <span className="step-num">01</span>
+              <h3>Register</h3>
+              <p>You already did. Your agent ID is ready to query FiberAgent.</p>
+            </div>
+            <div className="how-step">
+              <span className="step-num">02</span>
+              <h3>Query & Share</h3>
+              <p>Your agent searches FiberAgent. You share the affiliate link with your users.</p>
+            </div>
+            <div className="how-step">
+              <span className="step-num">03</span>
+              <h3>Earn</h3>
+              <p>User buys. You get a kickback in {selectedToken}. Automatic. On-chain.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Search Products */}
+        <section className="products-section">
+          <p className="section-label">SEARCH</p>
+          <h2>Find what your users want.</h2>
+          <div className="search-box">
             <input
               type="text"
-              className="agent-search"
-              placeholder="Search Fiber.shop products..."
+              placeholder="shoes, electronics, food…"
               value={searchQuery}
               onChange={handleSearch}
+              className="search-input"
             />
           </div>
 
-          {products.length > 0 ? (
-            <div className="products-grid">
-              {products.map(product => (
-                <div key={product.productId} className="product-card">
-                  <div className="product-header">
-                    <img src={product.image || 'https://via.placeholder.com/250x150'} alt={product.title} />
-                    <div className="cashback-badge">
-                      {product.cashback.rate}
-                    </div>
-                  </div>
-                  <div className="product-details">
-                    <h4>{product.title}</h4>
-                    <p className="brand">{product.brand}</p>
-                    <p className="price">{product.priceFormatted}</p>
-                    <p className="shop">Sold by: {product.shop.name}</p>
-                    <div className="your-earning">
-                      <span className="label">You earn:</span>
-                      <span className="amount">{(product.cashback.amount * 0.2).toFixed(2)} {selectedToken}</span>
-                    </div>
-                    <button className="share-btn">Share with Users</button>
-                  </div>
-                </div>
-              ))}
+          {products.length === 0 ? (
+            <div className="empty-state">
+              <p>Start searching to see products and earnings.</p>
             </div>
           ) : (
-            <div className="empty-state">
-              <p>🔍 Search for products to see earning potential</p>
-              <p className="subtitle">Find products and share your unique agent link with users</p>
+            <div className="products-grid">
+              {products.map(product => (
+                <a
+                  key={product.productId}
+                  href={product.affiliate_link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="product-card"
+                >
+                  <div className="pc-image">
+                    <img src={product.image || ''} alt={product.title} />
+                  </div>
+                  <div className="pc-body">
+                    <h4>{product.title}</h4>
+                    <span className="pc-shop">{product.shop?.name}</span>
+                    <span className="pc-earn">{(product.cashback?.amount * 0.2).toFixed(2)} {selectedToken}</span>
+                  </div>
+                </a>
+              ))}
             </div>
           )}
         </section>
 
-        <section className="agent-info">
-          <h2>How to Maximize Your Earnings</h2>
+        {/* Tips */}
+        <section className="tips-section">
+          <p className="section-label">TIPS</p>
+          <h2>Maximize your earnings.</h2>
           <div className="tips-grid">
-            <div className="tip-card">
-              <h4>1. Share Your Link</h4>
-              <p>Every user who shops through your link earns you cashback in your chosen crypto.</p>
+            <div className="tip-box">
+              <h3>Share What Converts</h3>
+              <p>Find products your users actually buy. Quality over quantity.</p>
             </div>
-            <div className="tip-card">
-              <h4>2. Decide What to Share</h4>
-              <p>You control the rewards. Share what you want with your users, keep the rest.</p>
+            <div className="tip-box">
+              <h3>Build on Trust</h3>
+              <p>Your reputation score grows with every successful transaction.</p>
             </div>
-            <div className="tip-card">
-              <h4>3. Instant Crypto</h4>
-              <p>Receive rewards in real-time to your wallet. No waiting, no middleman.</p>
+            <div className="tip-box">
+              <h3>Real-time Payouts</h3>
+              <p>No waiting. Earnings hit your wallet as transactions confirm.</p>
             </div>
-            <div className="tip-card">
-              <h4>4. Scale Your Network</h4>
-              <p>More users = more earnings. Build your network and watch your rewards grow.</p>
+            <div className="tip-box">
+              <h3>API-First</h3>
+              <p>Integrate FiberAgent directly into your agent. One API call per search.</p>
             </div>
           </div>
         </section>
+      </div>
 
-      </main>
-
-      <footer className="agent-footer">
-        <p>FiberAgent × OpenClaw × Fiber.shop</p>
+      {/* Footer */}
+      <footer className="page-footer">
+        <p>Build with Fiber. Deploy on Monad.</p>
       </footer>
     </div>
   );
