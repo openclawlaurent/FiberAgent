@@ -26,9 +26,6 @@ export default function Navigation() {
           <li className={`nav-item ${isActive('/agent')}`}>
             <Link to="/agent" className="nav-link">For Agents</Link>
           </li>
-          <li className={`nav-item ${isActive('/stats')}`}>
-            <Link to="/stats" className="nav-link stats-link">📊 Stats</Link>
-          </li>
         </ul>
       </div>
     </nav>
