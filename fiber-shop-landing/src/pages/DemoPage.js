@@ -226,7 +226,6 @@ export default function DemoPage() {
                   <div className="agent-summary">
                     <p><strong>Agent ID:</strong> {registrationResponse.agent_id}</p>
                     <p><strong>Name:</strong> {registrationResponse.agent_name}</p>
-                    <p><strong>Wallet:</strong> {registrationResponse.wallet_address}</p>
                     <p><strong>Status:</strong> {registrationResponse.status}</p>
                     <p><strong>Registered:</strong> {new Date(registrationResponse.registered_at).toLocaleString()}</p>
                   </div>
