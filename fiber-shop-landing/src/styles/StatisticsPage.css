@@ -50,10 +50,32 @@
   padding: 0 40px 80px;
 }
 
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 16px;
+}
+
+/* ---------- Loading State ---------- */
+.loading-state {
+  padding: 120px 40px;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 16px;
+}
+
 /* ---------- Lookup ---------- */
 .lookup-section {
   padding: 60px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
   border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.lookup-section h2 {
+  margin-bottom: 32px;
 }
 
 .lookup-form {
@@ -119,29 +141,29 @@
   font-size: 14px;
 }
 
-/* ---------- Your Stats ---------- */
+/* ---------- Your Stats / Agent Stats ---------- */
 .your-stats-section {
   padding: 60px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.section-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 16px;
+.your-stats-section h2 {
+  margin-bottom: 32px;
 }
 
-.your-stats-section h2,
+.network-section,
+.leaderboard-section {
+  padding-top: 60px;
+}
+
 .network-section h2,
-.leaderboard-section h2 {
+.leaderboard-section h2,
+.your-stats-section h2 {
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 1.2;
-  margin-bottom: 32px;
 }
 
 .your-stats-grid {
