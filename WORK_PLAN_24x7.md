@@ -239,7 +239,7 @@
   - [ ] Confirm RPC endpoints are accessible
 
 - [ ] **Create Agent Card Template**
-  - [ ] `contracts/fetch-agent-card.json` template
+  - [ ] `contracts/FiberAgent-card.json` template
   - [ ] Fields: name, description, endpoints, wallet, categories
   - [ ] Document where to host (IPFS? Web server?)
 

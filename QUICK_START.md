@@ -51,7 +51,7 @@ npm start
 Output:
 ```
 Compiled successfully!
-You can now view fetch-agent in the browser.
+You can now view FiberAgent in the browser.
   Local:            http://localhost:3000
 ```
 

@@ -1,6 +1,6 @@
-# OpenShop Project Status
+# FiberAgent Project Status
 
-**Project:** OpenShop - OpenClaw agent for Moltiverse hackathon
+**Project:** FiberAgent - OpenClaw agent for Moltiverse hackathon
 **Location:** `/home/nuc/.openclaw/workspace-fiber/fiber-shop-landing`
 **Status:** ✅ Core build complete, awaiting GitHub push and deployment
 
@@ -11,7 +11,7 @@
    cd /home/nuc/.openclaw/workspace-fiber/fiber-shop-landing
    git config --global user.name "Your Name"
    git config --global user.email "your.email@example.com"
-   git remote add origin https://github.com/YourUsername/openshop.git
+   git remote add origin https://github.com/YourUsername/FiberAgent.git
    git branch -M main
    git push -u origin main
    ```
@@ -31,7 +31,7 @@
 
 **Frontend:** React with Router (`/`, `/demo`, `/agent`, `/user`, `/stats`)
 **Backend:** Express.js + SQLite (port 5000)
-**Database:** SQLite at `server/openshop.db`
+**Database:** SQLite at `server/FiberAgent.db`
 
 ### Key Components
 

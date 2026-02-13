@@ -14,7 +14,7 @@
   - Behavioral personalization via FP (Fiber Points) system
   - On-chain reputation via ERC-8004
   - Everyone in chain gets paid (agents, code contributors, FiberAgent)
-- **Branding:** Rebranded from "OpenShop" → "FiberAgent" ✅
+- **Branding:** Rebranded from "FiberAgent" → "FiberAgent" ✅
 - **Persona:** "Ari Gold of AI agents" — hustler, delivers results, takes care of people
 
 **Monad Mainnet Wallet:**
@@ -23,7 +23,7 @@
 - **Private Key:** Secured in `.env` (never committed)
 
 **Phase 1 Complete (Feb 7):**
-- ✅ Rebranded OpenShop → FiberAgent throughout codebase
+- ✅ Rebranded FiberAgent → FiberAgent throughout codebase
 - ✅ Created Monad mainnet wallet (0x790b405d466f7fddcee4be90d504eb56e3fedcae)
 - ✅ Built MVP: Agent queries FiberAgent for products (GET /api/agent/search?keywords=...&agent_id=...)
 - ✅ Returns product list with merchant, price, cashback rate/amount

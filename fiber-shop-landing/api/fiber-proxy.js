@@ -2,7 +2,7 @@
  * Fiber API Proxy - Serverless function to bypass CORS restrictions
  * 
  * Temporary workaround while Fiber updates their CORS headers
- * to include https://openshop-ten.vercel.app
+ * to include https://FiberAgent-ten.vercel.app
  * 
  * Once Fiber fixes CORS, this can be removed and frontend
  * can call Fiber API directly.

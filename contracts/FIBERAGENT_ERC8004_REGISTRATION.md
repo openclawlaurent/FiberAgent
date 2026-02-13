@@ -7,7 +7,7 @@
 
 ## Step 1: Prepare Agent Card (JSON)
 
-Save this as `fetch-agent-card.json`:
+Save this as `FiberAgent-card.json`:
 
 ```json
 {
@@ -93,7 +93,7 @@ Save this as `fetch-agent-card.json`:
 
 ```bash
 # Using IPFS CLI or pinata.cloud
-ipfs add fetch-agent-card.json
+ipfs add FiberAgent-card.json
 # Returns: Qm... hash
 
 # Save the IPFS hash for next step
@@ -102,7 +102,7 @@ AGENT_CARD_IPFS="QmXxxx..."
 
 Or host on web:
 ```
-https://fetch-platform.example.com/fetch-agent-card.json
+https://fetch-platform.example.com/FiberAgent-card.json
 ```
 
 ---

@@ -253,7 +253,7 @@ curl -X PATCH https://api.staging.fiber.shop/v1/agent/agent_xyz \
 npm install -g @monad-foundation/monad-cli
 
 # Create wallet
-monad-cli create-wallet --name fetch-agent
+monad-cli create-wallet --name FiberAgent
 
 # Your wallet address will look like: 9yLMtg3DX98e08UYKSpbE6kBkhfUrB94UZSvKpAh1BdV
 ```

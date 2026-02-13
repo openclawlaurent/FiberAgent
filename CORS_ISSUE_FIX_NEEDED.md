@@ -5,7 +5,7 @@
 
 ```
 Error: Access to fetch at 'https://api.staging.fiber.shop/v1/agent/register' 
-from origin 'https://openshop-ten.vercel.app' has been blocked by CORS policy
+from origin 'https://FiberAgent-ten.vercel.app' has been blocked by CORS policy
 ```
 
 ### Root Cause
@@ -21,12 +21,12 @@ This only allows localhost development. The Vercel production domain is blocked.
 **Fiber API Configuration Team** needs to update their CORS settings to include:
 
 ```
-Access-Control-Allow-Origin: https://openshop-ten.vercel.app
+Access-Control-Allow-Origin: https://FiberAgent-ten.vercel.app
 ```
 
 Or better yet, add multiple origins:
 ```
-Access-Control-Allow-Origin: http://localhost:3000, https://openshop-ten.vercel.app
+Access-Control-Allow-Origin: http://localhost:3000, https://FiberAgent-ten.vercel.app
 ```
 
 ## Affected Endpoints
@@ -83,13 +83,13 @@ const response = await fetch(
 Hi Fiber team,
 
 FiberAgent (agent-to-agent commerce platform) is live on Vercel at:
-https://openshop-ten.vercel.app
+https://FiberAgent-ten.vercel.app
 
 Your staging API is returning CORS headers that only allow localhost:3000:
 Access-Control-Allow-Origin: http://localhost:3000
 
 Can you please update your CORS configuration to allow:
-✅ https://openshop-ten.vercel.app
+✅ https://FiberAgent-ten.vercel.app
 
 This will unblock all product search and agent registration calls from our live demo.
 

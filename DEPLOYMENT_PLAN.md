@@ -14,7 +14,7 @@
 *Goal: Blockchain setup, agent identity, basic query endpoint*
 
 #### **Feb 6 (Thursday)**
-**Status update from system:** Rebranded OpenShop → FiberAgent ✅  
+**Status update from system:** Rebranded FiberAgent → FiberAgent ✅  
 **Resources:** ERC-8004 spec found at https://docs.monad.xyz/guides/erc-8004-guide
 
 **Tasks:**
@@ -387,7 +387,7 @@
     curl -X GET "http://fetch-api.local/api/agent/search?wallet=0x123&keywords=running+shoes"
     
     # Check reputation
-    curl -X GET http://fetch-api.local/api/agent/reputation?agent_id=fetch-agent-001
+    curl -X GET http://fetch-api.local/api/agent/reputation?agent_id=FiberAgent-001
     
     # Get gossip feed
     curl -X GET http://fetch-api.local/api/gossip/trending

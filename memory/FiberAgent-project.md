@@ -1,9 +1,9 @@
-# OpenShop Project - Moltiverse Hackathon
+# FiberAgent Project - Moltiverse Hackathon
 
 **Status:** Statistics integration in progress
 
 ## Project Vision
-OpenShop is an OpenClaw agent platform that connects agents to Fiber.shop products, enabling agents to earn MON crypto rewards when users shop. Features real-time reward tracking dashboard with comprehensive API usage statistics.
+FiberAgent is an OpenClaw agent platform that connects agents to Fiber.shop products, enabling agents to earn MON crypto rewards when users shop. Features real-time reward tracking dashboard with comprehensive API usage statistics.
 
 ### Three-Perspective Value Prop
 1. **Users**: Conversational shopping with agent recommendations
