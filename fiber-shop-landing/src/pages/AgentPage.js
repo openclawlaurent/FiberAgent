@@ -1,8 +1,51 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import '../styles/AgentPage.css';
 
 export default function AgentPage() {
   const FIBER_API = '/api/fiber-proxy';
+
+  // Custom react-select styles (Fiber design)
+  const selectStyles = {
+    control: (base) => ({
+      ...base,
+      background: 'rgba(20,20,20,0.8)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '8px',
+      padding: '0px',
+      cursor: 'pointer',
+      transition: 'border-color 0.2s',
+      ':hover': {
+        borderColor: 'rgba(255,255,255,0.3)',
+      }
+    }),
+    input: (base) => ({
+      ...base,
+      color: '#fff',
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: '#fff',
+    }),
+    menu: (base) => ({
+      ...base,
+      background: 'rgba(20,20,20,0.95)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '8px',
+      marginTop: '4px',
+    }),
+    option: (base, state) => ({
+      ...base,
+      background: state.isSelected ? 'rgba(0,208,132,0.2)' : state.isFocused ? 'rgba(255,255,255,0.08)' : 'rgba(20,20,20,0.95)',
+      color: '#fff',
+      cursor: 'pointer',
+      padding: '12px 16px',
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: 'rgba(255,255,255,0.2)',
+    }),
+  };
 
   // Blockchain and token mapping
   const blockchainTokens = {
@@ -38,8 +81,8 @@ export default function AgentPage() {
 
   const getAvailableTokens = () => blockchainTokens[selectedBlockchain] || [];
 
-  const handleBlockchainChange = (e) => {
-    const newBlockchain = e.target.value;
+  const handleBlockchainChange = (option) => {
+    const newBlockchain = option.value;
     setSelectedBlockchain(newBlockchain);
     const availableTokens = blockchainTokens[newBlockchain];
     setSelectedToken(availableTokens[0]);
@@ -179,27 +222,23 @@ export default function AgentPage() {
                 </div>
                 <div className="reg-field">
                   <label>Blockchain</label>
-                  <select
-                    value={selectedBlockchain}
+                  <Select
+                    options={Object.keys(blockchainTokens).map(chain => ({ value: chain, label: chain }))}
+                    value={{ value: selectedBlockchain, label: selectedBlockchain }}
                     onChange={handleBlockchainChange}
-                    className="reg-select"
-                  >
-                    {Object.keys(blockchainTokens).map(chain => (
-                      <option key={chain} value={chain}>{chain}</option>
-                    ))}
-                  </select>
+                    styles={selectStyles}
+                    isSearchable={false}
+                  />
                 </div>
                 <div className="reg-field">
                   <label>Payout Token</label>
-                  <select
-                    value={selectedToken}
-                    onChange={(e) => setSelectedToken(e.target.value)}
-                    className="reg-select"
-                  >
-                    {getAvailableTokens().map(token => (
-                      <option key={token} value={token}>{token}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={getAvailableTokens().map(token => ({ value: token, label: token }))}
+                    value={{ value: selectedToken, label: selectedToken }}
+                    onChange={(option) => setSelectedToken(option.value)}
+                    styles={selectStyles}
+                    isSearchable={false}
+                  />
                 </div>
               </div>
               <button type="submit" disabled={regLoading} className="reg-submit">
