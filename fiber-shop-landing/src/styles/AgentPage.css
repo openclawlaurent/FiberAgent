@@ -237,12 +237,48 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  margin-bottom: 24px;
 }
 
 .dash-card {
   padding: 28px;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
+}
+
+.agent-info-box {
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  display: flex;
+  gap: 32px;
+}
+
+.info-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.info-value.mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  letter-spacing: 0.3px;
 }
 
 .card-label {
@@ -255,7 +291,7 @@
 }
 
 .card-value {
-  font-size: 32px;
+  font-size: clamp(24px, 5vw, 32px);
   font-weight: 800;
   letter-spacing: -1px;
   line-height: 1;
@@ -548,6 +584,11 @@
   .steps-layout {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .agent-info-box {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -562,6 +603,12 @@
   .tips-grid {
     grid-template-columns: 1fr;
   }
+  
+  .agent-info-box {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
   .search-form {
     flex-direction: column;
   }

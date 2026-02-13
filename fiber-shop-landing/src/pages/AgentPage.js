@@ -80,6 +80,8 @@ export default function AgentPage() {
   // After registration
   const [agentId, setAgentId] = useState(null);
   const [registered, setRegistered] = useState(false);
+  const [agentStats, setAgentStats] = useState(null);
+  const [statsLoading, setStatsLoading] = useState(false);
 
   // Search state
   const [searchQuery, setSearchQuery] = useState('');
@@ -120,14 +122,18 @@ export default function AgentPage() {
       const data = await res.json();
       
       if (data.success || data.agent_id) {
-        setAgentId(data.agent_id || data.existing_agent_id);
+        const newAgentId = data.agent_id || data.existing_agent_id;
+        setAgentId(newAgentId);
         setRegistered(true);
         setRegError(null);
+        // Fetch stats for the new agent
+        await fetchAgentStats(newAgentId);
       } else if (data.existing_agent_id) {
         // Already registered
         setAgentId(data.existing_agent_id);
         setRegistered(true);
         setRegError(null);
+        await fetchAgentStats(data.existing_agent_id);
       } else {
         setRegError(data.error || 'Registration failed');
       }
@@ -135,6 +141,28 @@ export default function AgentPage() {
       setRegError('Error: ' + err.message);
     } finally {
       setRegLoading(false);
+    }
+  };
+
+  const fetchAgentStats = async (id) => {
+    setStatsLoading(true);
+    try {
+      const res = await fetch(FIBER_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method: 'GET',
+          endpoint: `agent/${id}/stats`
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAgentStats(data);
+      }
+    } catch (err) {
+      console.error('Error fetching stats:', err);
+    } finally {
+      setStatsLoading(false);
     }
   };
 
@@ -159,6 +187,7 @@ export default function AgentPage() {
       
       if (data.success) {
         setAgentId(existingAgentId);
+        setAgentStats(data);
         setRegistered(true);
         setExistingAgentError(null);
       } else {
@@ -347,19 +376,37 @@ export default function AgentPage() {
             <section className="dashboard-section">
               <div className="dashboard-grid">
                 <div className="dash-card">
-                  <p className="card-label">Your Earnings</p>
-                  <p className="card-value">$0.00</p>
-                  <p className="card-desc">This month</p>
+                  <p className="card-label">Total Earnings</p>
+                  <p className="card-value">
+                    {agentStats?.stats?.total_earnings_usd ? `$${agentStats.stats.total_earnings_usd.toFixed(2)}` : '$0.00'}
+                  </p>
+                  <p className="card-desc">All time</p>
                 </div>
                 <div className="dash-card">
-                  <p className="card-label">Active Users</p>
-                  <p className="card-value">0</p>
-                  <p className="card-desc">Shopping through you</p>
+                  <p className="card-label">Total Purchases</p>
+                  <p className="card-value">
+                    {agentStats?.stats?.total_purchases_tracked || 0}
+                  </p>
+                  <p className="card-desc">Tracked via your agent</p>
                 </div>
                 <div className="dash-card">
-                  <p className="card-label">Agent ID</p>
-                  <p className="card-value-small">{agentId}</p>
-                  <p className="card-desc">Payout: {selectedToken} on {selectedBlockchain}</p>
+                  <p className="card-label">Reputation Score</p>
+                  <p className="card-value">
+                    {agentStats?.stats?.reputation_score?.toFixed(1) || '0.0'}
+                  </p>
+                  <p className="card-desc">Your agent credibility</p>
+                </div>
+              </div>
+              
+              {/* Agent Info */}
+              <div className="agent-info-box">
+                <div className="info-row">
+                  <span className="info-label">Agent ID:</span>
+                  <span className="info-value mono">{agentId}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Payout Token:</span>
+                  <span className="info-value">{selectedToken} (on {selectedBlockchain})</span>
                 </div>
               </div>
             </section>
