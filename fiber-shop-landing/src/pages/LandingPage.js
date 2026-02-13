@@ -3,128 +3,161 @@ import '../styles/LandingPage.css';
 
 export default function LandingPage() {
   return (
-    <div className="landing-page">
-      <header className="landing-header">
-        <h1 className="landing-logo">FiberAgent</h1>
-        <p className="landing-tagline">The Agent's Agent. Powered by Fiber & Monad.</p>
-      </header>
+    <div className="landing">
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-inner">
+          <p className="hero-label">AGENT INFRASTRUCTURE</p>
+          <h1>
+            The agent layer<br />
+            for commerce.
+          </h1>
+          <p className="hero-sub">
+            FiberAgent is the behavioral intelligence layer for agentic commerce — 
+            connecting AI agents to 50,000+ merchants with personalized deals and on-chain rewards.
+          </p>
+          <p className="hero-tagline">Agents query. Users earn. Everyone gets paid.</p>
+          <div className="hero-actions">
+            <a href="/demo" className="btn-main">Try the Demo</a>
+            <a href="/agent" className="btn-outline">For Agents</a>
+          </div>
+        </div>
+      </section>
 
-      <main className="landing-main">
-        <section className="landing-hero">
-          <h2>Have Your Agent Call My Agent</h2>
-          <p>FiberAgent is the agent's agent. Behavioral intelligence meets real-world shopping.</p>
-          <p className="hero-subtitle">AI agents query FiberAgent for personalized deals, stacked discounts, and better returns — powered by on-chain activity and real purchase data.</p>
-        </section>
+      {/* Stats Bar */}
+      <section className="stats-bar">
+        <div className="stats-inner">
+          <div className="stat-item">
+            <span className="stat-num">50,000+</span>
+            <span className="stat-desc">Merchants</span>
+          </div>
+          <div className="stat-divider" />
+          <div className="stat-item">
+            <span className="stat-num">$3T</span>
+            <span className="stat-desc">Crypto economy</span>
+          </div>
+          <div className="stat-divider" />
+          <div className="stat-item">
+            <span className="stat-num">2M+</span>
+            <span className="stat-desc">Token holders</span>
+          </div>
+          <div className="stat-divider" />
+          <div className="stat-item">
+            <span className="stat-num">1</span>
+            <span className="stat-desc">Intelligence layer</span>
+          </div>
+        </div>
+      </section>
 
-        <section className="landing-cta">
-          <div className="cta-container">
-            <div className="cta-card agent-card">
-              <div className="cta-icon">🤖</div>
-              <h3>I'm an Agent</h3>
-              <p>Query FiberAgent for personalized deals. Earn kickbacks when your users convert. Join the Founding Agent program for 2x rewards.</p>
-              <a href="/agent" className="cta-button agent-button">
-                Register Agent →
-              </a>
+      {/* What */}
+      <section className="section">
+        <div className="section-inner">
+          <p className="section-label">WHAT IS FIBERAGENT</p>
+          <h2>Have your agent<br />call my agent.</h2>
+          <p className="section-text">
+            AI agents need commerce. FiberAgent provides it.
+          </p>
+          <p className="section-text dim">
+            Your agent queries FiberAgent with a wallet address and a shopping intent. 
+            FiberAgent analyzes on-chain behavior and purchase history to return 
+            personalized deals with real cashback. The user buys. The agent earns a kickback. 
+            Fiber takes a cut. Everyone wins.
+          </p>
+        </div>
+      </section>
+
+      {/* How */}
+      <section className="section dark">
+        <div className="section-inner">
+          <p className="section-label">HOW IT WORKS</p>
+          <h2>Four steps to revenue.</h2>
+          <div className="steps-grid">
+            <div className="step-card">
+              <span className="step-num">01</span>
+              <h3>Register</h3>
+              <p>Connect your wallet. Get an agent ID. Takes 30 seconds.</p>
             </div>
-
-            <div className="cta-divider">+</div>
-
-            <div className="cta-card user-card">
-              <div className="cta-icon">👤</div>
-              <h3>I'm Human</h3>
-              <p>FiberAgent will help you shop. Get personalized deals with real cashback — no middleman, just better prices.</p>
-              <a href="/demo" className="cta-button user-button">
-                Try the Demo →
-              </a>
+            <div className="step-card">
+              <span className="step-num">02</span>
+              <h3>Query</h3>
+              <p>Send a search request with keywords and a wallet address. FiberAgent returns personalized results.</p>
+            </div>
+            <div className="step-card">
+              <span className="step-num">03</span>
+              <h3>Share</h3>
+              <p>Give your user the affiliate link. They click, they shop, they earn cashback.</p>
+            </div>
+            <div className="step-card">
+              <span className="step-num">04</span>
+              <h3>Earn</h3>
+              <p>You receive a kickback in MON or BONK. Automatic. On-chain. No invoices.</p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="landing-benefits">
-          <h2>Why FiberAgent Is Different</h2>
-          <div className="benefits-grid">
-            <div className="benefit-item">
-              <div className="benefit-icon">🧠</div>
-              <h4>Behavioral Intelligence</h4>
-              <p>On-chain activity + real purchase history = personalized deals. FiberAgent knows who you are. That's why the cashback is better.</p>
+      {/* Why */}
+      <section className="section">
+        <div className="section-inner">
+          <p className="section-label">WHY FIBERAGENT</p>
+          <h2>Unfair advantages.</h2>
+          <div className="features-grid">
+            <div className="feature-item">
+              <h3>Behavioral Intelligence</h3>
+              <p>
+                On-chain signals + real purchase data = deals that actually convert.
+                Not guessing from an NFT. Knowing they bought running shoes last month.
+              </p>
             </div>
-            <div className="benefit-item">
-              <div className="benefit-icon">🤝</div>
-              <h4>Agent-to-Agent Payments</h4>
-              <p>Calling agents earn kickbacks. Code submitters earn fees. FiberAgent takes a cut. Everyone's incentives align.</p>
+            <div className="feature-item">
+              <h3>50,000+ Merchants</h3>
+              <p>
+                Real commission structures via Wildfire's affiliate network.
+                Nike. Adidas. Walmart. Not mock data.
+              </p>
             </div>
-            <div className="benefit-item">
-              <div className="benefit-icon">⛓️</div>
-              <h4>On-Chain Reputation</h4>
-              <p>ERC-8004 identity registry. Every deal is tracked. Every agent is verified. Trust via crypto, not middlemen.</p>
+            <div className="feature-item">
+              <h3>Agent Economics</h3>
+              <p>
+                Every agent in the chain gets paid. Kickbacks flow automatically.
+                No contracts. No negotiations. Just code.
+              </p>
             </div>
-            <div className="benefit-item">
-              <div className="benefit-icon">⚡</div>
-              <h4>Monad Speed</h4>
-              <p>Sub-second finality. Micropayment kickbacks cost fractions of a cent. Commerce at crypto speed.</p>
+            <div className="feature-item">
+              <h3>On-Chain Reputation</h3>
+              <p>
+                ERC-8004 identity registry on Monad. Trust built through performance, 
+                not promises. Higher scores unlock better rates.
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="landing-quick-stats">
-          <h2>FiberAgent Network</h2>
-          <div className="quick-stats-grid">
-            <div className="quick-stat">
-              <div className="qs-icon">🤖</div>
-              <div className="qs-value">5+</div>
-              <div className="qs-label">Registered Agents</div>
-            </div>
-            <div className="quick-stat">
-              <div className="qs-icon">🧠</div>
-              <div className="qs-value">50K+</div>
-              <div className="qs-label">Behavioral Tags</div>
-            </div>
-            <div className="quick-stat">
-              <div className="qs-icon">🛍️</div>
-              <div className="qs-value">60+</div>
-              <div className="qs-label">Verified Deals</div>
-            </div>
-            <div className="quick-stat">
-              <div className="qs-icon">⛓️</div>
-              <div className="qs-value">Monad</div>
-              <div className="qs-label">Powered by</div>
-            </div>
+      {/* CTA */}
+      <section className="section dark">
+        <div className="section-inner cta-section">
+          <h2>The new era of<br />agent commerce.</h2>
+          <p className="section-text">
+            Register your agent. Start earning. Build reputation.
+          </p>
+          <div className="hero-actions">
+            <a href="/demo" className="btn-main">Launch Demo</a>
+            <a href="/agent" className="btn-outline">Read the Docs</a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="landing-how-it-works">
-          <h2>How FiberAgent Works (Agent-to-Agent)</h2>
-          <div className="how-it-works-flow">
-            <div className="flow-step">
-              <div className="step-icon">🤖</div>
-              <h4>Agent Queries</h4>
-              <p>"Running shoes for wallet 0xABC"</p>
-            </div>
-            <div className="flow-arrow">→</div>
-            <div className="flow-step">
-              <div className="step-icon">🧠</div>
-              <h4>FiberAgent Analyzes</h4>
-              <p>On-chain + purchase history</p>
-            </div>
-            <div className="flow-arrow">→</div>
-            <div className="flow-step">
-              <div className="step-icon">✨</div>
-              <h4>Best Deal Found</h4>
-              <p>Personalized + stacked discount</p>
-            </div>
-            <div className="flow-arrow">→</div>
-            <div className="flow-step">
-              <div className="step-icon">💰</div>
-              <h4>Kickback Paid</h4>
-              <p>Agent gets a cut on conversion</p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="landing-footer">
-        <p>FiberAgent by Fiber | Agent Track | Moltiverse Hackathon</p>
-        <p>"Have your agent call my agent." 🚀</p>
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <span className="footer-brand">FiberAgent</span>
+          <span className="footer-links">
+            <a href="https://fiber.shop" target="_blank" rel="noopener noreferrer">fiber.shop</a>
+            <a href="https://x.com/fiber_shop" target="_blank" rel="noopener noreferrer">Twitter</a>
+          </span>
+          <span className="footer-copy">Powered by Fiber · Built on Monad</span>
+        </div>
       </footer>
     </div>
   );

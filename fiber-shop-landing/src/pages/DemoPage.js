@@ -2,377 +2,170 @@ import React, { useState } from 'react';
 import '../styles/DemoPage.css';
 
 export default function DemoPage() {
-  // Use Vercel API proxy to bypass CORS restrictions
-  // TODO: Once Fiber fixes CORS headers, switch back to direct API calls
   const FIBER_API = '/api/fiber-proxy';
 
-  // Generate EVM test wallet: 0xtest + 36 random hex (= 42 chars, valid EVM format)
-  // Fiber auto-detects: EVM (0x..., 42 chars) → defaults to MON
   const generateTestWallet = () => {
-    const hexChars = '0123456789abcdef';
-    let address = '0xtest';
-    // Generate 36 more random hex characters (0xtest = 6 chars, total 42 for EVM)
-    for (let i = 0; i < 36; i++) {
-      address += hexChars.charAt(Math.floor(Math.random() * hexChars.length));
-    }
-    return address; // Returns: 0xtest[36 random hex] = 42 chars total
+    const hex = '0123456789abcdef';
+    let addr = '0xtest';
+    for (let i = 0; i < 36; i++) addr += hex[Math.floor(Math.random() * 16)];
+    return addr;
   };
 
-  // Agent Registration State
   const [agentId, setAgentId] = useState(null);
   const [agentName, setAgentName] = useState('My Shopping Agent');
   const [walletAddress, setWalletAddress] = useState(() => generateTestWallet());
-  const [registrationResponse, setRegistrationResponse] = useState(null);
-  const [registrationLoading, setRegistrationLoading] = useState(false);
-  const [registrationError, setRegistrationError] = useState(null);
+  const [regResponse, setRegResponse] = useState(null);
+  const [regLoading, setRegLoading] = useState(false);
+  const [regError, setRegError] = useState(null);
 
-  // Product Search State
   const [searchKeywords, setSearchKeywords] = useState('shoes');
   const [searchResults, setSearchResults] = useState(null);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState(null);
 
-  // Agent Info State
-  const [selectedAgent, setSelectedAgent] = useState(null);
-  const [agentInfo, setAgentInfo] = useState(null);
-  const [agentLoading, setAgentLoading] = useState(false);
-
-  // Register Agent with Fiber (via proxy)
-  const handleRegisterAgent = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    setRegistrationLoading(true);
-    setRegistrationError(null);
-
+    setRegLoading(true);
+    setRegError(null);
     try {
-      const response = await fetch(FIBER_API, {
+      const res = await fetch(FIBER_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           method: 'POST',
           endpoint: 'agent/register',
-          body: {
-            agent_name: agentName,
-            wallet_address: walletAddress,
-            description: 'Shopping agent discovering products via FiberAgent'
-          }
+          body: { agent_name: agentName, wallet_address: walletAddress, description: 'Shopping agent via FiberAgent' }
         })
       });
-
-      const data = await response.json();
-      
-      if (!response.ok || !data.success) {
-        setRegistrationError(data.error || 'Registration failed');
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        // Handle 409 — already registered
+        if (data.existing_agent_id) {
+          setAgentId(data.existing_agent_id);
+          setRegResponse({ agent_id: data.existing_agent_id, agent_name: agentName, status: 'active (existing)' });
+        } else {
+          setRegError(data.error || 'Registration failed');
+        }
       } else {
-        setRegistrationResponse(data);
+        setRegResponse(data);
         setAgentId(data.agent_id);
-        setSelectedAgent(data.agent_id);
-        setSearchResults(null);
       }
     } catch (err) {
-      setRegistrationError('Error: ' + err.message);
+      setRegError(err.message);
     } finally {
-      setRegistrationLoading(false);
+      setRegLoading(false);
     }
   };
 
-  // Search Products via Fiber (via proxy)
-  const handleSearchProducts = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    
-    if (!selectedAgent) {
-      setSearchError('Please register an agent first');
-      return;
-    }
-
+    if (!agentId) { setSearchError('Register first'); return; }
     setSearchLoading(true);
     setSearchError(null);
-
     try {
-      const response = await fetch(FIBER_API, {
+      const res = await fetch(FIBER_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           method: 'GET',
           endpoint: 'agent/search',
-          queryParams: {
-            keywords: searchKeywords,
-            agent_id: selectedAgent,
-            wallet: walletAddress,
-            limit: 10
-          }
+          queryParams: { keywords: searchKeywords, agent_id: agentId, limit: 8 }
         })
       });
-
-      const data = await response.json();
-      
-      if (!response.ok || !data.success) {
-        setSearchError(data.error || 'Search failed');
-      } else {
-        setSearchResults(data);
-      }
+      const data = await res.json();
+      if (!res.ok || !data.success) setSearchError(data.error || 'Search failed');
+      else setSearchResults(data);
     } catch (err) {
-      setSearchError('Error: ' + err.message);
+      setSearchError(err.message);
     } finally {
       setSearchLoading(false);
     }
   };
 
-  // Get Agent Info from Fiber (via proxy)
-  const handleGetAgentInfo = async () => {
-    if (!selectedAgent) {
-      setSearchError('Please select an agent');
-      return;
-    }
-
-    setAgentLoading(true);
-
-    try {
-      const response = await fetch(FIBER_API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method: 'GET',
-          endpoint: `agent/earnings/${selectedAgent}`
-        })
-      });
-      const data = await response.json();
-      
-      if (response.ok && data.success) {
-        setAgentInfo(data);
-      }
-    } catch (err) {
-      console.error('Error fetching agent info:', err);
-    } finally {
-      setAgentLoading(false);
-    }
-  };
-
   return (
-    <div className="demo-page">
-      <div className="demo-container">
-        {/* Header */}
-        <div className="demo-header">
-          <h1>🚀 FiberAgent Agent Demo</h1>
-          <p>Register an agent, search for products, see results in real-time</p>
+    <div className="demo">
+      {/* Header */}
+      <section className="demo-hero">
+        <div className="demo-hero-inner">
+          <p className="label">LIVE DEMO</p>
+          <h1>Try FiberAgent.</h1>
+          <p className="sub">Register an agent, search 50,000+ merchants, see real cashback rates.</p>
         </div>
+      </section>
 
-        <div className="demo-content">
-          {/* Left Column: Agent Registration */}
-          <div className="demo-section registration-section">
-            <h2>Step 1: Register Your Agent</h2>
-            <form onSubmit={handleRegisterAgent}>
-              <div className="form-group">
-                <label>Agent ID</label>
-                <input
-                  type="text"
-                  value={agentId}
-                  onChange={(e) => setAgentId(e.target.value)}
-                  placeholder="agent_claude"
-                />
-                <small>Unique identifier for your agent</small>
-              </div>
-
-              <div className="form-group">
-                <label>Agent Name</label>
-                <input
-                  type="text"
-                  value={agentName}
-                  onChange={(e) => setAgentName(e.target.value)}
-                  placeholder="My Shopping Agent"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Wallet Address (Monad)</label>
-                <div style={{display: 'flex', gap: '10px', marginBottom: '5px'}}>
-                  <input
-                    type="text"
-                    value={walletAddress}
-                    onChange={(e) => setWalletAddress(e.target.value)}
-                    placeholder="0x..."
-                    style={{flex: 1}}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setWalletAddress(generateTestWallet())}
-                    style={{
-                      padding: '10px 16px',
-                      backgroundColor: '#f0f0f0',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                      whiteSpace: 'nowrap'
-                    }}
-                    title="Generate a new wallet address"
-                  >
-                    🔄 Generate
-                  </button>
-                </div>
-                <small>EVM wallet address. Click "New Test" to generate a unique address.</small>
-              </div>
-
-              <button type="submit" disabled={registrationLoading} className="btn btn-primary">
-                {registrationLoading ? '⏳ Registering...' : '✅ Register Agent'}
-              </button>
-
-              {registrationError && (
-                <div className="error-message">{registrationError}</div>
-              )}
-
-              {registrationResponse && (
-                <div className="success-message">
-                  <strong>✅ Agent Registered!</strong>
-                  <div className="agent-summary">
-                    <p><strong>Agent ID:</strong> {registrationResponse.agent_id}</p>
-                    <p><strong>Name:</strong> {registrationResponse.agent_name}</p>
-                    <p><strong>Status:</strong> {registrationResponse.status}</p>
-                    <p><strong>Registered:</strong> {new Date(registrationResponse.registered_at).toLocaleString()}</p>
-                  </div>
-                </div>
-              )}
-            </form>
+      <div className="demo-body">
+        {/* Step 1 */}
+        <section className="demo-panel">
+          <div className="panel-head">
+            <span className="step-badge">01</span>
+            <h2>Register your agent</h2>
           </div>
-
-          {/* Right Column: Search & Results */}
-          <div className="demo-section search-section">
-            <h2>Step 2: Search for Products</h2>
-            
-            {!registrationResponse && (
-              <div className="placeholder-message">
-                👆 Register an agent first to search
+          <form onSubmit={handleRegister} className="reg-form">
+            <div className="field">
+              <label>Agent Name</label>
+              <input value={agentName} onChange={e => setAgentName(e.target.value)} placeholder="My Shopping Agent" />
+            </div>
+            <div className="field">
+              <label>Wallet Address</label>
+              <div className="wallet-row">
+                <input value={walletAddress} onChange={e => setWalletAddress(e.target.value)} placeholder="0x..." className="mono" />
+                <button type="button" className="btn-icon" onClick={() => setWalletAddress(generateTestWallet())} title="Generate wallet">↻</button>
+              </div>
+            </div>
+            <button type="submit" disabled={regLoading} className="btn-submit">
+              {regLoading ? 'Registering…' : 'Register Agent'}
+            </button>
+            {regError && <p className="msg-error">{regError}</p>}
+            {regResponse && (
+              <div className="msg-success">
+                <p><strong>Agent ID</strong> {regResponse.agent_id}</p>
+                <p><strong>Status</strong> {regResponse.status || 'active'}</p>
               </div>
             )}
+          </form>
+        </section>
 
-            {registrationResponse && (
-              <>
-                <form onSubmit={handleSearchProducts}>
-                  <div className="form-group">
-                    <label>Search for products</label>
-                    <input
-                      type="text"
-                      value={searchKeywords}
-                      onChange={(e) => setSearchKeywords(e.target.value)}
-                      placeholder="e.g., shoes, nike, boots"
-                    />
-                  </div>
-
-                  <button type="submit" disabled={searchLoading} className="btn btn-primary">
-                    {searchLoading ? '⏳ Searching...' : '🔍 Search Products'}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleGetAgentInfo}
-                    disabled={agentLoading}
-                    className="btn btn-secondary"
-                  >
-                    {agentLoading ? '⏳ Loading...' : '📊 Get Agent Stats'}
-                  </button>
-
-                  {searchError && (
-                    <div className="error-message">{searchError}</div>
-                  )}
-                </form>
-
-                {/* Search Results */}
-                {searchResults && (
-                  <div className="search-results">
-                    <h3>
-                      🏪 Found {searchResults.results_count} merchants for "{searchResults.query}"
-                    </h3>
-
-                    {searchResults.results.length === 0 ? (
-                      <p className="no-results">No merchants found. Try a different search.</p>
-                    ) : (
-                      <div className="products-grid">
-                        {searchResults.results.map((merchant) => (
-                          <a
-                            key={merchant.merchant_id}
-                            href={merchant.affiliate_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="product-card"
-                            style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer'}}
-                          >
-                            <div className="product-image">
-                              {merchant.image_url && <img src={merchant.image_url} alt={merchant.merchant_name} />}
-                            </div>
-                            <div className="product-info">
-                              <h4>{merchant.merchant_name}</h4>
-                              <p className="merchant">🌐 {merchant.merchant_domain}</p>
-                              <p className="description">{merchant.description}</p>
-                              <div className="product-details">
-                                <div className="cashback">
-                                  <span className="label">💰 Cashback Rate:</span>
-                                  <span className="amount">{merchant.cashback.display}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Agent Stats */}
-                {agentInfo && (
-                  <div className="agent-stats">
-                    <h3>📊 Agent Statistics</h3>
-                    <div className="stats-grid">
-                      <div className="stat-card">
-                        <span className="stat-label">Total Earnings</span>
-                        <span className="stat-value">${agentInfo.total_earnings_usd.toFixed(2)} USD</span>
-                      </div>
-                      <div className="stat-card">
-                        <span className="stat-label">Pending Payout</span>
-                        <span className="stat-value">${agentInfo.pending_payout_usd.toFixed(2)}</span>
-                      </div>
-                      <div className="stat-card">
-                        <span className="stat-label">Purchases Tracked</span>
-                        <span className="stat-value">{agentInfo.total_purchases_tracked}</span>
-                      </div>
-                      <div className="stat-card">
-                        <span className="stat-label">Reputation Score</span>
-                        <span className="stat-value">{agentInfo.reputation_score}</span>
-                      </div>
-                    </div>
-                    <div className="timeline-note">
-                      <strong>⏱️ Timeline:</strong> Fiber Points appear in 1-5 days. Crypto payout takes up to 90 days.
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
+        {/* Step 2 */}
+        <section className="demo-panel">
+          <div className="panel-head">
+            <span className="step-badge">02</span>
+            <h2>Search products</h2>
           </div>
-        </div>
+          {!agentId ? (
+            <p className="muted">Register an agent first.</p>
+          ) : (
+            <>
+              <form onSubmit={handleSearch} className="search-form">
+                <input value={searchKeywords} onChange={e => setSearchKeywords(e.target.value)} placeholder="shoes, electronics, fitness…" />
+                <button type="submit" disabled={searchLoading} className="btn-submit">
+                  {searchLoading ? 'Searching…' : 'Search'}
+                </button>
+              </form>
+              {searchError && <p className="msg-error">{searchError}</p>}
+            </>
+          )}
+        </section>
 
-        {/* Footer: What's Next */}
-        <div className="demo-footer">
-          <h3>🎯 How It Works</h3>
-          <div className="flow-diagram">
-            <div className="flow-step">
-              <span className="step-number">1</span>
-              <span className="step-text">Agent registers with wallet address</span>
+        {/* Results */}
+        {searchResults && searchResults.results && (
+          <section className="results-section">
+            <p className="results-count">{searchResults.results_count} merchants found for "{searchResults.query}"</p>
+            <div className="results-grid">
+              {searchResults.results.map((m) => (
+                <a key={m.merchant_id} href={m.affiliate_link} target="_blank" rel="noopener noreferrer" className="merchant-card">
+                  <div className="mc-image">
+                    {m.image_url ? <img src={m.image_url} alt={m.merchant_name} /> : <span className="mc-placeholder">{m.merchant_name[0]}</span>}
+                  </div>
+                  <div className="mc-body">
+                    <h3>{m.merchant_name}</h3>
+                    <span className="mc-domain">{m.merchant_domain}</span>
+                    <span className="mc-cashback">{m.cashback.display} cashback</span>
+                  </div>
+                </a>
+              ))}
             </div>
-            <div className="arrow">→</div>
-            <div className="flow-step">
-              <span className="step-number">2</span>
-              <span className="step-text">Agent searches for products</span>
-            </div>
-            <div className="arrow">→</div>
-            <div className="flow-step">
-              <span className="step-number">3</span>
-              <span className="step-text">FiberAgent returns personalized results</span>
-            </div>
-            <div className="arrow">→</div>
-            <div className="flow-step">
-              <span className="step-number">4</span>
-              <span className="step-text">User buys, agent earns MON cashback</span>
-            </div>
-          </div>
-        </div>
+          </section>
+        )}
       </div>
     </div>
   );
