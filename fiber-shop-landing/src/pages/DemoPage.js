@@ -287,7 +287,14 @@ export default function DemoPage() {
                     ) : (
                       <div className="products-grid">
                         {searchResults.results.map((merchant) => (
-                          <div key={merchant.merchant_id} className="product-card">
+                          <a
+                            key={merchant.merchant_id}
+                            href={merchant.affiliate_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="product-card"
+                            style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer'}}
+                          >
                             <div className="product-image">
                               {merchant.image_url && <img src={merchant.image_url} alt={merchant.merchant_name} />}
                             </div>
@@ -301,16 +308,8 @@ export default function DemoPage() {
                                   <span className="amount">{merchant.cashback.display}</span>
                                 </div>
                               </div>
-                              <a
-                                href={merchant.affiliate_link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-small"
-                              >
-                                Shop & Earn 🔗
-                              </a>
                             </div>
-                          </div>
+                          </a>
                         ))}
                       </div>
                     )}
