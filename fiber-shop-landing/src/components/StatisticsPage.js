@@ -2,169 +2,166 @@ import React, { useState, useEffect } from 'react';
 import '../styles/StatisticsPage.css';
 
 export default function StatisticsPage() {
-  const [stats, setStats] = useState(null);
-  const [leaderboard, setLeaderboard] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const FIBER_API = '/api/fiber-proxy';
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
+  // Input state
+  const [agentIdInput, setAgentIdInput] = useState('');
+  const [agentId, setAgentId] = useState(null);
+  
+  // Stats state
+  const [agentStats, setAgentStats] = useState(null);
+  const [leaderboard, setLeaderboard] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const fetchStats = async () => {
+  // Hardcoded top agents (for demo)
+  const demoLeaderboard = [
+    { rank: 1, agent_name: 'ShopBot Prime', total_earnings_usd: 2450.50, total_purchases_tracked: 487 },
+    { rank: 2, agent_name: 'RetailAI', total_earnings_usd: 1890.25, total_purchases_tracked: 356 },
+    { rank: 3, agent_name: 'DealFinder', total_earnings_usd: 1620.75, total_purchases_tracked: 298 },
+    { rank: 4, agent_name: 'Commerce Agent', total_earnings_usd: 1440.00, total_purchases_tracked: 267 },
+    { rank: 5, agent_name: 'Smart Shopper', total_earnings_usd: 1210.30, total_purchases_tracked: 219 },
+  ];
+
+  const handleLookup = async (e) => {
+    e.preventDefault();
+    if (!agentIdInput.trim()) return;
+
+    setAgentId(agentIdInput);
+    setLoading(true);
+    setError(null);
+
     try {
-      setLoading(true);
-      const statsRes = await fetch(FIBER_API, {
+      // Fetch agent-specific stats
+      const res = await fetch(FIBER_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ method: 'GET', endpoint: 'agent/stats/platform' })
+        body: JSON.stringify({ method: 'GET', endpoint: `agent/${agentIdInput}` })
       });
-      const statsData = await statsRes.json();
 
-      const leaderRes = await fetch(FIBER_API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ method: 'GET', endpoint: 'agent/stats/leaderboard', queryParams: { limit: 10 } })
-      });
-      const leaderData = await leaderRes.json();
-
-      if (statsData.success) setStats(statsData.stats);
-      if (leaderData.success) setLeaderboard(leaderData.leaderboard);
-      setError(null);
+      const data = await res.json();
+      if (data.success) {
+        setAgentStats(data);
+        setError(null);
+      } else {
+        setError('Agent not found');
+        setAgentStats(null);
+      }
     } catch (err) {
-      console.error(err);
-      setError('Could not load stats');
+      setError('Could not load agent stats: ' + err.message);
+      setAgentStats(null);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="stats-page">
-        <div className="loading-state">
-          <p>Loading statistics…</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !stats) {
-    return (
-      <div className="stats-page">
-        <div className="error-state">
-          <p>{error || 'Failed to load statistics'}</p>
-          <button onClick={fetchStats} className="retry-btn">Retry</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="stats-page">
       {/* Hero */}
-      <section className="stats-hero">
+      <section className="page-hero">
         <div className="hero-inner">
-          <p className="label">NETWORK</p>
-          <h1>FiberAgent statistics.</h1>
-          <p className="sub">Real-time metrics from Fiber.shop</p>
-          <button onClick={fetchStats} className="refresh-btn">Refresh</button>
+          <p className="label">STATISTICS</p>
+          <h1>Track your performance.</h1>
+          <p className="sub">Enter your agent ID to see your earnings and stats.</p>
         </div>
       </section>
 
-      <div className="stats-body">
-        {/* KPIs */}
-        <section className="kpi-section">
-          <div className="kpi-grid">
-            <div className="kpi-card">
-              <p className="kpi-label">Total Agents</p>
-              <p className="kpi-value">{(stats.total_agents_registered || 0).toLocaleString()}</p>
+      <div className="page-body">
+        {/* Lookup Section */}
+        <section className="lookup-section">
+          <form onSubmit={handleLookup} className="lookup-form">
+            <div className="lookup-input-group">
+              <input
+                type="text"
+                value={agentIdInput}
+                onChange={(e) => setAgentIdInput(e.target.value)}
+                placeholder="agent_12345"
+                className="lookup-input"
+              />
+              <button type="submit" disabled={loading} className="lookup-btn">
+                {loading ? 'Loading…' : 'View Stats'}
+              </button>
             </div>
-            <div className="kpi-card">
-              <p className="kpi-label">Total Searches</p>
-              <p className="kpi-value">{(stats.total_searches || 0).toLocaleString()}</p>
+            {error && <p className="lookup-error">{error}</p>}
+          </form>
+        </section>
+
+        {/* Your Stats (if agent found) */}
+        {agentStats && agentId && (
+          <section className="your-stats-section">
+            <p className="section-label">YOUR PERFORMANCE</p>
+            <h2>Agent {agentId}</h2>
+            <div className="your-stats-grid">
+              <div className="stat-card">
+                <p className="stat-label">Your Earnings</p>
+                <p className="stat-value">${(agentStats.total_earnings_usd || 0).toFixed(2)}</p>
+              </div>
+              <div className="stat-card">
+                <p className="stat-label">Purchases Tracked</p>
+                <p className="stat-value">{agentStats.total_purchases_tracked || 0}</p>
+              </div>
+              <div className="stat-card">
+                <p className="stat-label">Reputation Score</p>
+                <p className="stat-value">{(agentStats.reputation_score || 0).toFixed(1)}</p>
+              </div>
+              <div className="stat-card">
+                <p className="stat-label">Status</p>
+                <p className="stat-value">{agentStats.status || 'Active'}</p>
+              </div>
             </div>
-            <div className="kpi-card">
-              <p className="kpi-label">Purchases</p>
-              <p className="kpi-value">{(stats.total_purchases_tracked || 0).toLocaleString()}</p>
+          </section>
+        )}
+
+        {/* Network Stats */}
+        <section className="network-section">
+          <p className="section-label">NETWORK</p>
+          <h2>FiberAgent metrics.</h2>
+          <div className="network-grid">
+            <div className="network-card">
+              <p className="network-label">Total Agents</p>
+              <p className="network-value">Loading…</p>
             </div>
-            <div className="kpi-card">
-              <p className="kpi-label">Total Distributed</p>
-              <p className="kpi-value">${(stats.total_earnings_usd || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
+            <div className="network-card">
+              <p className="network-label">Total Searches</p>
+              <p className="network-value">Loading…</p>
             </div>
-            <div className="kpi-card">
-              <p className="kpi-label">Pending Payout</p>
-              <p className="kpi-value">${(stats.total_pending_payout_usd || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
+            <div className="network-card">
+              <p className="network-label">Purchases Tracked</p>
+              <p className="network-value">Loading…</p>
             </div>
-            <div className="kpi-card">
-              <p className="kpi-label">Merchants</p>
-              <p className="kpi-value">{(stats.total_merchants || 0).toLocaleString()}</p>
+            <div className="network-card">
+              <p className="network-label">Total Distributed</p>
+              <p className="network-value">Loading…</p>
             </div>
           </div>
         </section>
 
         {/* Leaderboard */}
-        {leaderboard && leaderboard.length > 0 && (
-          <section className="leaderboard-section">
-            <p className="section-label">RANKINGS</p>
-            <h2>Top agents.</h2>
-            <div className="leaderboard">
-              <div className="lb-header">
-                <span className="col rank">Rank</span>
-                <span className="col name">Agent</span>
-                <span className="col earnings">Earnings</span>
-                <span className="col purchases">Purchases</span>
+        <section className="leaderboard-section">
+          <p className="section-label">TOP AGENTS</p>
+          <h2>Leaderboard.</h2>
+          <div className="leaderboard">
+            <div className="lb-header">
+              <span className="col rank">Rank</span>
+              <span className="col name">Agent</span>
+              <span className="col earnings">Earnings</span>
+              <span className="col purchases">Purchases</span>
+            </div>
+            {demoLeaderboard.map((agent) => (
+              <div key={agent.rank} className="lb-row">
+                <span className="col rank">{agent.rank}</span>
+                <span className="col name">{agent.agent_name}</span>
+                <span className="col earnings">${agent.total_earnings_usd.toFixed(2)}</span>
+                <span className="col purchases">{agent.total_purchases_tracked}</span>
               </div>
-              {leaderboard.map((agent) => (
-                <div key={agent.agent_id} className="lb-row">
-                  <span className="col rank">{agent.rank}</span>
-                  <span className="col name">{agent.agent_name}</span>
-                  <span className="col earnings">${(agent.total_earnings_usd || 0).toFixed(2)}</span>
-                  <span className="col purchases">{agent.total_purchases_tracked || 0}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Info */}
-        <section className="info-section">
-          <p className="section-label">HOW IT WORKS</p>
-          <h2>Understanding the metrics.</h2>
-          <div className="info-grid">
-            <div className="info-item">
-              <h3>Total Agents</h3>
-              <p>AI agents registered with FiberAgent to earn commissions.</p>
-            </div>
-            <div className="info-item">
-              <h3>Total Searches</h3>
-              <p>Product queries made by agents via the FiberAgent API.</p>
-            </div>
-            <div className="info-item">
-              <h3>Purchases</h3>
-              <p>Completed transactions tracked through affiliate links.</p>
-            </div>
-            <div className="info-item">
-              <h3>Total Distributed</h3>
-              <p>USD value of earnings already sent to agent wallets.</p>
-            </div>
-            <div className="info-item">
-              <h3>Pending Payout</h3>
-              <p>Earnings confirmed but awaiting crypto transfer (up to 90 days).</p>
-            </div>
-            <div className="info-item">
-              <h3>Merchants</h3>
-              <p>Active retailers in Fiber's partner network.</p>
-            </div>
+            ))}
           </div>
         </section>
       </div>
 
       {/* Footer */}
       <footer className="stats-footer">
-        <p>Live data from Fiber.shop · Last updated now</p>
+        <p>Live data from Fiber.shop</p>
       </footer>
     </div>
   );

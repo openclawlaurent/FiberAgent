@@ -10,10 +10,29 @@ export default function AgentPage() {
     'Solana': ['SOL', 'BONK', 'MF', 'AOL', 'USDC', 'USD1', 'VALOR', 'PENGU']
   };
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState([]);
+  // Generate test wallet
+  const generateTestWallet = () => {
+    const hex = '0123456789abcdef';
+    let addr = '0xtest';
+    for (let i = 0; i < 36; i++) addr += hex[Math.floor(Math.random() * 16)];
+    return addr;
+  };
+
+  // Registration state
+  const [agentName, setAgentName] = useState('My Shopping Agent');
+  const [walletAddress, setWalletAddress] = useState(() => generateTestWallet());
   const [selectedBlockchain, setSelectedBlockchain] = useState('Monad');
   const [selectedToken, setSelectedToken] = useState('MON');
+  const [regLoading, setRegLoading] = useState(false);
+  const [regError, setRegError] = useState(null);
+  
+  // After registration
+  const [agentId, setAgentId] = useState(null);
+  const [registered, setRegistered] = useState(false);
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState(null);
 
@@ -24,6 +43,48 @@ export default function AgentPage() {
     setSelectedBlockchain(newBlockchain);
     const availableTokens = blockchainTokens[newBlockchain];
     setSelectedToken(availableTokens[0]);
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setRegLoading(true);
+    setRegError(null);
+
+    try {
+      const res = await fetch(FIBER_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method: 'POST',
+          endpoint: 'agent/register',
+          body: {
+            agent_name: agentName,
+            wallet_address: walletAddress,
+            preferred_token: selectedToken,
+            description: 'Shopping agent via FiberAgent'
+          }
+        })
+      });
+
+      const data = await res.json();
+      
+      if (data.success || data.agent_id) {
+        setAgentId(data.agent_id || data.existing_agent_id);
+        setRegistered(true);
+        setRegError(null);
+      } else if (data.existing_agent_id) {
+        // Already registered
+        setAgentId(data.existing_agent_id);
+        setRegistered(true);
+        setRegError(null);
+      } else {
+        setRegError(data.error || 'Registration failed');
+      }
+    } catch (err) {
+      setRegError('Error: ' + err.message);
+    } finally {
+      setRegLoading(false);
+    }
   };
 
   const handleSearch = async (e) => {
@@ -45,7 +106,7 @@ export default function AgentPage() {
           endpoint: 'agent/search',
           queryParams: {
             keywords: searchQuery,
-            agent_id: 'demo-agent',
+            agent_id: agentId,
             limit: 12
           }
         })
@@ -54,8 +115,9 @@ export default function AgentPage() {
       const data = await res.json();
       if (data.success && data.results) {
         setProducts(data.results);
+        setSearchError(null);
       } else {
-        setSearchError('No results found');
+        setSearchError(data.error || 'No results found');
         setProducts([]);
       }
     } catch (err) {
@@ -78,137 +140,196 @@ export default function AgentPage() {
       </section>
 
       <div className="page-body">
-        {/* Dashboard Cards */}
-        <section className="dashboard-section">
-          <div className="dashboard-grid">
-            <div className="dash-card">
-              <p className="card-label">Your Earnings</p>
-              <p className="card-value">$0.00</p>
-              <p className="card-desc">This month</p>
-            </div>
-            <div className="dash-card">
-              <p className="card-label">Active Users</p>
-              <p className="card-value">0</p>
-              <p className="card-desc">Shopping through you</p>
-            </div>
-            <div className="dash-card">
-              <p className="card-label">Payout Settings</p>
-              <div className="settings-flex">
-                <div className="setting-field">
+        {/* Registration Section */}
+        {!registered ? (
+          <section className="registration-section">
+            <p className="section-label">STEP 1</p>
+            <h2>Register your agent.</h2>
+            <form onSubmit={handleRegister} className="reg-form">
+              <div className="reg-grid">
+                <div className="reg-field">
+                  <label>Agent Name</label>
+                  <input
+                    type="text"
+                    value={agentName}
+                    onChange={(e) => setAgentName(e.target.value)}
+                    placeholder="My Shopping Agent"
+                    className="reg-input"
+                  />
+                </div>
+                <div className="reg-field">
+                  <label>Wallet Address</label>
+                  <div className="wallet-input-row">
+                    <input
+                      type="text"
+                      value={walletAddress}
+                      onChange={(e) => setWalletAddress(e.target.value)}
+                      placeholder="0x..."
+                      className="reg-input mono"
+                    />
+                    <button
+                      type="button"
+                      className="gen-btn"
+                      onClick={() => setWalletAddress(generateTestWallet())}
+                      title="Generate wallet"
+                    >
+                      ↻
+                    </button>
+                  </div>
+                </div>
+                <div className="reg-field">
                   <label>Blockchain</label>
-                  <select value={selectedBlockchain} onChange={handleBlockchainChange} className="setting-select">
+                  <select
+                    value={selectedBlockchain}
+                    onChange={handleBlockchainChange}
+                    className="reg-select"
+                  >
                     {Object.keys(blockchainTokens).map(chain => (
                       <option key={chain} value={chain}>{chain}</option>
                     ))}
                   </select>
                 </div>
-                <div className="setting-field">
-                  <label>Token</label>
-                  <select value={selectedToken} onChange={(e) => setSelectedToken(e.target.value)} className="setting-select">
+                <div className="reg-field">
+                  <label>Payout Token</label>
+                  <select
+                    value={selectedToken}
+                    onChange={(e) => setSelectedToken(e.target.value)}
+                    className="reg-select"
+                  >
                     {getAvailableTokens().map(token => (
                       <option key={token} value={token}>{token}</option>
                     ))}
                   </select>
                 </div>
               </div>
-              <p className="card-desc">Receive {selectedToken} on {selectedBlockchain}</p>
-            </div>
-          </div>
-        </section>
+              <button type="submit" disabled={regLoading} className="reg-submit">
+                {regLoading ? 'Registering…' : 'Register Agent'}
+              </button>
+              {regError && <p className="msg-error">{regError}</p>}
+            </form>
+          </section>
+        ) : (
+          <>
+            {/* Dashboard Cards */}
+            <section className="dashboard-section">
+              <div className="dashboard-grid">
+                <div className="dash-card">
+                  <p className="card-label">Your Earnings</p>
+                  <p className="card-value">$0.00</p>
+                  <p className="card-desc">This month</p>
+                </div>
+                <div className="dash-card">
+                  <p className="card-label">Active Users</p>
+                  <p className="card-value">0</p>
+                  <p className="card-desc">Shopping through you</p>
+                </div>
+                <div className="dash-card">
+                  <p className="card-label">Agent ID</p>
+                  <p className="card-value-small">{agentId}</p>
+                  <p className="card-desc">Payout: {selectedToken} on {selectedBlockchain}</p>
+                </div>
+              </div>
+            </section>
 
-        {/* How It Works */}
-        <section className="how-section">
-          <p className="section-label">THE PROCESS</p>
-          <h2>Three steps to revenue.</h2>
-          <div className="steps-layout">
-            <div className="how-step">
-              <span className="step-num">01</span>
-              <h3>Register</h3>
-              <p>You already did. Your agent ID is ready to query FiberAgent.</p>
-            </div>
-            <div className="how-step">
-              <span className="step-num">02</span>
-              <h3>Query & Share</h3>
-              <p>Your agent searches FiberAgent. You share the affiliate link with your users.</p>
-            </div>
-            <div className="how-step">
-              <span className="step-num">03</span>
-              <h3>Earn</h3>
-              <p>User buys. You get a kickback in {selectedToken}. Automatic. On-chain.</p>
-            </div>
-          </div>
-        </section>
+            {/* How It Works */}
+            <section className="how-section">
+              <p className="section-label">THE PROCESS</p>
+              <h2>Three steps to revenue.</h2>
+              <div className="steps-layout">
+                <div className="how-step">
+                  <span className="step-num">01</span>
+                  <h3>Register</h3>
+                  <p>You already did. Your agent ID is ready to query FiberAgent.</p>
+                </div>
+                <div className="how-step">
+                  <span className="step-num">02</span>
+                  <h3>Query & Share</h3>
+                  <p>Your agent searches FiberAgent. You share the affiliate link with your users.</p>
+                </div>
+                <div className="how-step">
+                  <span className="step-num">03</span>
+                  <h3>Earn</h3>
+                  <p>User buys. You get a kickback in {selectedToken}. Automatic. On-chain.</p>
+                </div>
+              </div>
+            </section>
 
-        {/* Search Products */}
-        <section className="products-section">
-          <p className="section-label">SEARCH</p>
-          <h2>Find what your users want.</h2>
-          <form onSubmit={handleSearch} className="search-form">
-            <input
-              type="text"
-              placeholder="shoes, electronics, food…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
-            />
-            <button type="submit" disabled={searchLoading} className="search-btn">
-              {searchLoading ? 'Searching…' : 'Search'}
-            </button>
-          </form>
+            {/* Search Products */}
+            <section className="products-section">
+              <p className="section-label">SEARCH</p>
+              <h2>Find what your users want.</h2>
+              <form onSubmit={handleSearch} className="search-form">
+                <input
+                  type="text"
+                  placeholder="shoes, electronics, food…"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                />
+                <button type="submit" disabled={searchLoading} className="search-btn">
+                  {searchLoading ? 'Searching…' : 'Search'}
+                </button>
+              </form>
 
-          {searchError && <p className="search-error">{searchError}</p>}
+              {searchError && <p className="search-error">{searchError}</p>}
 
-          {products.length === 0 ? (
-            <div className="empty-state">
-              <p>Start searching to see products and earnings.</p>
-            </div>
-          ) : (
-            <div className="products-grid">
-              {products.map(product => (
-                <a
-                  key={product.merchant_id}
-                  href={product.affiliate_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="product-card"
-                >
-                  <div className="pc-image">
-                    {product.image_url ? <img src={product.image_url} alt={product.merchant_name} /> : <span className="pc-placeholder">{product.merchant_name[0]}</span>}
-                  </div>
-                  <div className="pc-body">
-                    <h4>{product.merchant_name}</h4>
-                    <span className="pc-shop">{product.merchant_domain}</span>
-                    <span className="pc-earn">{product.cashback.display}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          )}
-        </section>
+              {products.length === 0 ? (
+                <div className="empty-state">
+                  <p>Start searching to see products and earnings.</p>
+                </div>
+              ) : (
+                <div className="products-grid">
+                  {products.map(product => (
+                    <a
+                      key={product.merchant_id}
+                      href={product.affiliate_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="product-card"
+                    >
+                      <div className="pc-image">
+                        {product.image_url ? (
+                          <img src={product.image_url} alt={product.merchant_name} />
+                        ) : (
+                          <span className="pc-placeholder">{product.merchant_name[0]}</span>
+                        )}
+                      </div>
+                      <div className="pc-body">
+                        <h4>{product.merchant_name}</h4>
+                        <span className="pc-shop">{product.merchant_domain}</span>
+                        <span className="pc-earn">{product.cashback.display}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </section>
 
-        {/* Tips */}
-        <section className="tips-section">
-          <p className="section-label">TIPS</p>
-          <h2>Maximize your earnings.</h2>
-          <div className="tips-grid">
-            <div className="tip-box">
-              <h3>Share What Converts</h3>
-              <p>Find products your users actually buy. Quality over quantity.</p>
-            </div>
-            <div className="tip-box">
-              <h3>Build on Trust</h3>
-              <p>Your reputation score grows with every successful transaction.</p>
-            </div>
-            <div className="tip-box">
-              <h3>Real-time Payouts</h3>
-              <p>No waiting. Earnings hit your wallet as transactions confirm.</p>
-            </div>
-            <div className="tip-box">
-              <h3>API-First</h3>
-              <p>Integrate FiberAgent directly into your agent. One API call per search.</p>
-            </div>
-          </div>
-        </section>
+            {/* Tips */}
+            <section className="tips-section">
+              <p className="section-label">TIPS</p>
+              <h2>Maximize your earnings.</h2>
+              <div className="tips-grid">
+                <div className="tip-box">
+                  <h3>Share What Converts</h3>
+                  <p>Find products your users actually buy. Quality over quantity.</p>
+                </div>
+                <div className="tip-box">
+                  <h3>Build on Trust</h3>
+                  <p>Your reputation score grows with every successful transaction.</p>
+                </div>
+                <div className="tip-box">
+                  <h3>Real-time Payouts</h3>
+                  <p>No waiting. Earnings hit your wallet as transactions confirm.</p>
+                </div>
+                <div className="tip-box">
+                  <h3>API-First</h3>
+                  <p>Integrate FiberAgent directly into your agent. One API call per search.</p>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
       </div>
 
       {/* Footer */}
