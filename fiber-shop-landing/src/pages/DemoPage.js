@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import '../styles/DemoPage.css';
+import { motion } from 'framer-motion';
+import styles from '../styles/DemoPage.module.css';
+import HeroBackground from '../components/HeroBackground';
 
 export default function DemoPage() {
   const FIBER_API = '/api/fiber-proxy';
 
-  const generateTestWallet = () => {
-    const hex = '0123456789abcdef';
-    let addr = '0xtest';
-    for (let i = 0; i < 36; i++) addr += hex[Math.floor(Math.random() * 16)];
-    return addr;
-  };
-
   const [agentId, setAgentId] = useState(null);
   const [agentName, setAgentName] = useState('My Shopping Agent');
-  const [walletAddress, setWalletAddress] = useState(() => generateTestWallet());
   const [regResponse, setRegResponse] = useState(null);
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState(null);
@@ -34,12 +28,11 @@ export default function DemoPage() {
         body: JSON.stringify({
           method: 'POST',
           endpoint: 'agent/register',
-          body: { agent_name: agentName, wallet_address: walletAddress, description: 'Shopping agent via FiberAgent' }
+          body: { agent_name: agentName, description: 'Shopping agent via FiberAgent' }
         })
       });
       const data = await res.json();
       if (!res.ok || !data.success) {
-        // Handle 409 — already registered
         if (data.existing_agent_id) {
           setAgentId(data.existing_agent_id);
           setRegResponse({ agent_id: data.existing_agent_id, agent_name: agentName, status: 'active (existing)' });
@@ -83,88 +76,108 @@ export default function DemoPage() {
   };
 
   return (
-    <div className="demo">
+    <div className={styles.demo}>
+      <HeroBackground />
+
       {/* Header */}
-      <section className="demo-hero">
-        <div className="demo-hero-inner">
-          <p className="label">LIVE DEMO</p>
+      <section className={styles.hero}>
+        <motion.div
+          className={styles.heroContent}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className={styles.label}>LIVE DEMO</p>
           <h1>Try FiberAgent.</h1>
-          <p className="sub">Register an agent, search 50,000+ merchants, see real cashback rates.</p>
-        </div>
+          <p className={styles.sub}>Register an agent, search 50,000+ merchants, see real cashback rates.</p>
+        </motion.div>
       </section>
 
-      <div className="demo-body">
+      <div className={styles.demoBody}>
         {/* Step 1 */}
-        <section className="demo-panel">
-          <div className="panel-head">
-            <span className="step-badge">01</span>
+        <motion.section
+          className={styles.panel}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className={styles.panelHead}>
+            <span className={styles.stepBadge}>01</span>
             <h2>Register your agent</h2>
           </div>
-          <form onSubmit={handleRegister} className="reg-form">
-            <div className="field">
+          <form onSubmit={handleRegister} className={styles.regForm}>
+            <div className={styles.field}>
               <label>Agent Name</label>
               <input value={agentName} onChange={e => setAgentName(e.target.value)} placeholder="My Shopping Agent" />
             </div>
-            <div className="field">
-              <label>Wallet Address</label>
-              <div className="wallet-row">
-                <input value={walletAddress} onChange={e => setWalletAddress(e.target.value)} placeholder="0x..." className="mono" />
-                <button type="button" className="btn-icon" onClick={() => setWalletAddress(generateTestWallet())} title="Generate wallet">↻</button>
-              </div>
-            </div>
-            <button type="submit" disabled={regLoading} className="btn-submit">
+
+            <button type="submit" disabled={regLoading} className={styles.btnSubmit}>
               {regLoading ? 'Registering…' : 'Register Agent'}
             </button>
-            {regError && <p className="msg-error">{regError}</p>}
+            {regError && <p className={styles.msgError}>{regError}</p>}
             {regResponse && (
-              <div className="msg-success">
+              <div className={styles.msgSuccess}>
                 <p><strong>Agent ID</strong> {regResponse.agent_id}</p>
                 <p><strong>Status</strong> {regResponse.status || 'active'}</p>
               </div>
             )}
           </form>
-        </section>
+        </motion.section>
 
         {/* Step 2 */}
-        <section className="demo-panel">
-          <div className="panel-head">
-            <span className="step-badge">02</span>
+        <motion.section
+          className={styles.panel}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className={styles.panelHead}>
+            <span className={styles.stepBadge}>02</span>
             <h2>Search products</h2>
           </div>
-          {!agentId ? (
-            <p className="muted">Register an agent first.</p>
-          ) : (
-            <>
-              <form onSubmit={handleSearch} className="search-form">
-                <input value={searchKeywords} onChange={e => setSearchKeywords(e.target.value)} placeholder="shoes, electronics, fitness…" />
-                <button type="submit" disabled={searchLoading} className="btn-submit">
-                  {searchLoading ? 'Searching…' : 'Search'}
-                </button>
-              </form>
-              {searchError && <p className="msg-error">{searchError}</p>}
-            </>
-          )}
-        </section>
+
+          <div style={{ position: 'relative' }}>
+            {!agentId && (
+              <div className={styles.authOverlay}>
+                <span className={styles.authMsg}>🔒 Complete Step 1 to Unlock</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSearch} className={styles.searchForm} style={{ opacity: agentId ? 1 : 0.3, pointerEvents: agentId ? 'auto' : 'none' }}>
+              <input value={searchKeywords} onChange={e => setSearchKeywords(e.target.value)} placeholder="shoes, electronics, fitness…" />
+              <button type="submit" disabled={searchLoading} className={styles.btnSubmit}>
+                {searchLoading ? 'Searching…' : 'Search'}
+              </button>
+            </form>
+          </div>
+
+          {searchError && <p className={styles.msgError}>{searchError}</p>}
+        </motion.section>
 
         {/* Results */}
         {searchResults && searchResults.results && (
-          <section className="results-section">
-            <p className="results-count">{searchResults.results_count} merchants found for "{searchResults.query}"</p>
-            <div className="results-grid">
+          <motion.section
+            className={styles.resultsSection}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className={styles.resultsCount}>{searchResults.results_count} merchants found for "{searchResults.query}"</p>
+            <div className={styles.resultsGrid}>
               {searchResults.results.map((m) => (
-                <a key={m.merchant_id} href={m.affiliate_link} target="_blank" rel="noopener noreferrer" className="merchant-card">
-                  <div className="mc-image">
-                    {m.image_url ? <img src={m.image_url} alt={m.merchant_name} /> : <span className="mc-placeholder">{m.merchant_name[0]}</span>}
+                <a key={m.merchant_id} href={m.affiliate_link} target="_blank" rel="noopener noreferrer" className={styles.merchantCard}>
+                  <div className={styles.mcImage}>
+                    {m.image_url ? <img src={m.image_url} alt={m.merchant_name} /> : <span className={styles.mcPlaceholder}>{m.merchant_name[0]}</span>}
                   </div>
-                  <div className="mc-body">
+                  <div className={styles.mcBody}>
                     <h3>{m.merchant_name}</h3>
-                    <span className="mc-domain">{m.merchant_domain}</span>
-                    <span className="mc-cashback">{m.cashback.display} cashback</span>
+                    <span className={styles.mcDomain}>{m.merchant_domain}</span>
+                    <span className={styles.mcCashback}>{m.cashback.display} cashback</span>
                   </div>
                 </a>
               ))}
             </div>
-          </section>
+          </motion.section>
         )}
       </div>
     </div>

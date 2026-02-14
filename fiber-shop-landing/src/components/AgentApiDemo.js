@@ -45,23 +45,11 @@ export default function AgentApiDemo() {
     }),
   };
 
-  // Generate EVM test wallet: 0xtest + 36 random hex (= 42 chars, valid EVM format)
-  // Fiber auto-detects: EVM (0x..., 42 chars) → defaults to MON
-  const generateTestWallet = () => {
-    const hexChars = '0123456789abcdef';
-    let address = '0xtest';
-    // Generate 36 more random hex characters (0xtest = 6 chars, total 42 for EVM)
-    for (let i = 0; i < 36; i++) {
-      address += hexChars.charAt(Math.floor(Math.random() * hexChars.length));
-    }
-    return address; // Returns: 0xtest[36 random hex] = 42 chars total
-  };
-
   const [selectedTab, setSelectedTab] = useState('register');
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
   const [agentId, setAgentId] = useState(null);
-  const [walletAddress, setWalletAddress] = useState(() => generateTestWallet());
+  // Removed walletAddress state and generation logic
   const [preferredToken, setPreferredToken] = useState(''); // Optional: MON, BONK, etc.
   const [currentToken, setCurrentToken] = useState(null);
   const [availableTokens, setAvailableTokens] = useState([]);
@@ -79,10 +67,9 @@ export default function AgentApiDemo() {
     try {
       const body = {
         agent_name: 'FiberAgent Demo Agent',
-        wallet_address: walletAddress,
         description: 'Demo shopping agent discovering products via FiberAgent'
       };
-      
+
       // Add preferred token if specified
       if (preferredToken) {
         body.preferred_token = preferredToken;
@@ -98,10 +85,10 @@ export default function AgentApiDemo() {
         })
       });
       const data = await res.json();
-      
+
       // Handle 409 Conflict (already registered)
       if (res.status === 409) {
-        setResponse({ 
+        setResponse({
           warning: 'Agent already registered',
           existing_agent_id: data.existing_agent_id,
           message: 'This wallet is already registered. Using existing agent ID.'
@@ -219,7 +206,7 @@ export default function AgentApiDemo() {
   const handleSelectProduct = (product) => {
     // Use affiliate_link directly from Fiber API
     setSelectedProduct(product);
-    setResponse({ 
+    setResponse({
       info: 'Product selected. Share the affiliate link with your users.',
       affiliate_link: product.affiliate_link,
       cashback: product.cashback
@@ -262,9 +249,9 @@ export default function AgentApiDemo() {
         <div className="demo-controls">
           <div className="agent-info">
             <h3>Your Agent ID</h3>
-            <input 
-              type="text" 
-              value={agentId} 
+            <input
+              type="text"
+              value={agentId}
               onChange={(e) => setAgentId(e.target.value)}
               placeholder="Agent ID"
               className="agent-id-input"
@@ -272,61 +259,34 @@ export default function AgentApiDemo() {
             <p className="hint">Unique identifier for your agent</p>
           </div>
 
-          <div className="agent-wallet">
-            <h3>Your Wallet</h3>
-            <div style={{display: 'flex', gap: '10px', marginBottom: '10px'}}>
-              <input 
-                type="text" 
-                value={walletAddress} 
-                onChange={(e) => setWalletAddress(e.target.value)}
-                placeholder="Monad wallet address"
-                className="wallet-input"
-              />
-              <button
-                onClick={() => setWalletAddress(generateTestWallet())}
-                style={{
-                  padding: '10px 16px',
-                  backgroundColor: '#f0f0f0',
-                  border: '1px solid #ddd',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  whiteSpace: 'nowrap'
-                }}
-                title="Generate a new wallet address"
-              >
-                🔄 Generate
-              </button>
-            </div>
-            <p className="hint">EVM wallet address. Click "New Test" to generate a unique address.</p>
-          </div>
+
 
           <div className="tabs">
-            <button 
+            <button
               className={`tab ${selectedTab === 'register' ? 'active' : ''}`}
               onClick={() => setSelectedTab('register')}
             >
               1️⃣ Register
             </button>
-            <button 
+            <button
               className={`tab ${selectedTab === 'search' ? 'active' : ''}`}
               onClick={() => setSelectedTab('search')}
             >
               2️⃣ Search
             </button>
-            <button 
+            <button
               className={`tab ${selectedTab === 'details' ? 'active' : ''}`}
               onClick={() => setSelectedTab('details')}
             >
               3️⃣ Share Link
             </button>
-            <button 
+            <button
               className={`tab ${selectedTab === 'earnings' ? 'active' : ''}`}
               onClick={() => setSelectedTab('earnings')}
             >
               4️⃣ Earnings
             </button>
-            <button 
+            <button
               className={`tab ${selectedTab === 'tokens' ? 'active' : ''}`}
               onClick={() => setSelectedTab('tokens')}
             >
@@ -338,9 +298,9 @@ export default function AgentApiDemo() {
             <div className="control-section">
               <h3>Step 1: Register Your Agent</h3>
               <p>Register your agent to start earning crypto rewards.</p>
-              
-              <div style={{marginBottom: '15px'}}>
-                <label style={{display: 'block', marginBottom: '8px'}}>
+
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '8px' }}>
                   <strong>Preferred Payout Token (optional):</strong>
                 </label>
                 <Select
@@ -354,10 +314,10 @@ export default function AgentApiDemo() {
                   styles={selectStyles}
                   isSearchable={false}
                 />
-                <p className="hint">Choose which token to receive earnings in. Defaults based on wallet type if not specified.</p>
+                <p className="hint">Choose which token to receive earnings in.</p>
               </div>
 
-              <button 
+              <button
                 className="action-btn"
                 onClick={handleRegisterAgent}
                 disabled={loading}
@@ -366,10 +326,10 @@ export default function AgentApiDemo() {
               </button>
 
               {currentToken && (
-                <div style={{marginTop: '15px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '6px'}}>
+                <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '6px' }}>
                   <p><strong>✅ Current Payout Token:</strong> {currentToken}</p>
                   {availableTokens.length > 0 && (
-                    <div style={{marginTop: '10px'}}>
+                    <div style={{ marginTop: '10px' }}>
                       <p><strong>Change to:</strong></p>
                       {availableTokens.map(token => (
                         <button
@@ -399,7 +359,7 @@ export default function AgentApiDemo() {
             <div className="control-section">
               <h3>Step 2: Search Products</h3>
               {!agentId && <p className="warning">⚠️ Register your agent first</p>}
-              <input 
+              <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -407,7 +367,7 @@ export default function AgentApiDemo() {
                 className="search-input"
                 disabled={!agentId}
               />
-              <button 
+              <button
                 className="action-btn"
                 onClick={handleSearchProducts}
                 disabled={loading || !agentId}
@@ -418,8 +378,8 @@ export default function AgentApiDemo() {
                 <div className="search-results">
                   <p className="result-count">Found {searchResults.length} merchant(s)</p>
                   {searchResults.map(product => (
-                    <div 
-                      key={product.merchant_id} 
+                    <div
+                      key={product.merchant_id}
                       className="search-result-item"
                       onClick={() => handleSelectProduct(product)}
                     >
@@ -449,12 +409,12 @@ export default function AgentApiDemo() {
                       let trackedLink = selectedProduct.affiliate_link;
                       const separator = trackedLink.includes('?') ? '&' : '?';
                       trackedLink += `${separator}agent=${agentId}`;
-                      
+
                       return (
                         <>
-                          <a 
-                            href={trackedLink} 
-                            target="_blank" 
+                          <a
+                            href={trackedLink}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="affiliate-button"
                             style={{
@@ -470,7 +430,7 @@ export default function AgentApiDemo() {
                           >
                             🛍️ Open Store
                           </a>
-                          <button 
+                          <button
                             className="copy-btn"
                             onClick={() => {
                               navigator.clipboard.writeText(trackedLink);
@@ -479,17 +439,17 @@ export default function AgentApiDemo() {
                           >
                             📋 Copy Link
                           </button>
-                          <p style={{fontSize: '0.75rem', marginTop: '10px', color: '#999', wordBreak: 'break-all'}}>
+                          <p style={{ fontSize: '0.75rem', marginTop: '10px', color: '#999', wordBreak: 'break-all' }}>
                             {trackedLink}
                           </p>
-                          <details style={{marginTop: '15px', fontSize: '0.85rem'}}>
-                            <summary style={{cursor: 'pointer', color: '#666'}}>Direct merchant link (no tracking)</summary>
-                            <p style={{marginTop: '10px'}}>
-                              <a 
-                                href={`https://${selectedProduct.merchant_domain}`} 
-                                target="_blank" 
+                          <details style={{ marginTop: '15px', fontSize: '0.85rem' }}>
+                            <summary style={{ cursor: 'pointer', color: '#666' }}>Direct merchant link (no tracking)</summary>
+                            <p style={{ marginTop: '10px' }}>
+                              <a
+                                href={`https://${selectedProduct.merchant_domain}`}
+                                target="_blank"
                                 rel="noopener noreferrer"
-                                style={{color: '#0066cc', wordBreak: 'break-all'}}
+                                style={{ color: '#0066cc', wordBreak: 'break-all' }}
                               >
                                 https://{selectedProduct.merchant_domain}
                               </a>
@@ -513,14 +473,14 @@ export default function AgentApiDemo() {
               <h3>Step 4: Check Earnings</h3>
               <p>See your earnings in real-time.</p>
               {!agentId && <p className="warning">⚠️ Register your agent first</p>}
-              <button 
+              <button
                 className="action-btn"
                 onClick={handleGetEarnings}
                 disabled={loading || !agentId}
               >
                 {loading ? '⏳ Loading...' : '💰 Check Earnings'}
               </button>
-              
+
               <div className="timeline-info">
                 <h4>⏱️ Payment Timeline</h4>
                 <div className="timeline">
@@ -548,25 +508,25 @@ export default function AgentApiDemo() {
               <h3>💰 Manage Payout Token</h3>
               <p>View and change which token you want to receive earnings in.</p>
               {!agentId && <p className="warning">⚠️ Register your agent first</p>}
-              <button 
+              <button
                 className="action-btn"
                 onClick={() => handleGetTokenInfo(agentId)}
                 disabled={loading || !agentId}
               >
                 {loading ? '⏳ Loading...' : '🔄 Refresh Token Info'}
               </button>
-              
+
               {currentToken && (
-                <div style={{marginTop: '20px', padding: '15px', backgroundColor: '#f0f0f0', borderRadius: '8px'}}>
+                <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f0f0f0', borderRadius: '8px' }}>
                   <h4>Current Payout Token</h4>
-                  <p style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#00d084', marginBottom: '15px'}}>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#00d084', marginBottom: '15px' }}>
                     {currentToken}
                   </p>
-                  
+
                   {availableTokens.length > 0 && (
                     <div>
                       <p><strong>Switch to:</strong></p>
-                      <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                         {availableTokens.map(token => (
                           token !== currentToken && (
                             <button
@@ -629,7 +589,7 @@ export default function AgentApiDemo() {
           <div className="flow-step">
             <div className="step-icon">1</div>
             <h4>Register</h4>
-            <p>Agent registers with wallet</p>
+            <p>Agent registers</p>
           </div>
           <div className="flow-arrow">→</div>
           <div className="flow-step">

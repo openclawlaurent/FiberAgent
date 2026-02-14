@@ -1,162 +1,193 @@
 import React from 'react';
-import '../styles/LandingPage.css';
+import { motion } from 'framer-motion';
+import styles from '../styles/LandingPage.module.css';
+import HeroBackground from '../components/HeroBackground';
+import ScrambledText from '../components/ScrambledText';
+import LiveTransactions from '../components/LiveTransactions';
+import BrandMarquee from '../components/BrandMarquee';
+import AgentStats from '../components/AgentStats';
+import howStyles from '../styles/HowItWorks.module.css';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
 
 export default function LandingPage() {
   return (
-    <div className="landing">
-      {/* Hero */}
-      <section className="hero">
-        <div className="hero-inner">
-          <p className="hero-label">AGENT INFRASTRUCTURE</p>
-          <h1>
+    <div className={styles.landing}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroBackground} />
+        <HeroBackground />
+
+        <motion.div
+          className={styles.heroContent}
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.div variants={fadeInUp} className={styles.heroImageContainer}>
+            <img src="/hero-shopping.png" alt="Future Shopping AI" className={styles.heroImage} />
+            <div className={styles.heroImageOverlay} />
+          </motion.div>
+
+          <motion.div variants={fadeInUp}>
+            <span className={styles.badge}>
+              <ScrambledText text="Agent Commerce Network" className={styles.scrambledBadge} />
+            </span>
+          </motion.div>
+
+          <motion.h1 className={styles.headline} variants={fadeInUp}>
             The agent layer<br />
             for commerce.
-          </h1>
-          <p className="hero-sub">
-            FiberAgent is the behavioral intelligence layer for agentic commerce — 
-            connecting AI agents to 50,000+ merchants with personalized deals and on-chain rewards.
-          </p>
-          <p className="hero-tagline">Agents query. Users earn. Everyone gets paid.</p>
-          <div className="hero-actions">
-            <a href="/demo" className="btn-main">Try the Demo</a>
-            <a href="/agent" className="btn-outline">For Agents</a>
-          </div>
-        </div>
+          </motion.h1>
+
+          <motion.p className={styles.subheadline} variants={fadeInUp}>
+            Fiber Agent connects AI agents to 50,000+ merchants with personalized deals and on-chain rewards.
+          </motion.p>
+
+          <motion.div className={styles.ctaGroup} variants={fadeInUp}>
+            <a href="/demo" className={styles.btnPrimary}>Try the Demo</a>
+            <a href="/agent" className={styles.btnSecondary}>For Agents</a>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="stats-bar">
-        <div className="stats-inner">
-          <div className="stat-item">
-            <span className="stat-num">50,000+</span>
-            <span className="stat-desc">Merchants</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-num">$3T</span>
-            <span className="stat-desc">Crypto economy</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-num">2M+</span>
-            <span className="stat-desc">Token holders</span>
-          </div>
-          <div className="stat-divider" />
-          <div className="stat-item">
-            <span className="stat-num">1</span>
-            <span className="stat-desc">Intelligence layer</span>
-          </div>
-        </div>
+
+
+      {/* Live Helper Text currently active */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        style={{ marginBottom: '60px', marginTop: '20px' }}
+      >
+        <LiveTransactions />
+      </motion.div>
+
+      {/* Features Section */}
+      <section className={styles.section}>
+        <motion.div
+          className={styles.featuresGrid}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+        >
+          <motion.div className={styles.glassCard} variants={fadeInUp}>
+            <div className={styles.cardIcon}>🧠</div>
+            <h3 className={styles.cardTitle}>Behavioral Intelligence</h3>
+            <p className={styles.cardText}>
+              On-chain signals + real purchase data = deals that actually convert.
+              Not guessing from an NFT. Knowing they bought running shoes last month.
+            </p>
+          </motion.div>
+
+          <motion.div className={styles.glassCard} variants={fadeInUp}>
+            <div className={styles.cardIcon}>🏢</div>
+            <h3 className={styles.cardTitle}>50,000+ Merchants</h3>
+            <p className={styles.cardText}>
+              Real commission structures via our global affiliate network.
+              Nike. Adidas. Walmart. Not mock data.
+            </p>
+          </motion.div>
+
+          <motion.div className={styles.glassCard} variants={fadeInUp}>
+            <div className={styles.cardIcon}>💸</div>
+            <h3 className={styles.cardTitle}>Agent Economics</h3>
+            <p className={styles.cardText}>
+              Every agent in the chain gets paid. Kickbacks flow automatically.
+              No contracts. No negotiations. Just code.
+            </p>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* What */}
-      <section className="section">
-        <div className="section-inner">
-          <p className="section-label">WHAT IS FIBERAGENT</p>
-          <h2>Have your agent<br />call my agent.</h2>
-          <p className="section-text">
-            AI agents need commerce. FiberAgent provides it.
-          </p>
-          <p className="section-text dim">
-            Your agent queries FiberAgent with a wallet address and a shopping intent. 
-            FiberAgent analyzes on-chain behavior and purchase history to return 
-            personalized deals with real cashback. The user buys. The agent earns a kickback. 
-            Fiber takes a cut. Everyone wins.
-          </p>
-        </div>
+      {/* Live Activity Section */}
+      <section className={styles.section} style={{ paddingTop: '0' }}>
+        <BrandMarquee />
       </section>
 
-      {/* How */}
-      <section className="section dark">
-        <div className="section-inner">
-          <p className="section-label">HOW IT WORKS</p>
-          <h2>Four steps to revenue.</h2>
-          <div className="steps-grid">
-            <div className="step-card">
-              <span className="step-num">01</span>
+      {/* How It Works */}
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className={styles.sectionTitle}
+          >
+            How It Works
+          </motion.h2>
+        </div>
+
+        <motion.div
+          className={howStyles.stepsContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+        >
+          {/* Step 1 */}
+          <motion.div className={howStyles.stepCard} variants={fadeInUp}>
+            <span className={howStyles.stepNumber}>01</span>
+            <div className={howStyles.stepIcon}>🔗</div>
+            <div className={howStyles.stepContent}>
               <h3>Register</h3>
               <p>Connect your wallet. Get an agent ID. Takes 30 seconds.</p>
             </div>
-            <div className="step-card">
-              <span className="step-num">02</span>
+          </motion.div>
+
+          {/* Step 2 */}
+          <motion.div className={howStyles.stepCard} variants={fadeInUp}>
+            <span className={howStyles.stepNumber}>02</span>
+            <div className={howStyles.stepIcon}>🔍</div>
+            <div className={howStyles.stepContent}>
               <h3>Query</h3>
-              <p>Send a search request with keywords and a wallet address. FiberAgent returns personalized results.</p>
+              <p>Send a search request with keywords. FiberAgent returns personalized results.</p>
             </div>
-            <div className="step-card">
-              <span className="step-num">03</span>
+          </motion.div>
+
+          {/* Step 3 */}
+          <motion.div className={howStyles.stepCard} variants={fadeInUp}>
+            <span className={howStyles.stepNumber}>03</span>
+            <div className={howStyles.stepIcon}>🤝</div>
+            <div className={howStyles.stepContent}>
               <h3>Share</h3>
-              <p>Give your user the affiliate link. They click, they shop, they earn cashback.</p>
+              <p>Give your user the affiliate link. They shop, they earn cashback.</p>
             </div>
-            <div className="step-card">
-              <span className="step-num">04</span>
+          </motion.div>
+
+          {/* Step 4 */}
+          <motion.div className={howStyles.stepCard} variants={fadeInUp}>
+            <span className={howStyles.stepNumber}>04</span>
+            <div className={howStyles.stepIcon}>💰</div>
+            <div className={howStyles.stepContent}>
               <h3>Earn</h3>
-              <p>You receive a kickback in MON or BONK. Automatic. On-chain. No invoices.</p>
+              <p>You receive a kickback in MON or BONK. Automatic. On-chain.</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why */}
-      <section className="section">
-        <div className="section-inner">
-          <p className="section-label">WHY FIBERAGENT</p>
-          <h2>Unfair advantages.</h2>
-          <div className="features-grid">
-            <div className="feature-item">
-              <h3>Behavioral Intelligence</h3>
-              <p>
-                On-chain signals + real purchase data = deals that actually convert.
-                Not guessing from an NFT. Knowing they bought running shoes last month.
-              </p>
-            </div>
-            <div className="feature-item">
-              <h3>50,000+ Merchants</h3>
-              <p>
-                Real commission structures via Wildfire's affiliate network.
-                Nike. Adidas. Walmart. Not mock data.
-              </p>
-            </div>
-            <div className="feature-item">
-              <h3>Agent Economics</h3>
-              <p>
-                Every agent in the chain gets paid. Kickbacks flow automatically.
-                No contracts. No negotiations. Just code.
-              </p>
-            </div>
-            <div className="feature-item">
-              <h3>On-Chain Reputation</h3>
-              <p>
-                ERC-8004 identity registry on Monad. Trust built through performance, 
-                not promises. Higher scores unlock better rates.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section dark">
-        <div className="section-inner cta-section">
-          <h2>The new era of<br />agent commerce.</h2>
-          <p className="section-text">
-            Register your agent. Start earning. Build reputation.
-          </p>
-          <div className="hero-actions">
-            <a href="/demo" className="btn-main">Launch Demo</a>
-            <a href="/agent" className="btn-outline">Read the Docs</a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <span className="footer-brand">FiberAgent</span>
-          <span className="footer-links">
-            <a href="https://fiber.shop" target="_blank" rel="noopener noreferrer">fiber.shop</a>
-            <a href="https://x.com/fiber_shop" target="_blank" rel="noopener noreferrer">Twitter</a>
-          </span>
-          <span className="footer-copy">Powered by Fiber · Built on Monad</span>
+      <footer className={styles.footer}>
+        <span className={styles.footerBrand}>FiberAgent</span>
+        <div className={styles.footerLinks}>
+          <a href="https://fiber.shop" target="_blank" rel="noopener noreferrer">fiber.shop</a>
+          <a href="https://x.com/fiber_shop" target="_blank" rel="noopener noreferrer">Twitter</a>
         </div>
       </footer>
     </div>

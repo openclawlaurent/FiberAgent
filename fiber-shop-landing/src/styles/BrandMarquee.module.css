@@ -1,0 +1,65 @@
+.marqueeContainer {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--border-glass);
+    padding: 24px 0;
+    position: relative;
+    z-index: 5;
+}
+
+.marqueeContent {
+    display: flex;
+    gap: 60px;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+}
+
+.brandItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.brandLogoImage {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(200%);
+    /* Make white/bright initially */
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.brandLogoImage.invertLogo {
+    filter: grayscale(100%) invert(1) brightness(200%);
+    opacity: 0.9;
+}
+
+.brandItem:hover .brandLogoImage {
+    filter: grayscale(0%) brightness(100%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.brandItem:hover .invertLogo {
+    filter: invert(0);
+    /* Reset invert on hover so original colors show */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover just for fun */
+.marqueeContainer:hover .marqueeContent {
+    animation-play-state: paused;
+}
