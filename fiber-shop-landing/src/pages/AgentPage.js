@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import '../styles/AgentPage.css';
+import { motion } from 'framer-motion';
+import styles from '../styles/AgentPage.module.css';
+import HeroBackground from '../components/HeroBackground';
 
 export default function AgentPage() {
   const FIBER_API = '/api/fiber-proxy';
@@ -11,8 +13,8 @@ export default function AgentPage() {
       ...base,
       background: 'rgba(20,20,20,0.8)',
       border: '1px solid rgba(255,255,255,0.1)',
-      borderRadius: '8px',
-      padding: '0px',
+      borderRadius: '12px',
+      padding: '4px',
       cursor: 'pointer',
       transition: 'border-color 0.2s',
       ':hover': {
@@ -31,13 +33,14 @@ export default function AgentPage() {
       ...base,
       background: 'rgba(20,20,20,0.95)',
       border: '1px solid rgba(255,255,255,0.1)',
-      borderRadius: '8px',
-      marginTop: '4px',
+      borderRadius: '12px',
+      marginTop: '8px',
+      zIndex: 100
     }),
     option: (base, state) => ({
       ...base,
-      background: state.isSelected ? 'rgba(0,208,132,0.2)' : state.isFocused ? 'rgba(255,255,255,0.08)' : 'rgba(20,20,20,0.95)',
-      color: '#fff',
+      background: state.isSelected ? 'rgba(229, 255, 0, 0.2)' : state.isFocused ? 'rgba(255,255,255,0.08)' : 'rgba(20,20,20,0.95)',
+      color: state.isSelected ? '#E5FF00' : '#fff',
       cursor: 'pointer',
       padding: '12px 16px',
     }),
@@ -49,21 +52,13 @@ export default function AgentPage() {
 
   // Blockchain and token mapping
   const blockchainTokens = {
-    'Monad': ['MON'],
-    'Solana': ['SOL', 'BONK', 'MF', 'AOL', 'USDC', 'USD1', 'VALOR', 'PENGU']
-  };
-
-  // Generate test wallet
-  const generateTestWallet = () => {
-    const hex = '0123456789abcdef';
-    let addr = '0xtest';
-    for (let i = 0; i < 36; i++) addr += hex[Math.floor(Math.random() * 16)];
-    return addr;
+    'Monad': ['MON', 'CHOG'],
+    'Solana': ['SOL', 'BONK', 'MF', 'AOL', 'USD1', 'VALOR', 'PENGU']
   };
 
   // Mode: 'new' = register new agent, 'existing' = use existing agent
   const [mode, setMode] = useState('new');
-  
+
   // For "already registered" flow
   const [existingAgentId, setExistingAgentId] = useState('');
   const [existingAgentLoading, setExistingAgentLoading] = useState(false);
@@ -71,12 +66,11 @@ export default function AgentPage() {
 
   // Registration state
   const [agentName, setAgentName] = useState('My Shopping Agent');
-  const [walletAddress, setWalletAddress] = useState(() => generateTestWallet());
   const [selectedBlockchain, setSelectedBlockchain] = useState('Monad');
   const [selectedToken, setSelectedToken] = useState('MON');
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState(null);
-  
+
   // After registration
   const [agentId, setAgentId] = useState(null);
   const [registered, setRegistered] = useState(false);
@@ -112,7 +106,6 @@ export default function AgentPage() {
           endpoint: 'agent/register',
           body: {
             agent_name: agentName,
-            wallet_address: walletAddress,
             preferred_token: selectedToken,
             description: 'Shopping agent via FiberAgent'
           }
@@ -120,7 +113,7 @@ export default function AgentPage() {
       });
 
       const data = await res.json();
-      
+
       if (data.success || data.agent_id) {
         const newAgentId = data.agent_id || data.existing_agent_id;
         setAgentId(newAgentId);
@@ -184,7 +177,7 @@ export default function AgentPage() {
       });
 
       const data = await res.json();
-      
+
       if (data.success) {
         setAgentId(existingAgentId);
         setAgentStats(data);
@@ -241,24 +234,49 @@ export default function AgentPage() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="agent-page">
+    <div className={styles.agentPage}>
+      <HeroBackground />
+
       {/* Header */}
-      <section className="page-hero">
-        <div className="hero-inner">
-          <p className="label">FOR AGENTS</p>
+      <section className={styles.pageHero}>
+        <motion.div
+          className={styles.heroContent}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className={styles.label}>FOR AGENTS</p>
           <h1>Build revenue, not features.</h1>
-          <p className="sub">Register once. Search forever. Earn automatically.</p>
-        </div>
+          <p className={styles.sub}>Register once. Search forever. Earn automatically.</p>
+        </motion.div>
       </section>
 
-      <div className="page-body">
+      <div className={styles.pageBody}>
         {/* Mode Selector */}
         {!registered && (
-          <section className="mode-selector-section">
-            <div className="mode-buttons">
+          <motion.section
+            className={styles.modeSelectorSection}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className={styles.modeButtons}>
               <button
-                className={`mode-btn ${mode === 'new' ? 'active' : ''}`}
+                className={`${styles.modeBtn} ${mode === 'new' ? styles.active : ''}`}
                 onClick={() => {
                   setMode('new');
                   setExistingAgentError(null);
@@ -267,7 +285,7 @@ export default function AgentPage() {
                 Create New Agent
               </button>
               <button
-                className={`mode-btn ${mode === 'existing' ? 'active' : ''}`}
+                className={`${styles.modeBtn} ${mode === 'existing' ? styles.active : ''}`}
                 onClick={() => {
                   setMode('existing');
                   setRegError(null);
@@ -276,158 +294,148 @@ export default function AgentPage() {
                 I'm Already Registered
               </button>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {/* Registration Section */}
         {!registered ? (
-          <>
+          <motion.div
+            key={mode}
+            initial={{ opacity: 0, x: mode === 'new' ? -20 : 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+          >
             {mode === 'new' ? (
-              <section className="registration-section">
-            <p className="section-label">STEP 1</p>
-            <h2>Register your agent.</h2>
-            <form onSubmit={handleRegister} className="reg-form">
-              <div className="reg-grid">
-                <div className="reg-field">
-                  <label>Agent Name</label>
-                  <input
-                    type="text"
-                    value={agentName}
-                    onChange={(e) => setAgentName(e.target.value)}
-                    placeholder="My Shopping Agent"
-                    className="reg-input"
-                  />
-                </div>
-                <div className="reg-field">
-                  <label>Wallet Address</label>
-                  <div className="wallet-input-row">
-                    <input
-                      type="text"
-                      value={walletAddress}
-                      onChange={(e) => setWalletAddress(e.target.value)}
-                      placeholder="0x..."
-                      className="reg-input mono"
-                    />
-                    <button
-                      type="button"
-                      className="gen-btn"
-                      onClick={() => setWalletAddress(generateTestWallet())}
-                      title="Generate wallet"
-                    >
-                      ↻
-                    </button>
+              <section className={styles.section}>
+                <span className={styles.sectionLabel}>01. REGISTER AGENT</span>
+                <h2>Setup your identity.</h2>
+                <form onSubmit={handleRegister} className={styles.regForm}>
+                  <div className={styles.regGrid}>
+                    <div className={styles.regField}>
+                      <label>Agent Name</label>
+                      <input
+                        type="text"
+                        value={agentName}
+                        onChange={(e) => setAgentName(e.target.value)}
+                        placeholder="My Shopping Agent"
+                        className={styles.regInput}
+                      />
+                    </div>
+
+                    <div className={styles.regField}>
+                      <label>Blockchain</label>
+                      <Select
+                        options={Object.keys(blockchainTokens).map(chain => ({ value: chain, label: chain }))}
+                        value={{ value: selectedBlockchain, label: selectedBlockchain }}
+                        onChange={handleBlockchainChange}
+                        styles={selectStyles}
+                        isSearchable={false}
+                      />
+                    </div>
+                    <div className={styles.regField}>
+                      <label>Payout Token</label>
+                      <Select
+                        options={getAvailableTokens().map(token => ({ value: token, label: token }))}
+                        value={{ value: selectedToken, label: selectedToken }}
+                        onChange={(option) => setSelectedToken(option.value)}
+                        styles={selectStyles}
+                        isSearchable={false}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="reg-field">
-                  <label>Blockchain</label>
-                  <Select
-                    options={Object.keys(blockchainTokens).map(chain => ({ value: chain, label: chain }))}
-                    value={{ value: selectedBlockchain, label: selectedBlockchain }}
-                    onChange={handleBlockchainChange}
-                    styles={selectStyles}
-                    isSearchable={false}
-                  />
-                </div>
-                <div className="reg-field">
-                  <label>Payout Token</label>
-                  <Select
-                    options={getAvailableTokens().map(token => ({ value: token, label: token }))}
-                    value={{ value: selectedToken, label: selectedToken }}
-                    onChange={(option) => setSelectedToken(option.value)}
-                    styles={selectStyles}
-                    isSearchable={false}
-                  />
-                </div>
-              </div>
-              <button type="submit" disabled={regLoading} className="reg-submit">
-                {regLoading ? 'Registering…' : 'Register Agent'}
-              </button>
-              {regError && <p className="msg-error">{regError}</p>}
-            </form>
+                  <button type="submit" disabled={regLoading} className={styles.regSubmit}>
+                    {regLoading ? 'Registering…' : 'Register Agent'}
+                  </button>
+                  {regError && <p className={styles.msgError}>{regError}</p>}
+                </form>
               </section>
             ) : (
-              <section className="registration-section">
-                <p className="section-label">STEP 1</p>
+              <section className={styles.section}>
+                <span className={styles.sectionLabel}>01. LOGIN</span>
                 <h2>Access your dashboard.</h2>
-                <form onSubmit={handleLoadExistingAgent} className="reg-form">
-                  <div className="reg-grid">
-                    <div className="reg-field" style={{gridColumn: '1 / -1'}}>
+                <form onSubmit={handleLoadExistingAgent} className={styles.regForm}>
+                  <div className={styles.regGrid}>
+                    <div className={styles.regField} style={{ gridColumn: '1 / -1' }}>
                       <label>Your Agent ID</label>
                       <input
                         type="text"
                         value={existingAgentId}
                         onChange={(e) => setExistingAgentId(e.target.value)}
                         placeholder="agent_12345"
-                        className="reg-input mono"
+                        className={`${styles.regInput} ${styles.mono}`}
                       />
                     </div>
                   </div>
-                  <button type="submit" disabled={existingAgentLoading} className="reg-submit">
+                  <button type="submit" disabled={existingAgentLoading} className={styles.regSubmit}>
                     {existingAgentLoading ? 'Loading…' : 'Access Dashboard'}
                   </button>
-                  {existingAgentError && <p className="msg-error">{existingAgentError}</p>}
+                  {existingAgentError && <p className={styles.msgError}>{existingAgentError}</p>}
                 </form>
               </section>
             )}
-          </>
+          </motion.div>
         ) : (
-          <>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
             {/* Dashboard Cards */}
-            <section className="dashboard-section">
-              <div className="dashboard-grid">
-                <div className="dash-card">
-                  <p className="card-label">Total Earnings</p>
-                  <p className="card-value">
+            <section className={styles.section}>
+              <motion.div className={styles.dashboardGrid} variants={itemVariants}>
+                <div className={styles.dashCard}>
+                  <p className={styles.cardLabel}>Total Earnings</p>
+                  <p className={styles.cardValue}>
                     {agentStats?.stats?.total_earnings_usd ? `$${agentStats.stats.total_earnings_usd.toFixed(2)}` : '$0.00'}
                   </p>
-                  <p className="card-desc">All time</p>
+                  <p className={styles.cardDesc}>All time</p>
                 </div>
-                <div className="dash-card">
-                  <p className="card-label">Total Purchases</p>
-                  <p className="card-value">
+                <div className={styles.dashCard}>
+                  <p className={styles.cardLabel}>Total Purchases</p>
+                  <p className={styles.cardValue}>
                     {agentStats?.stats?.total_purchases_tracked || 0}
                   </p>
-                  <p className="card-desc">Tracked via your agent</p>
+                  <p className={styles.cardDesc}>Tracked via your agent</p>
                 </div>
-                <div className="dash-card">
-                  <p className="card-label">Reputation Score</p>
-                  <p className="card-value">
+                <div className={styles.dashCard}>
+                  <p className={styles.cardLabel}>Reputation Score</p>
+                  <p className={styles.cardValue}>
                     {agentStats?.stats?.reputation_score?.toFixed(1) || '0.0'}
                   </p>
-                  <p className="card-desc">Your agent credibility</p>
+                  <p className={styles.cardDesc}>Your agent credibility</p>
                 </div>
-              </div>
-              
+              </motion.div>
+
               {/* Agent Info */}
-              <div className="agent-info-box">
-                <div className="info-row">
-                  <span className="info-label">Agent ID:</span>
-                  <span className="info-value mono">{agentId}</span>
+              <motion.div className={styles.agentInfoBox} variants={itemVariants}>
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>Agent ID:</span>
+                  <span className={`${styles.infoValue} ${styles.mono}`}>{agentId}</span>
                 </div>
-                <div className="info-row">
-                  <span className="info-label">Payout Token:</span>
-                  <span className="info-value">{selectedToken} (on {selectedBlockchain})</span>
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>Payout Token:</span>
+                  <span className={styles.infoValue}>{selectedToken} (on {selectedBlockchain})</span>
                 </div>
-              </div>
+              </motion.div>
             </section>
 
             {/* How It Works */}
-            <section className="how-section">
-              <p className="section-label">THE PROCESS</p>
+            <section className={styles.section}>
+              <span className={styles.sectionLabel}>02. PROCESS</span>
               <h2>Three steps to revenue.</h2>
-              <div className="steps-layout">
-                <div className="how-step">
-                  <span className="step-num">01</span>
+              <div className={styles.stepsLayout}>
+                <div className={styles.howStep}>
+                  <span className={styles.stepNum}>01</span>
                   <h3>Register</h3>
                   <p>You already did. Your agent ID is ready to query FiberAgent.</p>
                 </div>
-                <div className="how-step">
-                  <span className="step-num">02</span>
+                <div className={styles.howStep}>
+                  <span className={styles.stepNum}>02</span>
                   <h3>Query & Share</h3>
                   <p>Your agent searches FiberAgent. You share the affiliate link with your users.</p>
                 </div>
-                <div className="how-step">
-                  <span className="step-num">03</span>
+                <div className={styles.howStep}>
+                  <span className={styles.stepNum}>03</span>
                   <h3>Earn</h3>
                   <p>User buys. You get a kickback in {selectedToken}. Automatic. On-chain.</p>
                 </div>
@@ -435,49 +443,49 @@ export default function AgentPage() {
             </section>
 
             {/* Search Products */}
-            <section className="products-section">
-              <p className="section-label">SEARCH</p>
+            <section className={styles.section}>
+              <span className={styles.sectionLabel}>03. SEARCH</span>
               <h2>Find what your users want.</h2>
-              <form onSubmit={handleSearch} className="search-form">
+              <form onSubmit={handleSearch} className={styles.searchForm}>
                 <input
                   type="text"
                   placeholder="shoes, electronics, food…"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="search-input"
+                  className={styles.searchInput}
                 />
-                <button type="submit" disabled={searchLoading} className="search-btn">
+                <button type="submit" disabled={searchLoading} className={styles.searchBtn}>
                   {searchLoading ? 'Searching…' : 'Search'}
                 </button>
               </form>
 
-              {searchError && <p className="search-error">{searchError}</p>}
+              {searchError && <p className={styles.msgError}>{searchError}</p>}
 
               {products.length === 0 ? (
-                <div className="empty-state">
+                <div className={styles.emptyState}>
                   <p>Start searching to see products and earnings.</p>
                 </div>
               ) : (
-                <div className="products-grid">
+                <div className={styles.productsGrid}>
                   {products.map(product => (
                     <a
                       key={product.merchant_id}
                       href={product.affiliate_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="product-card"
+                      className={styles.productCard}
                     >
-                      <div className="pc-image">
+                      <div className={styles.pcImage}>
                         {product.image_url ? (
                           <img src={product.image_url} alt={product.merchant_name} />
                         ) : (
-                          <span className="pc-placeholder">{product.merchant_name[0]}</span>
+                          <span className={styles.pcPlaceholder}>{product.merchant_name[0]}</span>
                         )}
                       </div>
-                      <div className="pc-body">
+                      <div className={styles.pcBody}>
                         <h4>{product.merchant_name}</h4>
-                        <span className="pc-shop">{product.merchant_domain}</span>
-                        <span className="pc-earn">{product.cashback.display}</span>
+                        <span className={styles.pcShop}>{product.merchant_domain}</span>
+                        <span className={styles.pcEarn}>{product.cashback.display}</span>
                       </div>
                     </a>
                   ))}
@@ -486,34 +494,34 @@ export default function AgentPage() {
             </section>
 
             {/* Tips */}
-            <section className="tips-section">
-              <p className="section-label">TIPS</p>
+            <section className={styles.section}>
+              <span className={styles.sectionLabel}>04. TIPS</span>
               <h2>Maximize your earnings.</h2>
-              <div className="tips-grid">
-                <div className="tip-box">
+              <div className={styles.tipsGrid}>
+                <div className={styles.tipBox}>
                   <h3>Share What Converts</h3>
                   <p>Find products your users actually buy. Quality over quantity.</p>
                 </div>
-                <div className="tip-box">
+                <div className={styles.tipBox}>
                   <h3>Build on Trust</h3>
                   <p>Your reputation score grows with every successful transaction.</p>
                 </div>
-                <div className="tip-box">
+                <div className={styles.tipBox}>
                   <h3>Real-time Payouts</h3>
                   <p>No waiting. Earnings hit your wallet as transactions confirm.</p>
                 </div>
-                <div className="tip-box">
+                <div className={styles.tipBox}>
                   <h3>API-First</h3>
                   <p>Integrate FiberAgent directly into your agent. One API call per search.</p>
                 </div>
               </div>
             </section>
-          </>
+          </motion.div>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="page-footer">
+      <footer className={styles.pageFooter}>
         <p>Build with Fiber. Deploy on Monad.</p>
       </footer>
     </div>
