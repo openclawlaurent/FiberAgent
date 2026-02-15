@@ -124,16 +124,17 @@ export default function DemoPage() {
             </div>
 
             <div className={styles.field}>
-              <label>Wallet Address (Optional)</label>
+              <label>Wallet Address</label>
               <input 
                 value={walletAddress} 
                 onChange={e => setWalletAddress(e.target.value)} 
-                placeholder="0xtest..." 
+                placeholder="0x..." 
                 style={{ fontFamily: 'monospace', fontSize: '12px' }}
+                required
               />
             </div>
 
-            <button type="submit" disabled={regLoading} className={styles.btnSubmit}>
+            <button type="submit" disabled={regLoading || !agentName || !walletAddress} className={styles.btnSubmit}>
               {regLoading ? 'Registering…' : 'Register Agent'}
             </button>
             {regError && <p className={styles.msgError}>{regError}</p>}

@@ -66,6 +66,7 @@ export default function AgentPage() {
 
   // Registration state
   const [agentName, setAgentName] = useState('My Shopping Agent');
+  const [walletAddress, setWalletAddress] = useState('');
   const [selectedBlockchain, setSelectedBlockchain] = useState('Monad');
   const [selectedToken, setSelectedToken] = useState('MON');
   const [regLoading, setRegLoading] = useState(false);
@@ -94,6 +95,10 @@ export default function AgentPage() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!walletAddress.trim()) {
+      setRegError('Wallet address is required');
+      return;
+    }
     setRegLoading(true);
     setRegError(null);
 
@@ -106,6 +111,7 @@ export default function AgentPage() {
           endpoint: 'agent/register',
           body: {
             agent_name: agentName,
+            wallet_address: walletAddress,
             preferred_token: selectedToken,
             description: 'Shopping agent via FiberAgent'
           }
@@ -323,6 +329,18 @@ export default function AgentPage() {
                     </div>
 
                     <div className={styles.regField}>
+                      <label>Wallet Address</label>
+                      <input
+                        type="text"
+                        value={walletAddress}
+                        onChange={(e) => setWalletAddress(e.target.value)}
+                        placeholder="0x..."
+                        className={`${styles.regInput} ${styles.mono}`}
+                        required
+                      />
+                    </div>
+
+                    <div className={styles.regField}>
                       <label>Blockchain</label>
                       <Select
                         options={Object.keys(blockchainTokens).map(chain => ({ value: chain, label: chain }))}
@@ -343,7 +361,7 @@ export default function AgentPage() {
                       />
                     </div>
                   </div>
-                  <button type="submit" disabled={regLoading} className={styles.regSubmit}>
+                  <button type="submit" disabled={regLoading || !agentName || !walletAddress} className={styles.regSubmit}>
                     {regLoading ? 'Registering…' : 'Register Agent'}
                   </button>
                   {regError && <p className={styles.msgError}>{regError}</p>}
