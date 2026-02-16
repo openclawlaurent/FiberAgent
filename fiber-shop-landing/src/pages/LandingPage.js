@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styles from '../styles/LandingPage.module.css';
 import HeroBackground from '../components/HeroBackground';
 import ScrambledText from '../components/ScrambledText';
-import LiveTransactions from '../components/LiveTransactions';
+// import LiveTransactions from '../components/LiveTransactions';
 import BrandMarquee from '../components/BrandMarquee';
 import AgentStats from '../components/AgentStats';
 import howStyles from '../styles/HowItWorks.module.css';
@@ -67,6 +67,7 @@ export default function LandingPage() {
 
 
       {/* Live Helper Text currently active */}
+      {/* COMMENTED OUT: LiveTransactions section - will restore in a few days
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -76,6 +77,7 @@ export default function LandingPage() {
       >
         <LiveTransactions />
       </motion.div>
+      */}
 
       {/* Features Section */}
       <section className={styles.section}>
@@ -120,7 +122,7 @@ export default function LandingPage() {
         <BrandMarquee />
       </section>
 
-      {/* COMMENTED OUT: How It Works section - will restore in a few days
+      {/* How It Works */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <motion.h2
@@ -177,7 +179,6 @@ export default function LandingPage() {
           </motion.div>
         </motion.div>
       </section>
-      */}
 
       {/* Footer */}
       <footer className={styles.footer}>
