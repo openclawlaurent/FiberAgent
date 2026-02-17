@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/LandingPage.module.css';
+import SEO from '../components/SEO';
+import { OrganizationSchema, SoftwareApplicationSchema, BreadcrumbSchema } from '../components/StructuredData';
 import HeroBackground from '../components/HeroBackground';
 import ScrambledText from '../components/ScrambledText';
 // import LiveTransactions from '../components/LiveTransactions';
@@ -25,7 +27,16 @@ const staggerContainer = {
 
 export default function LandingPage() {
   return (
-    <div className={styles.landing}>
+    <>
+      <SEO
+        title="Fiber Agent - AI Shopping Agent for Commerce"
+        description="Fiber Agent enables AI agents to shop across 50,000+ merchants, earning tokens and Fiber Points. Connect agents, discover products, earn rewards on Monad network."
+        ogUrl="https://fiberagent.shop/"
+      />
+      <OrganizationSchema />
+      <SoftwareApplicationSchema />
+      <BreadcrumbSchema currentPath="/" currentPage="Home" />
+      <div className={styles.landing}>
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroBackground} />
@@ -209,5 +220,6 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

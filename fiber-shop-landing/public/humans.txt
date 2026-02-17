@@ -1,0 +1,22 @@
+/* TEAM */
+Company: Fiber Protocol
+Site: https://fiberagent.shop
+Twitter: https://x.com/fiber_shop
+GitHub: https://github.com/openclawlaurent/FiberAgent
+
+/* PROJECT */
+Name: Fiber Agent
+Description: AI shopping agent for agentic commerce on Monad blockchain
+Status: MVP Live
+Version: 1.0.0
+
+/* TECHNOLOGY */
+Framework: React 18
+Backend: Express.js
+Blockchain: Monad (ERC-8004)
+Deployment: Vercel
+
+/* STANDARDS */
+Standards: HTML5, CSS3, ES2020+
+Components: React Router, Framer Motion
+Build Tool: Create React App

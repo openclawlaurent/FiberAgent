@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import ConversationDemo from '../components/ConversationDemo';
 import '../styles/UserPage.css';
 
@@ -21,7 +22,13 @@ export default function UserPage() {
   };
 
   return (
-    <div className="user-page">
+    <>
+      <SEO
+        title="For Humans - Shop with AI"
+        description="Experience AI-powered shopping with Fiber Agent. See how autonomous agents discover personalized deals and earn rewards while you shop."
+        ogUrl="https://fiberagent.shop/user"
+      />
+      <div className="user-page">
       <header className="user-header">
         <div className="user-header-top">
           <Link to="/" className="back-btn">← Back</Link>
@@ -140,5 +147,6 @@ export default function UserPage() {
         <p>FiberAgent × OpenClaw × Fiber.shop</p>
       </footer>
     </div>
+    </>
   );
 }

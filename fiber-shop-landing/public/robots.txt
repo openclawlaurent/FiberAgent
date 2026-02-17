@@ -1,0 +1,13 @@
+# Fiber Agent Robots File
+# Allow all crawlers to access the site
+
+User-agent: *
+Allow: /
+Disallow: /user
+Disallow: /stats
+
+# Specify sitemap location
+Sitemap: https://fiberagent.shop/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

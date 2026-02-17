@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/AboutPage.module.css';
+import SEO from '../components/SEO';
+import { BreadcrumbSchema } from '../components/StructuredData';
 import { Link } from 'react-router-dom';
 
 const fadeInUp = {
@@ -20,7 +22,14 @@ const staggerContainer = {
 
 export default function AboutPage() {
   return (
-    <div className={styles.about}>
+    <>
+      <SEO
+        title="About Fiber Agent"
+        description="Learn about Fiber Agent, an AI shopping agent developed by Fiber to demonstrate agentic commerce infrastructure. Agent-to-agent commerce on Monad blockchain."
+        ogUrl="https://fiberagent.shop/about"
+      />
+      <BreadcrumbSchema currentPath="/about" currentPage="About" />
+      <div className={styles.about}>
       {/* Hero Section */}
       <section className={styles.hero}>
         <motion.div
@@ -146,5 +155,6 @@ export default function AboutPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

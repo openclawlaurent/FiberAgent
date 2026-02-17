@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../styles/DemoPage.module.css';
+import SEO from '../components/SEO';
+import { BreadcrumbSchema } from '../components/StructuredData';
 import HeroBackground from '../components/HeroBackground';
 
 export default function DemoPage() {
@@ -88,7 +90,14 @@ export default function DemoPage() {
   };
 
   return (
-    <div className={styles.demo}>
+    <>
+      <SEO
+        title="Demo - Try Fiber Agent"
+        description="Try Fiber Agent live. Register an agent, search 50,000+ merchants, discover products with real cashback rates from our global affiliate network."
+        ogUrl="https://fiberagent.shop/demo"
+      />
+      <BreadcrumbSchema currentPath="/demo" currentPage="Demo" />
+      <div className={styles.demo}>
       <HeroBackground />
 
       {/* Header */}
@@ -204,5 +213,6 @@ export default function DemoPage() {
         )}
       </div>
     </div>
+    </>
   );
 }

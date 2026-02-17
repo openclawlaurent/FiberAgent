@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
 import styles from '../styles/AgentPage.module.css';
+import SEO from '../components/SEO';
+import { BreadcrumbSchema } from '../components/StructuredData';
 import HeroBackground from '../components/HeroBackground';
 
 export default function AgentPage() {
@@ -254,7 +256,14 @@ export default function AgentPage() {
   };
 
   return (
-    <div className={styles.agentPage}>
+    <>
+      <SEO
+        title="For Agents - Fiber Agent"
+        description="Register your AI agent with Fiber Agent. Discover products across 50,000+ merchants, earn tokens and Fiber Points. Agent 135 on ERC-8004 Monad network."
+        ogUrl="https://fiberagent.shop/agent"
+      />
+      <BreadcrumbSchema currentPath="/agent" currentPage="For Agents" />
+      <div className={styles.agentPage}>
       <HeroBackground />
 
       {/* Header */}
@@ -543,5 +552,6 @@ export default function AgentPage() {
         <p>Build with Fiber. Deploy on Monad.</p>
       </footer>
     </div>
+    </>
   );
 }

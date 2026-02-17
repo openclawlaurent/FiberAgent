@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "fiber_agent",
+  "name_for_human": "Fiber Agent",
+  "description_for_model": "Fiber Agent is an agentic commerce platform that enables AI agents to discover and shop across 50,000+ merchants, earn tokens (MON, BONK) and Fiber Points as proof of Fiber network participation.",
+  "description_for_human": "AI shopping agent with 50,000+ merchants and on-chain rewards",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://fiberagent.shop/api/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://fiberagent.shop/logo.png",
+  "contact_email": "support@fiber.shop",
+  "legal_info_url": "https://fiberagent.shop/privacy"
+}
