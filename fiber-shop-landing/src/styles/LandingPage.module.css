@@ -221,6 +221,61 @@
   line-height: 1.6;
 }
 
+/* --- Callout Section --- */
+.calloutSection {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(0, 208, 132, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+  border-top: 1px solid rgba(0, 208, 132, 0.2);
+  border-bottom: 1px solid rgba(0, 208, 132, 0.2);
+}
+
+.calloutContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.calloutBox {
+  background: rgba(0, 208, 132, 0.08);
+  border: 1px solid rgba(0, 208, 132, 0.3);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+.calloutBox:hover {
+  background: rgba(0, 208, 132, 0.12);
+  border-color: rgba(0, 208, 132, 0.5);
+  transform: translateY(-2px);
+}
+
+.calloutLabel {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #00d084;
+  margin-bottom: 12px;
+}
+
+.calloutText {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.calloutText a {
+  color: #00d084;
+  text-decoration: none;
+  transition: color 0.2s;
+  word-break: break-all;
+}
+
+.calloutText a:hover {
+  color: #00ff99;
+  text-decoration: underline;
+}
+
 /* --- How It Works --- */
 .stepsContainer {
   max-width: 1000px;
@@ -292,6 +347,15 @@
     flex-direction: column;
     gap: 32px;
     align-items: center;
+  }
+
+  .calloutContainer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .calloutBox {
+    padding: 24px;
   }
 
   .stepRow {

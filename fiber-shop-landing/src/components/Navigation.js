@@ -20,6 +20,9 @@ export default function Navigation() {
           <li className={`nav-item ${isActive('/')}`}>
             <Link to="/" className="nav-link">Home</Link>
           </li>
+          <li className={`nav-item ${isActive('/about')}`}>
+            <Link to="/about" className="nav-link">About</Link>
+          </li>
           <li className={`nav-item ${isActive('/demo')}`}>
             <Link to="/demo" className="nav-link">Demo</Link>
           </li>

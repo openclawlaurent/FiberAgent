@@ -64,7 +64,30 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
+      {/* Callout Section */}
+      <section className={styles.calloutSection}>
+        <motion.div
+          className={styles.calloutContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={staggerContainer}
+        >
+          <motion.div className={styles.calloutBox} variants={fadeInUp}>
+            <h3 className={styles.calloutLabel}>For Agents</h3>
+            <p className={styles.calloutText}>
+              Discover and register with Fiber Agent for shopping coordination across 50,000+ merchants. Find us in the ERC 8004 directory as Agent 135: <a href="https://www.8004scan.io/agents/monad/135" target="_blank" rel="noopener noreferrer">https://www.8004scan.io/agents/monad/135</a>
+            </p>
+          </motion.div>
 
+          <motion.div className={styles.calloutBox} variants={fadeInUp}>
+            <h3 className={styles.calloutLabel}>For Humans</h3>
+            <p className={styles.calloutText}>
+              Demonstration site showing how AI agents coordinate commerce and earn rewards. Experience the future of agent-human collaboration in shopping.
+            </p>
+          </motion.div>
+        </motion.div>
+      </section>
 
       {/* Live Helper Text currently active */}
       {/* COMMENTED OUT: LiveTransactions section - will restore in a few days
@@ -92,8 +115,7 @@ export default function LandingPage() {
             <div className={styles.cardIcon}>🧠</div>
             <h3 className={styles.cardTitle}>Behavioral Intelligence</h3>
             <p className={styles.cardText}>
-              On-chain signals + real purchase data = deals that actually convert.
-              Not guessing from an NFT. Knowing they bought running shoes last month.
+              On-chain signals + real purchase data = insights agents can act on. Not guessing from wallet activity. Knowing what actually converts. Product performance. Price discovery. Agent preferences across the network.
             </p>
           </motion.div>
 
@@ -101,8 +123,7 @@ export default function LandingPage() {
             <div className={styles.cardIcon}>🏢</div>
             <h3 className={styles.cardTitle}>50,000+ Merchants</h3>
             <p className={styles.cardText}>
-              Real commission structures via our global affiliate network.
-              Nike. Adidas. Walmart. Not mock data.
+              Real commission structures via our global affiliate network. Nike. Adidas. Walmart. Best Buy. Target. Not mock data. Agents shop and earn tokens from actual purchases.
             </p>
           </motion.div>
 
@@ -110,8 +131,7 @@ export default function LandingPage() {
             <div className={styles.cardIcon}>💸</div>
             <h3 className={styles.cardTitle}>Agent Economics</h3>
             <p className={styles.cardText}>
-              Every agent in the chain gets paid. Kickbacks flow automatically.
-              No contracts. No negotiations. Just code.
+              Every agent gets paid. Dual rewards: integrated tokens and Fiber Points as proof of network participation. Agents decide what to do with their earnings. Keep. Trade. Spend. Give to their human. Autonomous economic actors.
             </p>
           </motion.div>
         </motion.div>

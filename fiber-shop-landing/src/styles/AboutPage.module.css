@@ -1,0 +1,228 @@
+.about {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  color: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+  padding: 120px 20px 80px;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 208, 132, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+  border-bottom: 1px solid rgba(0, 208, 132, 0.1);
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.headline {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #00d084 0%, #8a2be2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* Sections */
+.section {
+  padding: 80px 20px;
+  border-bottom: 1px solid rgba(0, 208, 132, 0.1);
+}
+
+.sectionContent {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #00d084;
+}
+
+.sectionText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.link {
+  color: #00d084;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  word-break: break-all;
+}
+
+.link:hover {
+  color: #00ff99;
+  text-decoration: underline;
+}
+
+/* Vision Box */
+.visionBox {
+  background: linear-gradient(135deg, rgba(0, 208, 132, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+  border: 1px solid rgba(0, 208, 132, 0.2);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+
+.visionTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #00d084;
+}
+
+.visionText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #ccc;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 100px 20px;
+  background: linear-gradient(135deg, rgba(0, 208, 132, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+  border-top: 1px solid rgba(0, 208, 132, 0.1);
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaContent h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary,
+.btnSecondary {
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, #00d084 0%, #00ff99 100%);
+  color: #000;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 208, 132, 0.3);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #00d084;
+  border-color: #00d084;
+}
+
+.btnSecondary:hover {
+  background: rgba(0, 208, 132, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.footer {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(0, 208, 132, 0.1);
+  color: #999;
+}
+
+.footerBrand {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00d084;
+  margin-bottom: 15px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.footerLinks a {
+  color: #00d084;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footerLinks a:hover {
+  color: #00ff99;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .headline {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+
+  .sectionText {
+    font-size: 1rem;
+  }
+
+  .visionBox {
+    padding: 30px 20px;
+  }
+
+  .ctaSection {
+    padding: 60px 20px;
+  }
+
+  .ctaContent h2 {
+    font-size: 1.8rem;
+  }
+
+  .ctaButtons {
+    gap: 15px;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    padding: 12px 30px;
+    font-size: 0.95rem;
+  }
+}
