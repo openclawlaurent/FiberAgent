@@ -548,8 +548,13 @@ export default function AgentPage() {
       </div>
 
       {/* Footer */}
-      <footer className={styles.pageFooter}>
-        <p>Build with Fiber. Deploy on Monad.</p>
+      <footer className={styles.footer}>
+        <span className={styles.footerBrand}>FiberAgent</span>
+        <div className={styles.footerLinks}>
+          <a href="https://fiber.shop" target="_blank" rel="noopener noreferrer">fiber.shop</a>
+          <a href="https://x.com/fiber_shop" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://www.8004scan.io/agents/monad/135" target="_blank" rel="noopener noreferrer">ERC-8004</a>
+        </div>
       </footer>
     </div>
     </>
